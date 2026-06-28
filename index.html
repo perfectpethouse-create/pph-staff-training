@@ -1146,20 +1146,55 @@
     <div class="page-header">
       <div class="eyebrow">ปิดท้าย</div>
       <h1>📝 แบบทดสอบท้ายบทเรียน</h1>
-      <p>ทำแบบทดสอบ 10 ข้อ เพื่อประเมินความเข้าใจหลังเรียนครบ 6 หมวด</p>
+      <p>15 ข้อ เน้นทักษะการให้บริการ + ความรู้สัตว์เลี้ยง · มีข้อเขียน 1 ข้อ</p>
     </div>
 
     <div class="quizbox">
       <h2>พร้อมทดสอบความเข้าใจแล้วหรือยัง? 🐾</h2>
-      <p>คะแนนจะถูกบันทึกอัตโนมัติผ่าน Google Form → Google Sheets</p>
-      <span class="quiz-btn" id="quizLinkPlaceholder" style="cursor:default;">⚠️ กายยังไม่ได้แทรกลิงก์ Google Form</span>
-      <p class="quiz-note">วิธีใส่ลิงก์: เปิดไฟล์ index.html → ค้นหา "quizLinkPlaceholder" → แทนที่ด้วย &lt;a class="quiz-btn" href="ลิงก์ฟอร์ม" target="_blank"&gt;เริ่มทำแบบทดสอบ&lt;/a&gt;</p>
+      <p>15 ข้อ · บันทึกคะแนนอัตโนมัติผ่าน Google Form → Google Sheets</p>
+      <!-- ════ วางลิงก์ Google Form ที่นี่ ════
+           แทนที่บรรทัด <span> ด้านล่าง ด้วย:
+           <a class="quiz-btn" href="https://forms.gle/XXXXXXXXX" target="_blank">เริ่มทำแบบทดสอบ →</a>
+      ════════════════════════════════════════ -->
+      <span class="quiz-btn" id="QUIZ_FORM_LINK" style="cursor:default; opacity:.75;">⏳ รอลิงก์ Google Form จากกาย</span>
+      <p class="quiz-note">📋 ไฟล์คำถาม 15 ข้อพร้อมเฉลย → <strong>แบบทดสอบ-15ข้อ.md</strong><br>copy ไปสร้าง Google Form ได้เลย แล้วนำลิงก์มาแทน span ด้านบน</p>
     </div>
 
-    <div class="card" style="margin-top: 24px;">
-      <h3>หมายเหตุสำหรับกาย</h3>
-      <p>เตรียมไฟล์คำถาม 10 ข้อพร้อมเฉลยไว้ในไฟล์ <strong>แบบทดสอบ-10ข้อ.md</strong> copy คำถาม/ตัวเลือกไปสร้าง Google Form ได้ทันที จากนั้นนำลิงก์มาแทนที่ปุ่มด้านบน</p>
+    <h2 class="sec" style="margin-top:36px;">ตัวอย่างคำถาม 15 ข้อ</h2>
+    <p style="color:var(--apple-gray); font-size:.88rem; margin-bottom:20px;">คำถามในแบบทดสอบจริงอยู่ใน Google Form — ด้านล่างนี้เป็นตัวอย่างเพื่อให้พนักงานเตรียมตัวก่อนทำ</p>
+
+    <div class="card">
+      <h3 class="subsec">📌 ชุดที่ 1: ทักษะการให้บริการ (ข้อ 1–10)</h3>
+      <ul style="margin-top:10px; color:var(--apple-gray);">
+        <li>อุณหภูมิน้ำที่เหมาะสมสำหรับอาบน้ำ</li>
+        <li>เวลาให้สัตว์ปรับตัวหลังเข้าห้องใหม่</li>
+        <li>ขั้นตอนเมื่อพบรอยแผลก่อนอาบน้ำ</li>
+        <li>การดูแลระหว่างเป่าแห้งในกล่อง</li>
+        <li>สัญญาณสุนัขกลัว/วิตกกังวล</li>
+        <li>วิธีรับมือเมื่อสัตว์แสดงสัญญาณเครียด</li>
+        <li>วิธีอุ้มแมวที่ถูกต้อง</li>
+        <li>ความหมายของ "แมวนิ่งผิดปกติ" ตอนถูกจับหนังคอ</li>
+        <li>วิธีรับมือแมวที่ตื่นตกใจระหว่างอาบน้ำ</li>
+        <li>ขั้นตอนเมื่อถูกกัด/ข่วน</li>
+      </ul>
     </div>
+
+    <div class="card">
+      <h3 class="subsec">📌 ชุดที่ 2: ความรู้สัตว์เลี้ยง (ข้อ 11–14)</h3>
+      <ul style="margin-top:10px; color:var(--apple-gray);">
+        <li>อาการที่ต้องรายงานหัวหน้าทันที</li>
+        <li>ความหมายของภาษากายแมวที่ผ่อนคลาย</li>
+        <li>เหตุผลที่ห้ามปล่อยแมวแปลกหน้าไว้ด้วยกัน</li>
+        <li>ความถี่ในการเปลี่ยนน้ำดื่มสัตว์เลี้ยง</li>
+      </ul>
+    </div>
+
+    <div class="card" style="border-left: 4px solid var(--brand-orange);">
+      <h3 class="subsec">✏️ ชุดที่ 3: ข้อเขียน (ข้อ 15)</h3>
+      <p style="font-size:.9rem; margin-top:8px;"><strong>โจทย์:</strong> คุณกำลังจะยกแมวที่ไม่รู้จักขึ้นมาอาบน้ำ พบว่าแมวมีท่าทาง: หูแบนราบ รูม่านตาขยาย หางสะบัดไปมา และตัวเกร็งกะทันหัน</p>
+      <p style="font-size:.9rem; color:var(--apple-gray); margin:0;"><strong>ต้องตอบ 2 ส่วน:</strong> (1) สัญญาณเหล่านี้บอกอะไร? (2) คุณจะทำอย่างไรต่อ?</p>
+    </div>
+
   </section>
 
 </div><!-- /main-wrap -->
