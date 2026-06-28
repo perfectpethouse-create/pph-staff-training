@@ -4,656 +4,422 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>คู่มือพนักงาน — Perfect Pet House</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;900&family=Varela+Round&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --brand-orange: #E37F33;
-    --brand-orange-dark: #c4661f;
-    --apple-black: #1d1d1f;
-    --apple-gray: #6e6e73;
-    --apple-light: #f5f5f7;
-    --apple-white: #ffffff;
-    --apple-border: rgba(0,0,0,.08);
-    --apple-card: rgba(255,255,255,.72);
-    --danger: #ff3b30;
+    --orange: #E37F33;
+    --orange-dark: #c4661f;
+    --orange-soft: rgba(227,127,51,.1);
+    --ink: #1d1d1f;
+    --gray: #6e6e73;
+    --gray-2: #86868b;
+    --bg: #f5f5f7;
+    --white: #ffffff;
+    --border: rgba(0,0,0,.08);
+    --danger: #d6322a;
     --danger-bg: #fff2f1;
+    --success: #1a9e4b;
     --success-bg: #f0faf4;
-    --success: #34c759;
+    --info: #0a6cce;
     --info-bg: #f0f6ff;
-    --warn-bg: #fffbe6;
-    --nav-h: 52px;
+    --warn: #b8860b;
+    --warn-bg: #fffaeb;
+    --sidebar-w: 264px;
+    --radius: 16px;
+    --shadow-sm: 0 1px 4px rgba(0,0,0,.05);
+    --shadow-md: 0 6px 24px rgba(0,0,0,.08);
+    --font-head: 'Varela Round', 'Noto Sans Thai', sans-serif;
+    --font-body: 'Nunito Sans', 'Noto Sans Thai', -apple-system, sans-serif;
   }
-
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   html { scroll-behavior: smooth; }
-
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Noto Sans Thai", "Sarabun", sans-serif;
-    background: var(--apple-light);
-    color: var(--apple-black);
-    line-height: 1.6;
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.65;
     -webkit-font-smoothing: antialiased;
   }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 
-  /* ─── NAV ─── */
-  nav.topnav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    height: var(--nav-h);
-    background: rgba(255,255,255,.82);
+  /* ─── TOP BAR (mobile) ─── */
+  .topbar {
+    display: none;
+    position: fixed; top: 0; left: 0; right: 0; height: 56px;
+    background: rgba(255,255,255,.85);
     backdrop-filter: saturate(180%) blur(20px);
     -webkit-backdrop-filter: saturate(180%) blur(20px);
-    border-bottom: 1px solid var(--apple-border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 24px;
-    z-index: 1000;
+    border-bottom: 1px solid var(--border);
+    align-items: center; justify-content: space-between;
+    padding: 0 16px; z-index: 200;
   }
-  .nav-brand {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: .95rem;
-    font-weight: 600;
-    color: var(--apple-black);
-    letter-spacing: -.01em;
-  }
-  .nav-brand .accent { color: var(--brand-orange); }
-  .nav-brand .paw { font-size: 1.1rem; }
+  .topbar .tb-brand { font-family: var(--font-head); font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+  .topbar .tb-brand b { color: var(--orange); }
+  #menuBtn { background: var(--orange); color: #fff; border: none; border-radius: 10px; width: 40px; height: 40px; font-size: 1.2rem; cursor: pointer; }
 
-  .nav-tabs {
-    display: flex;
-    gap: 4px;
-    list-style: none;
-  }
-  .nav-tabs button {
-    background: none;
-    border: none;
-    font-family: inherit;
-    font-size: .8rem;
-    color: var(--apple-gray);
-    padding: 6px 10px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: color .2s, background .2s;
-    white-space: nowrap;
-  }
-  .nav-tabs button:hover { color: var(--apple-black); background: rgba(0,0,0,.05); }
-  .nav-tabs button.active { color: var(--brand-orange); font-weight: 600; }
-
-  #menuBtn {
-    display: none;
-    background: none;
-    border: 1px solid var(--apple-border);
-    border-radius: 8px;
-    padding: 6px 10px;
-    font-size: .9rem;
-    cursor: pointer;
-    color: var(--apple-black);
-  }
-
-  /* mobile drawer */
-  .drawer-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,.35);
-    z-index: 998;
-  }
-  .drawer-overlay.open { display: block; }
-
-  .drawer {
-    position: fixed;
-    top: 0; right: -280px;
-    width: 260px;
-    height: 100dvh;
-    background: var(--apple-white);
-    box-shadow: -4px 0 30px rgba(0,0,0,.12);
-    z-index: 999;
-    transition: right .3s ease;
-    padding: 68px 16px 24px;
+  /* ─── SIDEBAR ─── */
+  .sidebar {
+    position: fixed; top: 0; left: 0; bottom: 0;
+    width: var(--sidebar-w);
+    background: var(--white);
+    border-right: 1px solid var(--border);
+    padding: 24px 16px;
     overflow-y: auto;
+    z-index: 150;
+    display: flex; flex-direction: column; gap: 4px;
   }
-  .drawer.open { right: 0; }
-  .drawer button {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-    padding: 12px 14px;
-    border: none;
-    background: none;
-    border-radius: 10px;
-    font-family: inherit;
-    font-size: .9rem;
-    color: var(--apple-black);
-    cursor: pointer;
-    margin-bottom: 2px;
-    text-align: left;
-    transition: background .15s;
+  .sb-brand {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--font-head); font-size: 1.15rem;
+    padding: 4px 8px 16px; letter-spacing: .3px;
   }
-  .drawer button:hover { background: var(--apple-light); }
-  .drawer button.active { background: var(--brand-orange); color: #fff; font-weight: 600; }
-  .drawer-section-label {
-    font-size: .68rem;
-    color: var(--apple-gray);
-    text-transform: uppercase;
-    letter-spacing: .07em;
-    padding: 16px 14px 6px;
+  .sb-brand .logo {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+    display: grid; place-items: center; font-size: 1.2rem; flex-shrink: 0;
   }
+  .sb-brand b { color: var(--orange); font-weight: inherit; }
+  .sb-brand span { color: var(--ink); }
 
-  @media (max-width: 860px) {
-    .nav-tabs { display: none; }
-    #menuBtn { display: block; }
+  .search-wrap { position: relative; margin-bottom: 10px; }
+  .search-wrap svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; color: var(--gray-2); }
+  #searchBox {
+    width: 100%; border: 1px solid var(--border); background: var(--bg);
+    border-radius: 12px; padding: 10px 12px 10px 36px;
+    font-family: var(--font-body); font-size: .9rem; color: var(--ink);
+    outline: none; transition: border-color .2s, box-shadow .2s;
   }
+  #searchBox:focus { border-color: var(--orange); box-shadow: 0 0 0 3px var(--orange-soft); }
 
-  /* ─── LAYOUT ─── */
-  .main-wrap {
-    max-width: 880px;
-    margin: 0 auto;
-    padding: calc(var(--nav-h) + 40px) 24px 80px;
+  .sb-label { font-size: .68rem; font-weight: 700; color: var(--gray-2); text-transform: uppercase; letter-spacing: .08em; padding: 14px 10px 4px; }
+  .navbtn {
+    display: flex; align-items: center; gap: 11px;
+    width: 100%; text-align: left; border: none; background: none;
+    padding: 9px 11px; border-radius: 11px;
+    font-family: var(--font-body); font-size: .9rem; font-weight: 600; color: var(--ink);
+    cursor: pointer; transition: background .15s, color .15s;
   }
+  .navbtn svg { width: 18px; height: 18px; flex-shrink: 0; color: var(--gray); transition: color .15s; }
+  .navbtn:hover { background: var(--bg); }
+  .navbtn.active { background: var(--orange); color: #fff; }
+  .navbtn.active svg { color: #fff; }
+  .navbtn .num { font-size: .72rem; color: var(--gray-2); margin-left: auto; font-weight: 700; }
+  .navbtn.active .num { color: rgba(255,255,255,.8); }
 
-  section.page { display: none; animation: fadeUp .35s ease; }
-  section.page.active { display: block; }
+  .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 140; }
+  .sidebar-overlay.open { display: block; }
 
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(12px); }
-    to   { opacity: 1; transform: translateY(0); }
+  /* ─── MAIN ─── */
+  .main {
+    margin-left: var(--sidebar-w);
+    max-width: 920px;
+    padding: 48px 40px 100px;
   }
+  section.page { display: none; }
+  section.page.active { display: block; animation: fadeUp .4s ease; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
 
   /* ─── HERO ─── */
-  .hero {
-    text-align: center;
-    padding: 56px 0 48px;
-  }
-  .hero-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(227,127,51,.12);
-    color: var(--brand-orange-dark);
-    border-radius: 999px;
-    padding: 5px 14px;
-    font-size: .78rem;
-    font-weight: 600;
-    letter-spacing: .04em;
-    margin-bottom: 20px;
-    text-transform: uppercase;
+  .hero { text-align: center; padding: 40px 0 36px; }
+  .hero .eyebrow {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--orange-soft); color: var(--orange-dark);
+    border-radius: 999px; padding: 6px 16px; font-size: .78rem; font-weight: 700;
+    letter-spacing: .03em; margin-bottom: 24px;
   }
   .hero h1 {
-    font-size: clamp(2rem, 5vw, 3.2rem);
-    font-weight: 700;
-    letter-spacing: -.03em;
-    line-height: 1.1;
-    color: var(--apple-black);
-    margin-bottom: 16px;
+    font-family: var(--font-head);
+    font-size: clamp(2.2rem, 6vw, 4rem);
+    line-height: 1.08; letter-spacing: -.02em; color: var(--ink); margin-bottom: 18px;
   }
-  .hero h1 .accent { color: var(--brand-orange); }
-  .hero p {
-    font-size: 1.05rem;
-    color: var(--apple-gray);
-    max-width: 520px;
-    margin: 0 auto 32px;
-  }
-  .hero-meta {
-    display: inline-flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  .hero-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: var(--apple-white);
-    border: 1px solid var(--apple-border);
-    border-radius: 999px;
-    padding: 6px 14px;
-    font-size: .82rem;
-    color: var(--apple-gray);
-    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+  .hero h1 .accent { color: var(--orange); }
+  .hero p.lead { font-size: 1.1rem; color: var(--gray); max-width: 540px; margin: 0 auto 30px; }
+  .hero-chips { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--white); border: 1px solid var(--border); box-shadow: var(--shadow-sm);
+    border-radius: 999px; padding: 7px 15px; font-size: .82rem; color: var(--gray);
   }
 
-  /* ─── QUICK CARDS (home) ─── */
-  .quick-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 16px;
-    margin-top: 8px;
+  /* ─── STAT ROW ─── */
+  .stat-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin: 28px 0; }
+  @media (max-width: 600px) { .stat-row { grid-template-columns: 1fr; } }
+  .stat {
+    background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 22px; text-align: center; box-shadow: var(--shadow-sm);
   }
-  .quick-card {
-    background: var(--apple-white);
-    border: 1px solid var(--apple-border);
-    border-radius: 18px;
-    padding: 24px;
-    box-shadow: 0 2px 12px rgba(0,0,0,.05);
-    transition: box-shadow .25s, transform .25s;
-  }
-  .quick-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,.1); transform: translateY(-2px); }
-  .quick-card .icon { font-size: 2rem; margin-bottom: 12px; }
-  .quick-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 6px; letter-spacing: -.01em; }
-  .quick-card p { font-size: .88rem; color: var(--apple-gray); line-height: 1.55; }
-
-  .facility-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    margin-top: 20px;
-  }
-  @media (max-width: 560px) { .facility-row { grid-template-columns: 1fr; } }
-  .facility-card {
-    background: var(--apple-white);
-    border: 1px solid var(--apple-border);
-    border-radius: 16px;
-    padding: 20px;
-    text-align: center;
-  }
-  .facility-card .num { font-size: 2.2rem; font-weight: 700; letter-spacing: -.02em; color: var(--apple-black); }
-  .facility-card .label { font-size: .82rem; color: var(--apple-gray); margin-top: 4px; }
+  .stat .n { font-family: var(--font-head); font-size: 2.4rem; color: var(--ink); line-height: 1; }
+  .stat .n.orange { color: var(--orange); }
+  .stat .l { font-size: .82rem; color: var(--gray); margin-top: 8px; }
 
   /* ─── PAGE HEADER ─── */
-  .page-header { padding: 32px 0 24px; border-bottom: 1px solid var(--apple-border); margin-bottom: 36px; }
-  .page-header .eyebrow { font-size: .78rem; text-transform: uppercase; letter-spacing: .07em; color: var(--brand-orange); font-weight: 600; margin-bottom: 8px; }
-  .page-header h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 700; letter-spacing: -.03em; line-height: 1.15; }
-  .page-header p { font-size: .95rem; color: var(--apple-gray); margin-top: 8px; }
+  .page-header { padding-bottom: 24px; border-bottom: 1px solid var(--border); margin-bottom: 32px; }
+  .page-header .eyebrow { font-size: .76rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--orange); margin-bottom: 10px; }
+  .page-header h1 { font-family: var(--font-head); font-size: clamp(1.8rem, 4.5vw, 2.8rem); line-height: 1.12; letter-spacing: -.02em; }
+  .page-header p { font-size: 1rem; color: var(--gray); margin-top: 10px; }
 
-  /* ─── SECTION LABEL ─── */
-  h2.sec {
-    font-size: 1.3rem;
-    font-weight: 700;
-    letter-spacing: -.02em;
-    margin: 48px 0 16px;
-    color: var(--apple-black);
-  }
-  h2.sec::before {
-    content: '';
-    display: inline-block;
-    width: 4px;
-    height: 1.1em;
-    background: var(--brand-orange);
-    border-radius: 2px;
-    vertical-align: middle;
-    margin-right: 10px;
-  }
-  h3.subsec {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--brand-orange-dark);
-    margin: 24px 0 10px;
-    letter-spacing: -.01em;
-  }
+  /* ─── SECTION ─── */
+  h2.sec { font-family: var(--font-head); font-size: 1.4rem; letter-spacing: -.01em; margin: 44px 0 16px; display: flex; align-items: center; gap: 10px; }
+  h2.sec::before { content:''; width: 4px; height: 1.05em; background: var(--orange); border-radius: 2px; }
+  h3.subsec { font-family: var(--font-head); font-size: 1.08rem; color: var(--orange-dark); margin: 26px 0 10px; }
 
   /* ─── CARD ─── */
-  .card {
-    background: var(--apple-white);
-    border: 1px solid var(--apple-border);
-    border-radius: 16px;
-    padding: 22px 24px;
-    margin-bottom: 14px;
-    box-shadow: 0 1px 6px rgba(0,0,0,.04);
-  }
-  .card h3 { font-size: .95rem; font-weight: 600; margin-bottom: 8px; }
+  .card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 24px; margin-bottom: 14px; box-shadow: var(--shadow-sm); }
+  .card h3 { font-family: var(--font-head); font-size: 1rem; margin-bottom: 10px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
+  .quick-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(230px,1fr)); gap: 14px; }
+  .quick-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow-sm); transition: transform .25s, box-shadow .25s; }
+  .quick-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+  .quick-card .ic { font-size: 1.9rem; margin-bottom: 10px; }
+  .quick-card h3 { font-family: var(--font-head); font-size: 1rem; margin-bottom: 5px; }
+  .quick-card p { font-size: .86rem; color: var(--gray); }
 
   /* ─── TABLE ─── */
-  .table-wrap { overflow-x: auto; margin: 16px 0 24px; border-radius: 14px; border: 1px solid var(--apple-border); box-shadow: 0 1px 6px rgba(0,0,0,.04); }
-  table { width: 100%; border-collapse: collapse; font-size: .88rem; background: var(--apple-white); }
-  th {
-    background: var(--apple-light);
-    color: var(--apple-gray);
-    font-weight: 600;
-    font-size: .75rem;
-    text-transform: uppercase;
-    letter-spacing: .05em;
-    padding: 10px 14px;
-    text-align: left;
-    border-bottom: 1px solid var(--apple-border);
-  }
-  td { padding: 10px 14px; border-bottom: 1px solid rgba(0,0,0,.05); color: var(--apple-black); }
+  .table-wrap { overflow-x: auto; margin: 16px 0 22px; border: 1px solid var(--border); border-radius: 14px; box-shadow: var(--shadow-sm); }
+  table { width: 100%; border-collapse: collapse; font-size: .88rem; background: var(--white); }
+  th { background: var(--bg); color: var(--gray); font-weight: 700; font-size: .74rem; text-transform: uppercase; letter-spacing: .04em; padding: 11px 14px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  td { padding: 11px 14px; border-bottom: 1px solid rgba(0,0,0,.05); }
   tr:last-child td { border-bottom: none; }
-  tr:hover td { background: rgba(227,127,51,.04); }
+  tbody tr:hover td { background: var(--orange-soft); }
 
   /* ─── ALERT ─── */
-  .alert {
-    border-radius: 14px;
-    padding: 16px 20px;
-    margin: 18px 0;
-    font-size: .9rem;
-    line-height: 1.6;
-  }
-  .alert.danger { background: var(--danger-bg); border: 1px solid rgba(255,59,48,.2); color: #a3000c; }
-  .alert.danger strong, .alert.danger h3 { color: var(--danger); margin-bottom: 6px; }
-  .alert.info { background: var(--info-bg); border: 1px solid rgba(0,122,255,.18); color: #1450a3; }
-  .alert.warn { background: var(--warn-bg); border: 1px solid rgba(255,204,0,.4); color: #6b5410; }
-  .alert.success { background: var(--success-bg); border: 1px solid rgba(52,199,89,.25); color: #1a6b38; }
-  .alert h3 { font-size: .95rem; font-weight: 700; margin-bottom: 6px; }
+  .alert { border-radius: 14px; padding: 16px 20px; margin: 16px 0; font-size: .92rem; }
+  .alert h3 { font-family: var(--font-head); font-size: 1rem; margin-bottom: 6px; }
+  .alert.danger { background: var(--danger-bg); border: 1px solid rgba(214,50,42,.2); color: #8c1c16; }
+  .alert.danger h3 { color: var(--danger); }
+  .alert.info { background: var(--info-bg); border: 1px solid rgba(10,108,206,.18); color: #0a4a8c; }
+  .alert.info h3 { color: var(--info); }
+  .alert.warn { background: var(--warn-bg); border: 1px solid rgba(184,134,11,.3); color: #6b5410; }
+  .alert.success { background: var(--success-bg); border: 1px solid rgba(26,158,75,.25); color: #136336; }
 
   /* ─── CHECKLIST ─── */
   ul.checklist { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-  ul.checklist li {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    background: var(--apple-white);
-    border: 1px solid var(--apple-border);
-    border-radius: 10px;
-    padding: 12px 14px;
-    font-size: .9rem;
-  }
-  ul.checklist li::before {
-    content: "☐";
-    color: var(--brand-orange);
-    font-size: 1.1rem;
-    flex-shrink: 0;
-    margin-top: 1px;
-  }
+  ul.checklist li { display: flex; gap: 11px; background: var(--white); border: 1px solid var(--border); border-radius: 11px; padding: 12px 15px; font-size: .9rem; }
+  ul.checklist li::before { content: '✓'; color: var(--orange); font-weight: 900; flex-shrink: 0; }
 
-  /* ─── DO/DON'T ─── */
+  /* ─── DO / DONT ─── */
   .dosdonts { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
-  @media (max-width: 620px) { .dosdonts { grid-template-columns: 1fr; } }
-  .do, .dont {
-    border-radius: 14px;
-    padding: 18px 20px;
-  }
-  .do { background: var(--success-bg); border: 1px solid rgba(52,199,89,.25); }
-  .dont { background: var(--danger-bg); border: 1px solid rgba(255,59,48,.18); }
-  .do h4 { color: #1a6b38; font-size: .88rem; font-weight: 700; margin-bottom: 10px; }
-  .dont h4 { color: #a3000c; font-size: .88rem; font-weight: 700; margin-bottom: 10px; }
-  .do ul, .dont ul { padding-left: 18px; font-size: .88rem; display: flex; flex-direction: column; gap: 6px; }
+  @media (max-width: 640px) { .dosdonts { grid-template-columns: 1fr; } }
+  .do, .dont { border-radius: 14px; padding: 18px 20px; }
+  .do { background: var(--success-bg); border: 1px solid rgba(26,158,75,.25); }
+  .dont { background: var(--danger-bg); border: 1px solid rgba(214,50,42,.18); }
+  .do h4 { font-family: var(--font-head); color: #136336; font-size: .92rem; margin-bottom: 10px; }
+  .dont h4 { font-family: var(--font-head); color: #8c1c16; font-size: .92rem; margin-bottom: 10px; }
+  .do ul, .dont ul { padding-left: 18px; font-size: .87rem; display: flex; flex-direction: column; gap: 6px; }
 
   /* ─── TIMELINE ─── */
-  .timeline { padding-left: 18px; border-left: 2px solid rgba(227,127,51,.3); display: flex; flex-direction: column; gap: 0; }
-  .t-step {
-    position: relative;
-    padding: 14px 0 14px 20px;
-    border-bottom: 1px solid var(--apple-border);
-  }
+  .timeline { padding-left: 18px; border-left: 2px solid rgba(227,127,51,.3); }
+  .t-step { position: relative; padding: 13px 0 13px 20px; border-bottom: 1px solid var(--border); }
   .t-step:last-child { border-bottom: none; }
-  .t-step::before {
-    content: '';
-    position: absolute;
-    left: -26px; top: 20px;
-    width: 10px; height: 10px;
-    background: var(--brand-orange);
-    border-radius: 50%;
-    border: 2px solid var(--apple-white);
-    box-shadow: 0 0 0 2px var(--brand-orange);
-  }
-  .t-time {
-    font-weight: 700;
-    font-size: .82rem;
-    color: var(--brand-orange-dark);
-    text-transform: uppercase;
-    letter-spacing: .04em;
-    margin-bottom: 3px;
-  }
-  .t-step p { font-size: .9rem; color: var(--apple-black); }
+  .t-step::before { content:''; position: absolute; left: -25px; top: 19px; width: 9px; height: 9px; background: var(--orange); border-radius: 50%; border: 2px solid var(--white); box-shadow: 0 0 0 2px var(--orange); }
+  .t-time { font-family: var(--font-head); font-size: .82rem; color: var(--orange-dark); margin-bottom: 3px; }
+  .t-step p { font-size: .9rem; }
 
   /* ─── ORG CARD ─── */
-  .orgcard {
-    background: var(--apple-white);
-    border: 1px solid var(--apple-border);
-    border-radius: 14px;
-    padding: 18px 20px;
-    margin-bottom: 12px;
-  }
-  .orgcard h4 {
-    font-size: .95rem;
-    font-weight: 700;
-    color: var(--apple-black);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 10px;
-  }
-  .orgcard ul { padding-left: 18px; font-size: .88rem; color: var(--apple-gray); display: flex; flex-direction: column; gap: 4px; }
-  .orgcard .note { font-size: .8rem; color: var(--apple-gray); margin-top: 8px; }
+  .orgcard { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; margin-bottom: 12px; }
+  .orgcard h4 { font-family: var(--font-head); font-size: .98rem; display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .orgcard ul { padding-left: 18px; font-size: .87rem; color: var(--gray); display: flex; flex-direction: column; gap: 4px; }
+  .orgcard .note { font-size: .8rem; color: var(--gray-2); margin-top: 8px; }
 
   /* ─── TAG ─── */
-  .tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    border-radius: 999px;
-    padding: 3px 10px;
-    font-size: .75rem;
-    font-weight: 600;
-  }
-  .tag.orange { background: rgba(227,127,51,.15); color: var(--brand-orange-dark); }
-  .tag.blue { background: rgba(0,122,255,.1); color: #0057b8; }
+  .tag { display: inline-flex; align-items: center; gap: 4px; border-radius: 999px; padding: 3px 11px; font-size: .76rem; font-weight: 700; }
+  .tag.orange { background: var(--orange-soft); color: var(--orange-dark); }
+  .tag.blue { background: rgba(10,108,206,.1); color: #0a4a8c; }
   .tag.brown { background: rgba(138,90,50,.1); color: #6b4420; }
   .tag.gray { background: rgba(110,110,115,.12); color: #444; }
 
+  /* ─── CODE ─── */
+  code.fc { background: var(--orange-soft); color: var(--orange-dark); border-radius: 6px; padding: 2px 7px; font-size: .82rem; font-weight: 700; font-family: 'SF Mono', Menlo, monospace; }
+
   /* ─── TOC PILLS ─── */
-  .toc { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
-  .toc a {
-    background: var(--apple-white);
-    border: 1px solid var(--apple-border);
-    border-radius: 999px;
-    padding: 6px 14px;
-    font-size: .8rem;
-    color: var(--brand-orange-dark);
-    text-decoration: none;
-    font-weight: 500;
-    transition: background .15s;
-  }
-  .toc a:hover { background: rgba(227,127,51,.1); }
+  .toc { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+  .toc a { background: var(--white); border: 1px solid var(--border); border-radius: 999px; padding: 6px 14px; font-size: .8rem; color: var(--orange-dark); text-decoration: none; font-weight: 600; transition: background .15s; }
+  .toc a:hover { background: var(--orange-soft); }
 
-  /* ─── FORM CODE ─── */
-  code.fc {
-    background: rgba(227,127,51,.12);
-    color: var(--brand-orange-dark);
-    border-radius: 6px;
-    padding: 2px 7px;
-    font-size: .82rem;
-    font-weight: 700;
-    font-family: "SF Mono", "Menlo", monospace;
-  }
+  /* ─── CHAT BUBBLE (Line scripts) ─── */
+  .chat { background: #e9eef2; border-radius: 18px; padding: 18px 16px; margin: 14px 0; display: flex; flex-direction: column; gap: 10px; }
+  .chat-head { display: flex; align-items: center; gap: 8px; font-size: .78rem; color: var(--gray); font-weight: 700; margin-bottom: 2px; }
+  .chat-head .dot { width: 9px; height: 9px; border-radius: 50%; background: #06c755; }
+  .bubble { max-width: 84%; padding: 11px 15px; border-radius: 16px; font-size: .88rem; line-height: 1.55; position: relative; }
+  .bubble.shop { align-self: flex-end; background: #06c755; color: #fff; border-bottom-right-radius: 5px; }
+  .bubble.cust { align-self: flex-start; background: #fff; color: var(--ink); border-bottom-left-radius: 5px; box-shadow: var(--shadow-sm); }
+  .bubble .who { display: block; font-size: .68rem; font-weight: 700; opacity: .7; margin-bottom: 3px; }
+  .bubble.shop .who { color: rgba(255,255,255,.85); }
 
-  /* ─── QUIZ BOX ─── */
-  .quizbox {
-    background: linear-gradient(135deg, #E37F33 0%, #c4661f 100%);
-    border-radius: 22px;
-    padding: 44px 36px;
-    text-align: center;
-    color: #fff;
-    box-shadow: 0 12px 40px rgba(227,127,51,.3);
+  /* ─── SCRIPT CARD (role-play) ─── */
+  .script { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin: 16px 0; box-shadow: var(--shadow-sm); }
+  .script-head { background: var(--ink); color: #fff; padding: 14px 18px; font-family: var(--font-head); font-size: 1rem; display: flex; align-items: center; gap: 10px; }
+  .script-head .badge { background: var(--orange); color: #fff; font-size: .68rem; font-weight: 700; padding: 3px 9px; border-radius: 999px; font-family: var(--font-body); }
+  .script-body { background: var(--white); padding: 18px; }
+  .line { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .line:last-child { border-bottom: none; }
+  .line .role { flex-shrink: 0; width: 84px; font-size: .76rem; font-weight: 700; }
+  .line .role.cust { color: var(--danger); }
+  .line .role.staff { color: var(--success); }
+  .line .txt { font-size: .89rem; line-height: 1.6; }
+  .line .txt em { color: var(--gray-2); font-style: normal; font-size: .82rem; display: block; margin-top: 3px; }
+
+  /* ─── WORKFLOW / FLOWCHART ─── */
+  .flow { display: flex; flex-direction: column; align-items: center; gap: 0; margin: 18px 0; }
+  .flow-node {
+    width: 100%; max-width: 540px; background: var(--white); border: 2px solid var(--border);
+    border-radius: 14px; padding: 14px 18px; text-align: center; font-size: .9rem; font-weight: 600; box-shadow: var(--shadow-sm);
   }
-  .quizbox h2 { font-size: 1.6rem; font-weight: 700; letter-spacing: -.02em; margin-bottom: 12px; }
-  .quizbox p { opacity: .9; font-size: .95rem; margin-bottom: 24px; }
-  .quiz-btn {
-    display: inline-block;
-    background: #fff;
-    color: var(--brand-orange-dark);
-    font-weight: 700;
-    font-size: .95rem;
-    padding: 13px 30px;
-    border-radius: 999px;
-    text-decoration: none;
-    transition: transform .2s, box-shadow .2s;
-    box-shadow: 0 4px 16px rgba(0,0,0,.12);
-  }
+  .flow-node.start { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .flow-node.decision { background: var(--warn-bg); border-color: var(--warn); color: #6b5410; border-radius: 14px; }
+  .flow-node.decision .q { font-family: var(--font-head); }
+  .flow-node.action { background: var(--info-bg); border-color: rgba(10,108,206,.3); }
+  .flow-node.danger { background: var(--danger-bg); border-color: rgba(214,50,42,.35); color: #8c1c16; }
+  .flow-node.success { background: var(--success-bg); border-color: rgba(26,158,75,.35); color: #136336; }
+  .flow-arrow { width: 2px; height: 22px; background: var(--gray-2); position: relative; }
+  .flow-arrow::after { content:''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 7px solid var(--gray-2); }
+  .flow-branch { display: flex; gap: 16px; width: 100%; max-width: 560px; }
+  @media (max-width: 560px) { .flow-branch { flex-direction: column; } }
+  .flow-branch .col { flex: 1; display: flex; flex-direction: column; align-items: center; }
+  .branch-label { font-size: .72rem; font-weight: 700; padding: 3px 12px; border-radius: 999px; margin: 4px 0; }
+  .branch-label.yes { background: var(--success-bg); color: var(--success); }
+  .branch-label.no { background: var(--danger-bg); color: var(--danger); }
+
+  /* ─── QUIZ ─── */
+  .quizbox { background: linear-gradient(135deg, var(--orange), var(--orange-dark)); border-radius: 22px; padding: 44px 36px; text-align: center; color: #fff; box-shadow: 0 14px 40px rgba(227,127,51,.3); }
+  .quizbox h2 { font-family: var(--font-head); font-size: 1.6rem; margin-bottom: 12px; }
+  .quizbox p { opacity: .92; margin-bottom: 22px; }
+  .quiz-btn { display: inline-block; background: #fff; color: var(--orange-dark); font-weight: 700; padding: 13px 30px; border-radius: 999px; text-decoration: none; transition: transform .2s, box-shadow .2s; box-shadow: 0 4px 16px rgba(0,0,0,.12); }
   .quiz-btn:hover { transform: scale(1.04); box-shadow: 0 8px 24px rgba(0,0,0,.18); }
-  .quiz-note { font-size: .8rem; opacity: .75; margin-top: 18px; line-height: 1.6; }
+  .quiz-note { font-size: .8rem; opacity: .8; margin-top: 18px; line-height: 1.6; }
 
-  /* ─── FOOTER ─── */
-  footer {
-    text-align: center;
-    color: var(--apple-gray);
-    font-size: .8rem;
-    padding: 32px 20px 40px;
-    border-top: 1px solid var(--apple-border);
-    margin-top: 40px;
-    line-height: 2;
-  }
-
-  /* ─── SOURCE LIST ─── */
-  .source-list { font-size: .8rem; color: var(--apple-gray); margin-top: 24px; line-height: 1.8; }
-
-  p { font-size: .92rem; color: var(--apple-black); line-height: 1.7; margin-bottom: 12px; }
-  ul:not(.checklist) { padding-left: 20px; display: flex; flex-direction: column; gap: 6px; font-size: .9rem; }
+  .source-list { font-size: .8rem; color: var(--gray-2); margin-top: 24px; line-height: 1.8; }
+  p { font-size: .93rem; line-height: 1.7; margin-bottom: 12px; }
+  ul:not(.checklist):not(.toc) { padding-left: 20px; display: flex; flex-direction: column; gap: 6px; font-size: .9rem; }
   ol { padding-left: 20px; display: flex; flex-direction: column; gap: 8px; font-size: .9rem; }
 
-  @media (max-width: 600px) {
-    .main-wrap { padding-left: 16px; padding-right: 16px; }
-    .quizbox { padding: 28px 20px; }
+  footer { text-align: center; color: var(--gray-2); font-size: .8rem; padding: 30px 20px; border-top: 1px solid var(--border); margin-top: 30px; line-height: 2; }
+
+  .no-result { text-align: center; color: var(--gray-2); padding: 40px; display: none; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1000px) {
+    .topbar { display: flex; }
+    .sidebar { left: calc(-1 * var(--sidebar-w) - 10px); top: 0; transition: left .28s ease; box-shadow: 4px 0 30px rgba(0,0,0,.12); padding-top: 20px; }
+    .sidebar.open { left: 0; }
+    .main { margin-left: 0; padding: 80px 20px 80px; max-width: 100%; }
   }
 </style>
 </head>
 <body>
 
-<!-- ─── TOP NAV ─── -->
-<nav class="topnav">
-  <div class="nav-brand">
-    <span class="paw">🐾</span>
-    <span><span class="accent">Perfect</span> Pet House</span>
-  </div>
-  <ul class="nav-tabs" id="navTabs">
-    <li><button class="navbtn active" data-target="home">หน้าแรก</button></li>
-    <li><button class="navbtn" data-target="cat1">ตัวบุคคล</button></li>
-    <li><button class="navbtn" data-target="cat2">บริการ</button></li>
-    <li><button class="navbtn" data-target="cat3">กฎระเบียบ</button></li>
-    <li><button class="navbtn" data-target="cat4">SOP</button></li>
-    <li><button class="navbtn" data-target="cat5">ความปลอดภัย</button></li>
-    <li><button class="navbtn" data-target="cat6">ความรู้สัตว์</button></li>
-    <li><button class="navbtn" data-target="quiz">แบบทดสอบ</button></li>
-  </ul>
-  <button id="menuBtn">☰ เมนู</button>
-</nav>
-
-<!-- Mobile Drawer -->
-<div class="drawer-overlay" id="drawerOverlay"></div>
-<div class="drawer" id="drawer">
-  <div class="drawer-section-label">เริ่มต้น</div>
-  <button class="navbtn active" data-target="home">🏠 หน้าแรก</button>
-  <div class="drawer-section-label">6 หมวดมาตรฐาน</div>
-  <button class="navbtn" data-target="cat1">👤 1. ตัวบุคคล</button>
-  <button class="navbtn" data-target="cat2">🛎️ 2. การให้บริการ</button>
-  <button class="navbtn" data-target="cat3">📋 3. กฎระเบียบ</button>
-  <button class="navbtn" data-target="cat4">✅ 4. SOP มาตรฐาน</button>
-  <button class="navbtn" data-target="cat5">🧠 5. ความรู้ & ความปลอดภัย</button>
-  <button class="navbtn" data-target="cat6">🐶🐱 6. ความรู้สัตว์เลี้ยง</button>
-  <div class="drawer-section-label">ปิดท้าย</div>
-  <button class="navbtn" data-target="quiz">📝 แบบทดสอบ 10 ข้อ</button>
+<!-- mobile topbar -->
+<div class="topbar">
+  <div class="tb-brand">🐾 <span><b>Perfect</b> Pet House</span></div>
+  <button id="menuBtn" aria-label="เปิดเมนู">☰</button>
 </div>
 
-<div class="main-wrap">
+<div class="sidebar-overlay" id="overlay"></div>
 
-  <!-- ════════════════════════════════════════ HOME ════════════════ -->
+<!-- ─── SIDEBAR ─── -->
+<nav class="sidebar" id="sidebar">
+  <div class="sb-brand"><span class="logo">🐾</span> <span><b>Perfect</b> Pet House</span></div>
+
+  <div class="search-wrap">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+    <input type="text" id="searchBox" placeholder="ค้นหาหัวข้อ..." autocomplete="off">
+  </div>
+
+  <div class="sb-label">เริ่มต้น</div>
+  <button class="navbtn active" data-target="home">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9.5 12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1Z"/></svg>
+    หน้าแรก
+  </button>
+
+  <div class="sb-label">มาตรฐานหลัก</div>
+  <button class="navbtn" data-target="cat1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 12 0v1"/></svg> ตัวบุคคล <span class="num">1</span></button>
+  <button class="navbtn" data-target="cat2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10h18M5 10V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v3M6 21v-3M18 21v-3M4 14h16v4H4z"/></svg> การให้บริการ <span class="num">2</span></button>
+  <button class="navbtn" data-target="cat3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg> กฎระเบียบ <span class="num">3</span></button>
+  <button class="navbtn" data-target="cat4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg> SOP มาตรฐาน <span class="num">4</span></button>
+  <button class="navbtn" data-target="cat5"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg> ความปลอดภัย <span class="num">5</span></button>
+  <button class="navbtn" data-target="cat6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="4" r="2"/><circle cx="18" cy="8" r="2"/><circle cx="4" cy="8" r="2"/><path d="M8 14c0-3 8-3 8 0 1 2 2 3 0 5-2 1-6 1-8 0-2-2-1-3 0-5Z"/></svg> ความรู้สัตว์เลี้ยง <span class="num">6</span></button>
+
+  <div class="sb-label">ทักษะขั้นสูง</div>
+  <button class="navbtn" data-target="cat7"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg> สื่อสารกับเจ้าของ <span class="num">7</span></button>
+  <button class="navbtn" data-target="cat8"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 2v4M13 2v4M5 10h14l-1 11a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1Z"/><path d="M9 14h6M12 11v6"/></svg> โรค &amp; สุขภาพ <span class="num">8</span></button>
+  <button class="navbtn" data-target="cat9"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M12 7v5l3 2"/></svg> Fear-Free Handling <span class="num">9</span></button>
+  <button class="navbtn" data-target="cat10"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3 2.5 5 5.5.8-4 3.9.9 5.5L12 21l-4.9 2.6.9-5.5-4-3.9 5.5-.8Z"/></svg> สัตว์ต้องการพิเศษ <span class="num">10</span></button>
+  <button class="navbtn" data-target="cat11"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 9h8M8 13h6M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg> รับมือลูกค้ายาก <span class="num">11</span></button>
+
+  <div class="sb-label">ปิดท้าย</div>
+  <button class="navbtn" data-target="quiz"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg> แบบทดสอบ 15 ข้อ</button>
+</nav>
+
+<main class="main" id="main">
+
+  <!-- ════════════ HOME ════════════ -->
   <section class="page active" id="page-home">
-
     <div class="hero">
-      <div class="hero-eyebrow">🐾 คู่มือพนักงานฉบับศึกษา</div>
+      <div class="eyebrow">🐾 คู่มือพนักงานฉบับศึกษา</div>
       <h1>ยินดีต้อนรับสู่<br><span class="accent">Perfect Pet House</span></h1>
-      <p>ศึกษามาตรฐานการทำงาน 6 หมวด ครบทุกข้อ ก่อนเริ่มปฏิบัติงานจริง</p>
-      <div class="hero-meta">
-        <span class="hero-chip">📍 วัชรพล–รามอินทรา กรุงเทพฯ</span>
-        <span class="hero-chip">⏰ เปิด 09:00–20:00 ทุกวัน</span>
-        <span class="hero-chip">📱 Line: @perfectbkk</span>
-        <span class="hero-chip">📞 082-320-2807</span>
+      <p class="lead">ศึกษามาตรฐานการทำงาน 11 หมวด ครบทุกทักษะ ตั้งแต่พื้นฐานจนถึงการรับมือสถานการณ์จริง</p>
+      <div class="hero-chips">
+        <span class="chip">📍 วัชรพล–รามอินทรา</span>
+        <span class="chip">⏰ เปิด 09:00–20:00 ทุกวัน</span>
+        <span class="chip">📱 @perfectbkk</span>
+        <span class="chip">📞 082-320-2807</span>
       </div>
     </div>
 
-    <div class="facility-row">
-      <div class="facility-card">
-        <div class="num">47</div>
-        <div class="label">ห้องพักทั้งหมด (ชั้น 1+2)</div>
-      </div>
-      <div class="facility-card">
-        <div class="num" style="color:var(--brand-orange)">6</div>
-        <div class="label">หมวดที่ต้องศึกษาก่อนทำงาน</div>
-      </div>
+    <div class="stat-row">
+      <div class="stat"><div class="n">47</div><div class="l">ห้องพักทั้งหมด</div></div>
+      <div class="stat"><div class="n orange">11</div><div class="l">หมวดที่ต้องศึกษา</div></div>
+      <div class="stat"><div class="n">15</div><div class="l">ข้อสอบวัดผล</div></div>
     </div>
 
     <h2 class="sec">เกี่ยวกับร้าน</h2>
     <div class="card">
       <p>Perfect Pet House เป็นธุรกิจ <strong>Pet Hotel &amp; Grooming</strong> (โรงแรมรับฝากสัตว์เลี้ยง + อาบน้ำตัดขน) สำหรับสุนัขและแมว ตั้งอยู่ในซอยร่วมมิตรพัฒนา แยก 6 ใกล้แยกวัชรพล เขตวัชรพล-รามอินทรา กรุงเทพฯ</p>
-      <p style="margin:0">
-        <span class="tag orange">Line OA: @perfectbkk</span>&nbsp;
-        <span class="tag gray">โทร: 082-320-2807</span>&nbsp;
-        <span class="tag blue">Facebook: Perfect Pet House</span>
-      </p>
+      <p style="margin:0"><span class="tag orange">Line: @perfectbkk</span> <span class="tag gray">โทร: 082-320-2807</span> <span class="tag blue">FB: Perfect Pet House</span></p>
     </div>
 
     <h2 class="sec">สิ่งอำนวยความสะดวก</h2>
     <div class="quick-grid">
-      <div class="quick-card">
-        <div class="icon">🐶</div>
-        <h3>ชั้น 1 — โซนสุนัข</h3>
-        <p>26 ห้องพัก + สนามวิ่งเล่น CCTV 24 ชม. แอร์เย็นตลอด</p>
-      </div>
-      <div class="quick-card">
-        <div class="icon">🐱</div>
-        <h3>ชั้น 2 — โซนแมว</h3>
-        <p>21 ห้องพัก + ห้องนั่งเล่น CCTV 24 ชม. แอร์เย็นตลอด</p>
-      </div>
-      <div class="quick-card">
-        <div class="icon">✂️</div>
-        <h3>ห้อง Grooming</h3>
-        <p>บริการอาบน้ำตัดขนทั้งสุนัขและแมว โดยช่างมืออาชีพ</p>
-      </div>
+      <div class="quick-card"><div class="ic">🐶</div><h3>ชั้น 1 — โซนสุนัข</h3><p>26 ห้องพัก + สนามวิ่งเล่น</p></div>
+      <div class="quick-card"><div class="ic">🐱</div><h3>ชั้น 2 — โซนแมว</h3><p>21 ห้องพัก + ห้องนั่งเล่น</p></div>
+      <div class="quick-card"><div class="ic">✂️</div><h3>ห้อง Grooming</h3><p>อาบน้ำตัดขนโดยช่างมืออาชีพ</p></div>
     </div>
+    <p style="margin-top:12px; color:var(--gray); font-size:.88rem;">ทุกห้องมี CCTV 24 ชม. และแอร์เย็นตลอด 24 ชม.</p>
 
-    <h2 class="sec">วิธีใช้เว็บไซต์นี้</h2>
+    <h2 class="sec">เส้นทางการเรียนรู้</h2>
     <div class="card">
-      <p>กดเมนูด้านบน (หรือกดปุ่ม ☰ บนมือถือ) เพื่อเข้าหมวดที่ต้องการ แนะนำให้อ่านตามลำดับ <strong>หมวด 1 → 6</strong> แล้วปิดท้ายด้วยแบบทดสอบ 10 ข้อ</p>
-      <div class="alert warn" style="margin:12px 0 0">
-        หมวดที่ <strong>ต้องอ่านให้ละเอียดที่สุด</strong> คือ หมวด 5 (ความรู้ & ความปลอดภัย) เพราะเกี่ยวกับความปลอดภัยของทั้งพนักงานและสัตว์เลี้ยงโดยตรง — ที่ร้านเคยมีเหตุการณ์พี่เลี้ยงถูกแมวกัดมาแล้วจริง
-      </div>
+      <p>อ่านตามลำดับ <strong>หมวด 1 → 11</strong> แล้วปิดท้ายด้วยแบบทดสอบ 15 ข้อ</p>
+      <ul style="margin-top:6px;">
+        <li><strong>หมวด 1–6</strong> พื้นฐาน: องค์กร บริการ กฎ SOP ความปลอดภัย ความรู้สัตว์</li>
+        <li><strong>หมวด 7–11</strong> ทักษะขั้นสูง: สื่อสารลูกค้า โรค การจับสัตว์ สัตว์พิเศษ รับมือลูกค้ายาก</li>
+      </ul>
+      <div class="alert warn" style="margin:14px 0 0">หมวดที่ <strong>ต้องอ่านละเอียดที่สุด</strong> คือ หมวด 5 และ 9 (ความปลอดภัย + การจับสัตว์) — ที่ร้านเคยมีเหตุการณ์พี่เลี้ยงถูกแมวกัดมาแล้วจริง</div>
     </div>
-
   </section>
 
-  <!-- ════════════════════════════════════════ CAT 1 ════════════════ -->
+  <!-- ════════════ CAT 1 ════════════ -->
   <section class="page" id="page-cat1">
-    <div class="page-header">
-      <div class="eyebrow">หมวด 1</div>
-      <h1>👤 ตัวบุคคล</h1>
-      <p>โครงสร้างองค์กร ตำแหน่งงาน เวลาทำงาน และหลักการบริหาร</p>
-    </div>
+    <div class="page-header"><div class="eyebrow">หมวด 1</div><h1>ตัวบุคคล</h1><p>โครงสร้างองค์กร ตำแหน่งงาน เวลาทำงาน และหลักการบริหาร</p></div>
 
     <h2 class="sec">โครงสร้างแผนก (6 แผนก)</h2>
-    <p style="color:var(--apple-gray); font-size:.84rem; margin-bottom:16px;">* แสดงเฉพาะชื่อแผนกและตำแหน่ง ไม่ระบุชื่อพนักงานรายบุคคล</p>
-
-    <div class="orgcard">
-      <h4>🏛️ EXE — ผู้บริหาร</h4>
-      <ul><li>เจ้าของ/CEO</li><li>กรรมการผู้จัดการ</li><li>ที่ปรึกษาธุรกิจ</li></ul>
-    </div>
-    <div class="orgcard">
-      <h4>📊 MGR — ผู้จัดการ</h4>
-      <ul><li>ผู้จัดการร้าน</li><li>ผู้จัดการฝ่ายปฏิบัติการ</li><li>ผู้จัดการฝ่ายการเงิน</li><li>ผู้จัดการฝ่ายการตลาด</li></ul>
-    </div>
-    <div class="orgcard">
-      <h4>🐾 NUR — พี่เลี้ยงสัตว์เลี้ยง</h4>
-      <ul><li>หัวหน้าพี่เลี้ยง</li><li>พี่เลี้ยงสุนัข (ชั้น 1)</li><li>พี่เลี้ยงแมว (ชั้น 2)</li><li>พนักงานต้อนรับ/ลูกค้าสัมพันธ์</li></ul>
-      <p class="note">หมายเหตุ: ตำแหน่งพนักงานต้อนรับอยู่ในแผนก NUR ไม่ได้แยกต่างหาก</p>
-    </div>
-    <div class="orgcard">
-      <h4>✂️ GRM — ช่างอาบน้ำตัดขน</h4>
-      <ul><li>หัวหน้าช่าง Groomer</li><li>ช่าง Groomer อาวุโส</li><li>ช่าง Groomer</li><li>ช่างฝึกหัด</li></ul>
-    </div>
-    <div class="orgcard">
-      <h4>🧹 HKP — แม่บ้าน/ทำความสะอาด</h4>
-      <ul><li>หัวหน้าแม่บ้าน</li><li>แม่บ้านประจำ</li><li>พนักงานทำความสะอาด</li></ul>
-    </div>
-    <div class="orgcard">
-      <h4>🕑 PRT — พนักงานพาร์ทไทม์</h4>
-      <ul><li>พาร์ทไทม์ช่วงเช้า</li><li>พาร์ทไทม์ช่วงบ่าย</li><li>พาร์ทไทม์วันหยุด/เทศกาล</li></ul>
-    </div>
+    <p style="color:var(--gray-2); font-size:.84rem;">* แสดงเฉพาะชื่อแผนกและตำแหน่ง ไม่ระบุชื่อพนักงานรายบุคคล</p>
+    <div class="orgcard"><h4>🏛️ EXE — ผู้บริหาร</h4><ul><li>เจ้าของ/CEO</li><li>กรรมการผู้จัดการ</li><li>ที่ปรึกษาธุรกิจ</li></ul></div>
+    <div class="orgcard"><h4>📊 MGR — ผู้จัดการ</h4><ul><li>ผู้จัดการร้าน</li><li>ผู้จัดการฝ่ายปฏิบัติการ</li><li>ผู้จัดการฝ่ายการเงิน</li><li>ผู้จัดการฝ่ายการตลาด</li></ul></div>
+    <div class="orgcard"><h4>🐾 NUR — พี่เลี้ยงสัตว์เลี้ยง</h4><ul><li>หัวหน้าพี่เลี้ยง</li><li>พี่เลี้ยงสุนัข (ชั้น 1)</li><li>พี่เลี้ยงแมว (ชั้น 2)</li><li>พนักงานต้อนรับ/ลูกค้าสัมพันธ์</li></ul><p class="note">หมายเหตุ: ตำแหน่งพนักงานต้อนรับอยู่ในแผนก NUR ไม่ได้แยกต่างหาก</p></div>
+    <div class="orgcard"><h4>✂️ GRM — ช่างอาบน้ำตัดขน</h4><ul><li>หัวหน้าช่าง Groomer</li><li>ช่าง Groomer อาวุโส</li><li>ช่าง Groomer</li><li>ช่างฝึกหัด</li></ul></div>
+    <div class="orgcard"><h4>🧹 HKP — แม่บ้าน/ทำความสะอาด</h4><ul><li>หัวหน้าแม่บ้าน</li><li>แม่บ้านประจำ</li><li>พนักงานทำความสะอาด</li></ul></div>
+    <div class="orgcard"><h4>🕑 PRT — พนักงานพาร์ทไทม์</h4><ul><li>พาร์ทไทม์ช่วงเช้า</li><li>พาร์ทไทม์ช่วงบ่าย</li><li>พาร์ทไทม์วันหยุด/เทศกาล</li></ul></div>
 
     <h2 class="sec">เวลาทำงาน</h2>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>กลุ่มงาน</th><th>เวลาเข้างาน</th></tr></thead>
-        <tbody>
-          <tr><td>กะเช้า</td><td>07:00 น.</td></tr>
-          <tr><td>กะบ่าย</td><td>11:00 น.</td></tr>
-          <tr><td>ช่างอาบน้ำตัดขน (Groomer)</td><td>10:00 น.</td></tr>
-          <tr><td>แม่บ้าน</td><td>07:30 น.</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <div class="table-wrap"><table><thead><tr><th>กลุ่มงาน</th><th>เวลาเข้างาน</th></tr></thead><tbody>
+      <tr><td>กะเช้า</td><td>07:00 น.</td></tr>
+      <tr><td>กะบ่าย</td><td>11:00 น.</td></tr>
+      <tr><td>ช่างอาบน้ำตัดขน (Groomer)</td><td>10:00 น.</td></tr>
+      <tr><td>แม่บ้าน</td><td>07:30 น.</td></tr>
+    </tbody></table></div>
     <p>ร้านเปิดให้บริการลูกค้า <strong>09:00–20:00 น.</strong> ทุกวัน</p>
 
     <h2 class="sec">หลักการบริหาร 5 ข้อ</h2>
@@ -661,543 +427,602 @@
       <div class="t-step"><div class="t-time">1. วางแผน (Planning)</div><p>วางแผนรับฝาก ตารางงาน และกำลังคนล่วงหน้า</p></div>
       <div class="t-step"><div class="t-time">2. จัดองค์กร (Organizing)</div><p>แบ่งหน้าที่แต่ละแผนกให้ชัดเจน ไม่ทับซ้อนกัน</p></div>
       <div class="t-step"><div class="t-time">3. นำทีม (Leading)</div><p>ผู้จัดการนำทีมด้วยความเข้าใจ สื่อสารเป้าหมายให้ตรงกัน</p></div>
-      <div class="t-step"><div class="t-time">4. ควบคุม (Controlling)</div><p>ตรวจสอบมาตรฐานบริการ ความปลอดภัย และความพึงพอใจลูกค้าอย่างต่อเนื่อง</p></div>
-      <div class="t-step"><div class="t-time">5. ใส่ใจลูกค้า (Customer Care)</div><p>สร้างความไว้วางใจ รายงานทุกวัน ดูแลสัตว์เลี้ยงเสมือนของตัวเอง</p></div>
+      <div class="t-step"><div class="t-time">4. ควบคุม (Controlling)</div><p>ตรวจสอบมาตรฐานบริการ ความปลอดภัย ความพึงพอใจลูกค้าต่อเนื่อง</p></div>
+      <div class="t-step"><div class="t-time">5. ใส่ใจลูกค้า (Customer Care)</div><p>สร้างความไว้วางใจ รายงานทุกวัน ดูแลสัตว์เสมือนของตัวเอง</p></div>
     </div>
   </section>
 
-  <!-- ════════════════════════════════════════ CAT 2 ════════════════ -->
+  <!-- ════════════ CAT 2 ════════════ -->
   <section class="page" id="page-cat2">
-    <div class="page-header">
-      <div class="eyebrow">หมวด 2</div>
-      <h1>🛎️ การให้บริการ</h1>
-      <p>บริการหลัก ราคา และนโยบายที่พนักงานต้องอธิบายลูกค้าได้ถูกต้อง</p>
-    </div>
+    <div class="page-header"><div class="eyebrow">หมวด 2</div><h1>การให้บริการ</h1><p>บริการหลัก ราคา และนโยบายที่พนักงานต้องอธิบายลูกค้าได้ถูกต้อง</p></div>
 
     <h2 class="sec">บริการหลัก</h2>
-    <p>
-      <span class="tag orange">Pet Hotel โรงแรมสัตว์เลี้ยง</span>&nbsp;
-      <span class="tag brown">Grooming อาบน้ำตัดขน</span>&nbsp;
-      <span class="tag blue">Day Care ฝากเลี้ยงรายวัน</span>
-    </p>
+    <p><span class="tag orange">Pet Hotel โรงแรมสัตว์เลี้ยง</span> <span class="tag brown">Grooming อาบน้ำตัดขน</span> <span class="tag blue">Day Care ฝากเลี้ยงรายวัน</span></p>
 
     <h2 class="sec">เวลาเช็คอิน–เช็คเอาท์</h2>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>รายการ</th><th>เวลา / เงื่อนไข</th></tr></thead>
-        <tbody>
-          <tr><td>เช็คอิน</td><td>09:00–18:00 น.</td></tr>
-          <tr><td>เช็คเอาท์ปกติ</td><td>14:00 น.</td></tr>
-          <tr><td>เลทเช็คเอาท์ 14:00–20:00 น.</td><td>คิดค่า Day Care เพิ่ม</td></tr>
-          <tr><td>เลทเช็คเอาท์ 20:00–21:00 น.</td><td>+100 บาท/ชม./ตัว (เศษชั่วโมงคิดเป็น 1 ชม.)</td></tr>
-          <tr><td>หลัง 21:00 น.</td><td>ร้านขอสงวนสิทธิ์ปฏิเสธรับฝาก</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <div class="table-wrap"><table><thead><tr><th>รายการ</th><th>เวลา / เงื่อนไข</th></tr></thead><tbody>
+      <tr><td>เช็คอิน</td><td>09:00–18:00 น.</td></tr>
+      <tr><td>เช็คเอาท์ปกติ</td><td>14:00 น.</td></tr>
+      <tr><td>เลทเช็คเอาท์ 14:00–20:00</td><td>คิดค่า Day Care เพิ่ม</td></tr>
+      <tr><td>เลทเช็คเอาท์ 20:00–21:00</td><td>+100 บาท/ชม./ตัว (เศษชั่วโมง = 1 ชม.)</td></tr>
+      <tr><td>หลัง 21:00 น.</td><td>สงวนสิทธิ์ปฏิเสธรับฝาก</td></tr>
+    </tbody></table></div>
     <div class="alert warn">ไม่รับเช็คอิน/เช็คเอาท์ก่อน 09:00 น. และหลัง 20:00 น.</div>
 
     <h2 class="sec">ห้องพักสุนัข (ราคา/คืน)</h2>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>ห้อง</th><th>ขนาดห้อง</th><th>ราคา</th></tr></thead>
-        <tbody>
-          <tr><td>Cozy Room</td><td>1 × 1.5 ม.</td><td><strong>790 บาท</strong></td></tr>
-          <tr><td>Deluxe Room</td><td>1 × 2 ม.</td><td><strong>990 บาท</strong></td></tr>
-          <tr><td>VIP Villa Room</td><td>1.5 × 2.5 ม.</td><td><strong>1,890 บาท</strong></td></tr>
-        </tbody>
-      </table>
-    </div>
+    <div class="table-wrap"><table><thead><tr><th>ห้อง</th><th>ขนาด</th><th>ราคา</th></tr></thead><tbody>
+      <tr><td>Cozy Room</td><td>1 × 1.5 ม.</td><td><strong>790 บาท</strong></td></tr>
+      <tr><td>Deluxe Room</td><td>1 × 2 ม.</td><td><strong>990 บาท</strong></td></tr>
+      <tr><td>VIP Villa Room</td><td>1.5 × 2.5 ม.</td><td><strong>1,890 บาท</strong></td></tr>
+    </tbody></table></div>
 
     <h2 class="sec">ห้องพักแมว (ราคา/คืน)</h2>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>ห้อง</th><th>ขนาดห้อง</th><th>ราคา</th></tr></thead>
-        <tbody>
-          <tr><td>Cozy Room</td><td>1 × 1 ม. (ใช้ Play Room ร่วม)</td><td><strong>690 บาท</strong></td></tr>
-          <tr><td>Deluxe Room</td><td>1 × 1 × 2.5 ม. (แนวตั้ง)</td><td><strong>990 บาท</strong></td></tr>
-          <tr><td>VIP Villa Room</td><td>1.5 × 2.5 ม. + Play Room ส่วนตัว</td><td><strong>1,890 บาท</strong></td></tr>
-        </tbody>
-      </table>
-    </div>
+    <div class="table-wrap"><table><thead><tr><th>ห้อง</th><th>ขนาด</th><th>ราคา</th></tr></thead><tbody>
+      <tr><td>Cozy Room</td><td>1 × 1 ม. (ใช้ Play Room ร่วม)</td><td><strong>690 บาท</strong></td></tr>
+      <tr><td>Deluxe Room</td><td>1 × 1 × 2.5 ม. (แนวตั้ง)</td><td><strong>990 บาท</strong></td></tr>
+      <tr><td>VIP Villa Room</td><td>1.5 × 2.5 ม. + Play Room ส่วนตัว</td><td><strong>1,890 บาท</strong></td></tr>
+    </tbody></table></div>
     <p>ทุกห้องรวม: CCTV 24 ชม. · แอร์เย็นตลอด · อัปเดตรูปน้องทุกวัน · เตียงนุ่มสะอาด</p>
 
     <h2 class="sec">อาบน้ำ-ตัดขนสุนัข</h2>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>ขนาด</th><th>น้ำหนัก</th><th>ขนสั้น</th><th>ขนยาว</th><th>ขนยาวพิเศษ</th><th>+ตัดขน</th></tr></thead>
-        <tbody>
-          <tr><td>XS</td><td>&lt;2 kg</td><td>350</td><td>400</td><td>450</td><td>+400</td></tr>
-          <tr><td>S</td><td>2-5 kg</td><td>400</td><td>500</td><td>600</td><td>+500</td></tr>
-          <tr><td>M</td><td>5-10 kg</td><td>500</td><td>700</td><td>900</td><td>+600</td></tr>
-          <tr><td>L</td><td>10-15 kg</td><td>700</td><td>900</td><td>1,000</td><td>+700</td></tr>
-          <tr><td>XL</td><td>15-20 kg</td><td>900</td><td>1,100</td><td>1,400</td><td>+900</td></tr>
-          <tr><td>2XL</td><td>20-30 kg</td><td>1,200</td><td>1,450</td><td>1,600</td><td>+1,200</td></tr>
-          <tr><td>3XL</td><td>30-40 kg</td><td>1,650</td><td>1,850</td><td>1,900</td><td>+1,600</td></tr>
-          <tr><td>4XL</td><td>40-50 kg</td><td>2,200</td><td>2,150</td><td>2,400</td><td>+2,200</td></tr>
-          <tr><td>5XL</td><td>&gt;50 kg</td><td>2,850</td><td>3,100</td><td>3,300</td><td>+2,800</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <div class="table-wrap"><table><thead><tr><th>ขนาด</th><th>น้ำหนัก</th><th>ขนสั้น</th><th>ขนยาว</th><th>ขนยาวพิเศษ</th><th>+ตัดขน</th></tr></thead><tbody>
+      <tr><td>XS</td><td>&lt;2 kg</td><td>350</td><td>400</td><td>450</td><td>+400</td></tr>
+      <tr><td>S</td><td>2-5 kg</td><td>400</td><td>500</td><td>600</td><td>+500</td></tr>
+      <tr><td>M</td><td>5-10 kg</td><td>500</td><td>700</td><td>900</td><td>+600</td></tr>
+      <tr><td>L</td><td>10-15 kg</td><td>700</td><td>900</td><td>1,000</td><td>+700</td></tr>
+      <tr><td>XL</td><td>15-20 kg</td><td>900</td><td>1,100</td><td>1,400</td><td>+900</td></tr>
+      <tr><td>2XL</td><td>20-30 kg</td><td>1,200</td><td>1,450</td><td>1,600</td><td>+1,200</td></tr>
+      <tr><td>3XL</td><td>30-40 kg</td><td>1,650</td><td>1,850</td><td>1,900</td><td>+1,600</td></tr>
+      <tr><td>4XL</td><td>40-50 kg</td><td>2,200</td><td>2,150</td><td>2,400</td><td>+2,200</td></tr>
+      <tr><td>5XL</td><td>&gt;50 kg</td><td>2,850</td><td>3,100</td><td>3,300</td><td>+2,800</td></tr>
+    </tbody></table></div>
     <p>ฟรีทุกครั้ง: ตัดเล็บ + เช็ดหู + ไดเท้า + ไดท้อง + ไดก้น</p>
 
     <h2 class="sec">อาบน้ำ-ตัดขนแมว</h2>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>ขนาด</th><th>น้ำหนัก</th><th>ขนสั้น</th><th>ขนยาว</th><th>+ตัดขน</th></tr></thead>
-        <tbody>
-          <tr><td>XS</td><td>&lt;2 kg</td><td>450</td><td>550</td><td>+450</td></tr>
-          <tr><td>S</td><td>2-3 kg</td><td>550</td><td>650</td><td>+550</td></tr>
-          <tr><td>M</td><td>3-5 kg</td><td>750</td><td>850</td><td>+750</td></tr>
-          <tr><td>L</td><td>5-7 kg</td><td>950</td><td>1,100</td><td>+950</td></tr>
-          <tr><td>XL</td><td>7-9 kg</td><td>1,250</td><td>1,400</td><td>+1,250</td></tr>
-          <tr><td>2XL</td><td>9-11 kg</td><td>1,400</td><td>1,600</td><td>+1,400</td></tr>
-          <tr><td>3XL</td><td>11-13 kg</td><td>1,750</td><td>1,850</td><td>+1,750</td></tr>
-          <tr><td>4XL</td><td>13-15 kg</td><td>2,100</td><td>2,250</td><td>+2,100</td></tr>
-          <tr><td>5XL</td><td>&gt;15 kg</td><td>2,650</td><td>2,800</td><td>+2,650</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <div class="table-wrap"><table><thead><tr><th>ขนาด</th><th>น้ำหนัก</th><th>ขนสั้น</th><th>ขนยาว</th><th>+ตัดขน</th></tr></thead><tbody>
+      <tr><td>XS</td><td>&lt;2 kg</td><td>450</td><td>550</td><td>+450</td></tr>
+      <tr><td>S</td><td>2-3 kg</td><td>550</td><td>650</td><td>+550</td></tr>
+      <tr><td>M</td><td>3-5 kg</td><td>750</td><td>850</td><td>+750</td></tr>
+      <tr><td>L</td><td>5-7 kg</td><td>950</td><td>1,100</td><td>+950</td></tr>
+      <tr><td>XL</td><td>7-9 kg</td><td>1,250</td><td>1,400</td><td>+1,250</td></tr>
+      <tr><td>2XL</td><td>9-11 kg</td><td>1,400</td><td>1,600</td><td>+1,400</td></tr>
+      <tr><td>3XL</td><td>11-13 kg</td><td>1,750</td><td>1,850</td><td>+1,750</td></tr>
+      <tr><td>4XL</td><td>13-15 kg</td><td>2,100</td><td>2,250</td><td>+2,100</td></tr>
+      <tr><td>5XL</td><td>&gt;15 kg</td><td>2,650</td><td>2,800</td><td>+2,650</td></tr>
+    </tbody></table></div>
     <p>ฟรีทุกครั้ง: ตัดเล็บ + เช็ดหู</p>
 
     <h2 class="sec">บริการเสริม</h2>
-    <div class="card">
-      <h3>ตัดแต่งหัว-เท้า-ก้น (ตามขนาด)</h3>
-      <p>XS 300 / S 400 / M 500 / L 600 / XL 700 / 2XL 900 / 3XL 1,200 / 4XL 1,500 / 5XL 1,900 บาท</p>
-    </div>
-    <div class="card">
-      <h3>บริการเฉพาะจุด (ราคาเริ่มต้น)</h3>
-      <p>สปาโฟม 150 · โกนท้อง-ก้นทอม 150 · ไดขนรอบหู 150 · แปรงขนรวบ 150 · โกนขนตัวเปลือย 150 · ตัดเล็บ-ฉีดยา 100–1,000 บาท</p>
-    </div>
-    <div class="card">
-      <h3>แชมพูพิเศษ (+เพิ่มจากราคาอาบน้ำปกติ)</h3>
-      <p>สำหรับกาว/ลดกลิ่น/แก้ผิวแพ้: XS +400 / S +600 / M +900 / L +1,300 / XL +2,300 บาท</p>
-    </div>
+    <div class="card"><h3>ตัดแต่งหัว-เท้า-ก้น (ตามขนาด)</h3><p>XS 300 / S 400 / M 500 / L 600 / XL 700 / 2XL 900 / 3XL 1,200 / 4XL 1,500 / 5XL 1,900 บาท</p></div>
+    <div class="card"><h3>บริการเฉพาะจุด (ราคาเริ่มต้น)</h3><p>สปาโฟม 150 · โกนท้อง-ก้นทอม 150 · ไดขนรอบหู 150 · แปรงขนรวบ 150 · โกนขนตัวเปลือย 150 · ตัดเล็บ-ฉีดยา 100–1,000 บาท</p></div>
+    <div class="card"><h3>แชมพูพิเศษ (+เพิ่มจากราคาปกติ)</h3><p>สำหรับกาว/ลดกลิ่น/แก้ผิวแพ้: XS +400 / S +600 / M +900 / L +1,300 / XL +2,300 บาท</p></div>
 
     <h2 class="sec">นโยบายการจอง/ยกเลิก</h2>
-    <div class="card">
-      <ul>
-        <li>มัดจำ 50% เพื่อยืนยันการจอง</li>
-        <li><strong>Low season:</strong> ยกเลิก/เลื่อนล่วงหน้า ≥3 วัน → คืนมัดจำ 50%</li>
-        <li><strong>High season</strong> (5–20 เม.ย. / 15 ธ.ค.–5 ม.ค.): ไม่คืนเงิน ไม่ยกเลิก เปลี่ยนวันได้เท่านั้น</li>
-        <li>ขยายเวลาเข้าพักได้ ถ้าห้องว่าง</li>
-      </ul>
-    </div>
+    <div class="card"><ul>
+      <li>มัดจำ 50% เพื่อยืนยันการจอง</li>
+      <li><strong>Low season:</strong> ยกเลิก/เลื่อนล่วงหน้า ≥3 วัน → คืนมัดจำ 50%</li>
+      <li><strong>High season</strong> (5–20 เม.ย. / 15 ธ.ค.–5 ม.ค.): ไม่คืนเงิน ไม่ยกเลิก เปลี่ยนวันได้เท่านั้น</li>
+      <li>ขยายเวลาเข้าพักได้ ถ้าห้องว่าง</li>
+    </ul></div>
 
     <h2 class="sec">เงื่อนไขการรับฝาก</h2>
-    <div class="card">
-      <ul>
-        <li>สุขภาพแข็งแรง วัคซีนครบ ถ่ายพยาธิแล้ว ไม่มีพฤติกรรมก้าวร้าว</li>
-        <li>สงวนสิทธิ์ปฏิเสธหากผิดเงื่อนไขสุขภาพ/ความปลอดภัย</li>
-        <li>คัดกรองน้องใหม่ก่อนเข้าพื้นที่รวมทุกครั้ง</li>
-        <li>กรณีฉุกเฉิน ร้านมีสิทธิ์พาไปรักษาสัตวแพทย์ (เจ้าของรับผิดชอบค่าใช้จ่าย)</li>
-        <li>เจ้าของยินยอมให้ถ่ายภาพ/วิดีโอน้องเพื่อประชาสัมพันธ์</li>
-        <li>รับเคสแพ้อาหาร/ความต้องการพิเศษ ไม่มีค่าใช้จ่ายเพิ่ม (แจ้งล่วงหน้า)</li>
-      </ul>
-    </div>
+    <div class="card"><ul>
+      <li>สุขภาพแข็งแรง วัคซีนครบ ถ่ายพยาธิแล้ว ไม่ก้าวร้าว</li>
+      <li>สงวนสิทธิ์ปฏิเสธหากผิดเงื่อนไขสุขภาพ/ความปลอดภัย</li>
+      <li>คัดกรองน้องใหม่ก่อนเข้าพื้นที่รวมทุกครั้ง</li>
+      <li>กรณีฉุกเฉิน ร้านมีสิทธิ์พาไปรักษาสัตวแพทย์ (เจ้าของรับผิดชอบค่าใช้จ่าย)</li>
+      <li>เจ้าของยินยอมให้ถ่ายภาพ/วิดีโอเพื่อประชาสัมพันธ์</li>
+      <li>รับเคสแพ้อาหาร/ความต้องการพิเศษ ไม่มีค่าใช้จ่ายเพิ่ม (แจ้งล่วงหน้า)</li>
+    </ul></div>
   </section>
 
-  <!-- ════════════════════════════════════════ CAT 3 ════════════════ -->
+  <!-- ════════════ CAT 3 ════════════ -->
   <section class="page" id="page-cat3">
-    <div class="page-header">
-      <div class="eyebrow">หมวด 3</div>
-      <h1>📋 กฎระเบียบ</h1>
-      <p>ข้อบังคับที่พนักงานทุกคนต้องปฏิบัติตามอย่างเคร่งครัด</p>
-    </div>
+    <div class="page-header"><div class="eyebrow">หมวด 3</div><h1>กฎระเบียบ</h1><p>ข้อบังคับที่พนักงานทุกคนต้องปฏิบัติตามอย่างเคร่งครัด</p></div>
 
     <h2 class="sec">เอกสารก่อนรับฝาก (บังคับ)</h2>
-    <ul>
-      <li>สมุดวัคซีนครบ</li>
-      <li>ใบรับรองสุขภาพ ไม่เกิน 7 วัน</li>
-    </ul>
-
-    <div class="alert danger" style="margin-top:20px">
-      <h3>⛔ เงื่อนไขปฏิเสธรับฝากทันที</h3>
-      วัคซีนไม่ครบ · สัตว์ป่วย · มีโรคติดต่อ · มีพฤติกรรมก้าวร้าวรุนแรง<br>
-      → แจ้งลูกค้าด้วยน้ำเสียงสุภาพ อธิบายเหตุผลตามจริง
-    </div>
+    <ul><li>สมุดวัคซีนครบ</li><li>ใบรับรองสุขภาพ ไม่เกิน 7 วัน</li></ul>
+    <div class="alert danger" style="margin-top:18px"><h3>⛔ ปฏิเสธรับฝากทันทีหาก</h3>วัคซีนไม่ครบ · สัตว์ป่วย · มีโรคติดต่อ · ก้าวร้าวรุนแรง → แจ้งลูกค้าด้วยน้ำเสียงสุภาพ อธิบายเหตุผลตามจริง</div>
 
     <h2 class="sec">กฎที่ต้องปฏิบัติเคร่งครัด</h2>
     <ul class="checklist">
       <li>ห้ามให้อาหารข้ามห้อง ยึดตามใบจองเท่านั้น</li>
       <li>สวมถุงมือ + หน้ากากทุกครั้งที่ทำความสะอาด</li>
       <li>แมวที่ไม่คุ้นเคยกัน ห้ามปล่อยรวมกัน</li>
-      <li>แยกสัตว์ก้าวร้าวออกเล่นคนเดียว ห้ามเล่นโดยไม่มีพนักงานดูแล</li>
+      <li>แยกสัตว์ก้าวร้าวออกเล่นคนเดียว ห้ามเล่นโดยไม่มีคนดูแล</li>
       <li>ห้ามทิ้งสัตว์ในกล่องเป่าแห้งโดยไม่มีคนดูแล</li>
       <li>ของใช้ส่วนตัวลูกค้าต้องติดชื่อห้องทุกชิ้น</li>
-      <li>ตรวจนับสัตว์เลี้ยงให้ครบ 47 ห้อง ทุกช่วงเวลาที่กำหนด</li>
+      <li>ตรวจนับสัตว์ให้ครบ 47 ห้อง ทุกช่วงเวลาที่กำหนด</li>
       <li>ประตูห้องพักต้องล็อคสนิททุกครั้ง</li>
     </ul>
 
-    <h2 class="sec">มาตรฐานการสื่อสารทาง Line OA</h2>
-    <div class="card">
-      <ul>
-        <li>ตอบลูกค้าภายใน <strong>15 นาที</strong> ในเวลาทำการ</li>
-        <li>ใช้ภาษาสุภาพ ยิ้มแย้ม ไม่ตอบสั้นจนดูรีบ</li>
-        <li>ส่งรูปสัตว์เลี้ยงพร้อมทุกรายงาน</li>
-        <li>รายงาน 3 รอบ/วัน: เช้า (09:00) · กลางวัน (13:00) · เย็น (18:00)</li>
-      </ul>
-    </div>
+    <h2 class="sec">มาตรฐานสื่อสารทาง Line OA</h2>
+    <div class="card"><ul>
+      <li>ตอบลูกค้าภายใน <strong>15 นาที</strong> ในเวลาทำการ</li>
+      <li>ใช้ภาษาสุภาพ ยิ้มแย้ม ไม่ตอบสั้นจนดูรีบ</li>
+      <li>ส่งรูปสัตว์เลี้ยงพร้อมทุกรายงาน</li>
+      <li>รายงาน 3 รอบ/วัน: เช้า (09:00) · กลางวัน (13:00) · เย็น (18:00)</li>
+    </ul></div>
 
     <h2 class="sec">แผนรับมือเหตุฉุกเฉิน</h2>
-    <div class="card">
-      <h3 class="subsec">🏥 สัตว์ป่วย/บาดเจ็บ</h3>
-      <ol>
-        <li>แยกสัตว์ออกจากพื้นที่รวมทันที</li>
-        <li>แจ้งหัวหน้า + เจ้าของสัตว์ทาง Line ภายใน 10 นาที</li>
-        <li>โทรสัตวแพทย์ประจำร้าน</li>
-        <li>กรณีฉุกเฉิน นำส่งคลินิกทันที</li>
-      </ol>
-    </div>
-    <div class="card">
-      <h3 class="subsec">🚪 สัตว์หลุด/หนี</h3>
-      <ol>
-        <li>ค้นหาทันที ระดมพนักงานทุกคน</li>
-        <li>ล็อคทางออกทุกจุดทันที</li>
-        <li>แจ้งหัวหน้า + เจ้าของทันที — อย่ารอ</li>
-        <li>บันทึกใน <code class="fc">F-05</code></li>
-        <li>ห้ามปิดบังข้อมูลใดๆ</li>
-      </ol>
-    </div>
-    <div class="card">
-      <h3 class="subsec">😠 ลูกค้าร้องเรียน</h3>
-      <ol>
-        <li>รับฟังด้วยความสงบ ไม่โต้เถียง</li>
-        <li>ขอโทษ + ขอบคุณที่แจ้ง</li>
-        <li>บันทึกใน <code class="fc">F-06</code></li>
-        <li>ส่งหัวหน้าพิจารณาภายใน 24 ชม.</li>
-      </ol>
-    </div>
-
-    <div class="alert info">SOP ทุกข้อพนักงานทุกคนต้องปฏิบัติตาม — หากมีข้อสงสัยแจ้งหัวหน้าทันที ร้านทบทวน SOP ทุก 3 เดือน</div>
+    <div class="card"><h3 class="subsec">🏥 สัตว์ป่วย/บาดเจ็บ</h3><ol><li>แยกสัตว์ออกจากพื้นที่รวมทันที</li><li>แจ้งหัวหน้า + เจ้าของทาง Line ภายใน 10 นาที</li><li>โทรสัตวแพทย์ประจำร้าน</li><li>กรณีฉุกเฉิน นำส่งคลินิกทันที</li></ol></div>
+    <div class="card"><h3 class="subsec">🚪 สัตว์หลุด/หนี</h3><ol><li>ค้นหาทันที ระดมพนักงานทุกคน</li><li>ล็อคทางออกทุกจุดทันที</li><li>แจ้งหัวหน้า + เจ้าของทันที — อย่ารอ</li><li>บันทึกใน <code class="fc">F-05</code></li><li>ห้ามปิดบังข้อมูลใดๆ</li></ol></div>
+    <div class="card"><h3 class="subsec">😠 ลูกค้าร้องเรียน</h3><ol><li>รับฟังด้วยความสงบ ไม่โต้เถียง</li><li>ขอโทษ + ขอบคุณที่แจ้ง</li><li>บันทึกใน <code class="fc">F-06</code></li><li>ส่งหัวหน้าพิจารณาภายใน 24 ชม.</li></ol></div>
+    <div class="alert info">SOP ทุกข้อพนักงานทุกคนต้องปฏิบัติตาม — มีข้อสงสัยแจ้งหัวหน้าทันที ร้านทบทวน SOP ทุก 3 เดือน</div>
   </section>
 
-  <!-- ════════════════════════════════════════ CAT 4 ════════════════ -->
+  <!-- ════════════ CAT 4 ════════════ -->
   <section class="page" id="page-cat4">
-    <div class="page-header">
-      <div class="eyebrow">หมวด 4</div>
-      <h1>✅ มาตรฐานการให้บริการ (SOP)</h1>
-      <p>ขั้นตอนการทำงานมาตรฐาน ตั้งแต่เปิดร้านถึงปิดร้าน</p>
-    </div>
+    <div class="page-header"><div class="eyebrow">หมวด 4</div><h1>มาตรฐานการให้บริการ (SOP)</h1><p>ขั้นตอนการทำงานมาตรฐาน ตั้งแต่เปิดร้านถึงปิดร้าน</p></div>
 
     <div class="toc">
-      <a href="#sop1">เปิดร้าน</a>
-      <a href="#sop2">Check-in</a>
-      <a href="#sop3">ดูแลประจำวัน</a>
-      <a href="#sop4">Check-out</a>
-      <a href="#sop5">Grooming</a>
-      <a href="#sop6">ปิดร้าน</a>
-      <a href="#forms">แบบฟอร์ม F-01~06</a>
+      <a href="#sop1">เปิดร้าน</a><a href="#sop2">Check-in</a><a href="#sop3">ดูแลประจำวัน</a>
+      <a href="#sop4">Check-out</a><a href="#sop5">Grooming</a><a href="#sop6">ปิดร้าน</a><a href="#forms">แบบฟอร์ม</a>
     </div>
 
-    <h2 class="sec" id="sop1">SOP-01 เปิดร้าน (08:00–10:00 น.)</h2>
+    <h2 class="sec" id="sop1">SOP-01 เปิดร้าน (08:00–10:00)</h2>
     <div class="timeline">
-      <div class="t-step"><div class="t-time">08:00</div><p>หัวหน้าทีม: รับกุญแจ ปลดล็อค เปิดไฟ เปิดแอร์ ตรวจอุณหภูมิ (เป้า 25-28°C) บันทึกเวลาเข้างาน</p></div>
+      <div class="t-step"><div class="t-time">08:00</div><p>หัวหน้า: รับกุญแจ ปลดล็อค เปิดไฟ-แอร์ ตรวจอุณหภูมิ (25-28°C) บันทึกเวลาเข้างาน</p></div>
       <div class="t-step"><div class="t-time">08:05</div><p>พี่เลี้ยง: ตรวจนับสัตว์ 26/21 ห้อง สังเกตอาการผิดปกติ บันทึก <code class="fc">F-01</code></p></div>
       <div class="t-step"><div class="t-time">08:15</div><p>ให้อาหารเช้าตามใบจอง เปลี่ยนน้ำใหม่ บันทึก <code class="fc">F-02</code></p></div>
       <div class="t-step"><div class="t-time">08:30</div><p>แม่บ้าน: ทำความสะอาด-ฆ่าเชื้อ (สวมถุงมือ+หน้ากาก) พ่นน้ำยาทิ้ง 5 นาที</p></div>
-      <div class="t-step"><div class="t-time">09:00</div><p>พนักงานต้อนรับ: เปิด Line OA ตรวจยอดจอง เตรียมเอกสารเช็คอิน</p></div>
+      <div class="t-step"><div class="t-time">09:00</div><p>ต้อนรับ: เปิด Line OA ตรวจยอดจอง เตรียมเอกสารเช็คอิน</p></div>
       <div class="t-step"><div class="t-time">09:30</div><p>Stand-up meeting 10 นาที ตรวจตาราง Grooming วันนี้</p></div>
       <div class="t-step"><div class="t-time">10:00</div><p>เปิดร้านอย่างเป็นทางการ</p></div>
     </div>
 
-    <h2 class="sec" id="sop2">SOP-02 รับสัตว์เลี้ยงเข้าพัก (Check-in)</h2>
+    <h2 class="sec" id="sop2">SOP-02 Check-in</h2>
     <div class="timeline">
-      <div class="t-step"><p>รับจอง/ยืนยันทาง Line ภายใน 15 นาที แจ้งเอกสารที่ต้องเตรียมล่วงหน้า</p></div>
+      <div class="t-step"><p>รับจอง/ยืนยันทาง Line ภายใน 15 นาที แจ้งเอกสารล่วงหน้า</p></div>
       <div class="t-step"><p>ลูกค้ามาถึง: ตรวจสมุดวัคซีน + ใบรับรองสุขภาพ (ห้ามรับถ้าวัคซีนไม่ครบ)</p></div>
-      <div class="t-step"><p>ตรวจสุขภาพเบื้องต้น: น้ำหนัก อุณหภูมิ สภาพขน-ผิว พฤติกรรม บันทึก <code class="fc">F-03</code></p></div>
+      <div class="t-step"><p>ตรวจสุขภาพเบื้องต้น: น้ำหนัก อุณหภูมิ ขน-ผิว พฤติกรรม บันทึก <code class="fc">F-03</code></p></div>
       <div class="t-step"><p>เซ็นเอกสารยินยอม ระบุอาหาร/ยา/สิ่งแพ้/เบอร์ฉุกเฉิน ถ่ายรูปก่อนเข้าห้อง</p></div>
-      <div class="t-step"><p>นำเข้าห้อง ติดป้ายชื่อ ให้เวลาปรับตัว 30 นาที ก่อนทำกิจกรรมอื่น</p></div>
-      <div class="t-step"><p>แจ้งลูกค้า: ส่งรูปภายใน 30 นาทีหลังเช็คอิน แจ้งเวลาเช็คเอาท์และรอบรายงาน</p></div>
+      <div class="t-step"><p>นำเข้าห้อง ติดป้ายชื่อ ให้เวลาปรับตัว 30 นาที</p></div>
+      <div class="t-step"><p>แจ้งลูกค้า: ส่งรูปภายใน 30 นาที แจ้งเวลาเช็คเอาท์และรอบรายงาน</p></div>
     </div>
 
-    <h2 class="sec" id="sop3">SOP-03 ดูแลประจำวัน (Daily Care)</h2>
+    <h2 class="sec" id="sop3">SOP-03 ดูแลประจำวัน</h2>
     <div class="timeline">
       <div class="t-step"><div class="t-time">10:00</div><p>พาสุนัขออกสนาม (3-5 ตัว/รอบ แยกตัวก้าวร้าว) ≥2 รอบ/วัน · เปิดห้องนั่งเล่นแมว</p></div>
       <div class="t-step"><div class="t-time">12:00</div><p>อาหารเที่ยง + ทำความสะอาดรอบบ่าย บันทึก <code class="fc">F-02</code></p></div>
       <div class="t-step"><div class="t-time">13:00</div><p>รายงานเที่ยงทาง Line (รูป 2-3 รูป + การกิน + พฤติกรรม)</p></div>
       <div class="t-step"><div class="t-time">14:00</div><p>รอบสนามบ่าย ตรวจนับสัตว์ทุก 2 ชม.</p></div>
       <div class="t-step"><div class="t-time">16:00</div><p>อาหารเย็น บันทึก <code class="fc">F-02</code></p></div>
-      <div class="t-step"><div class="t-time">18:00</div><p>รายงานเย็นทาง Line (ก่อน 18:30) รูป 2-3 รูป + สรุปสุขภาพ + ถามสั่งพิเศษวันถัดไป</p></div>
+      <div class="t-step"><div class="t-time">18:00</div><p>รายงานเย็น (ก่อน 18:30) สรุปสุขภาพ + ถามสั่งพิเศษวันถัดไป</p></div>
     </div>
 
-    <h2 class="sec" id="sop4">SOP-04 ส่งสัตว์เลี้ยงกลับบ้าน (Check-out)</h2>
+    <h2 class="sec" id="sop4">SOP-04 Check-out</h2>
     <div class="timeline">
       <div class="t-step"><p>วันก่อนเช็คเอาท์: แจ้ง Line ล่วงหน้า ยืนยันเวลา แจ้งยอดค่าบริการ</p></div>
-      <div class="t-step"><p>ก่อนลูกค้ามา 1 ชม.: อาบน้ำ/เป่าขน เก็บของส่วนตัว เตรียมรายงาน <code class="fc">F-04</code></p></div>
+      <div class="t-step"><p>ก่อนลูกค้ามา 1 ชม.: อาบน้ำ/เป่าขน เก็บของส่วนตัว เตรียม <code class="fc">F-04</code></p></div>
       <div class="t-step"><p>ลูกค้ามารับ: มอบ F-04 คืนของส่วนตัว (ให้เซ็นรับ)</p></div>
       <div class="t-step"><p>ชำระเงินตามรายการจริง ออกใบเสร็จทุกครั้ง</p></div>
       <div class="t-step"><p>ส่งแบบประเมินหลังลูกค้ากลับ 2-3 ชม. ขอรีวิว Google Maps/Facebook</p></div>
       <div class="t-step"><p>ทำความสะอาดห้องทันที พร้อมรับตัวใหม่ภายใน 1 ชม.</p></div>
     </div>
 
-    <h2 class="sec" id="sop5">SOP-05 อาบน้ำ-ตัดขน (Grooming)</h2>
+    <h2 class="sec" id="sop5">SOP-05 Grooming</h2>
     <div class="timeline">
       <div class="t-step"><p>รับงาน: ตรวจตาราง อ่านใบสั่งงาน เตรียมอุปกรณ์ (ห้ามใช้ร่วมโดยไม่ฆ่าเชื้อ)</p></div>
       <div class="t-step"><p>ตรวจก่อนอาบ: ดูแผล เห็บหมัด ผื่น <strong>ถ่ายรูปก่อนอาบทุกครั้ง</strong> — พบปัญหาแจ้งหัวหน้า+เจ้าของทันที</p></div>
       <div class="t-step"><p>อาบน้ำ: อุณหภูมิน้ำ <strong>35-38°C</strong> ระวังน้ำเข้าหู ใช้แชมพูเหมาะสายพันธุ์</p></div>
-      <div class="t-step"><p>เป่าแห้ง: เริ่มอุณหภูมิต่ำ เช็คความร้อนผิวหนังทุก 2-3 นาที <strong>ห้ามทิ้งสัตว์ในกล่องเป่าโดยไม่มีคนดูแล</strong></p></div>
+      <div class="t-step"><p>เป่าแห้ง: เริ่มอุณหภูมิต่ำ เช็คความร้อนผิวทุก 2-3 นาที <strong>ห้ามทิ้งสัตว์ในกล่องเป่า</strong></p></div>
       <div class="t-step"><p>ตัด/จัดแต่งขนตามที่ลูกค้าระบุ ถ่ายรูป progress ตัดเล็บ เช็ดหู</p></div>
       <div class="t-step"><p>ตกแต่ง: โบว์/กิ๊ก น้ำหอมเบาๆ (ไม่ฉีดที่หน้า) ถ่ายรูป After</p></div>
-      <div class="t-step"><p>ส่งรูป Before-After ภายใน 30 นาทีหลังเสร็จ แจ้งสิ่งผิดปกติ บันทึกทรงขนในประวัติ</p></div>
+      <div class="t-step"><p>ส่งรูป Before-After ภายใน 30 นาที บันทึกทรงขนในประวัติ</p></div>
     </div>
 
-    <h2 class="sec" id="sop6">SOP-06 ปิดร้าน (19:00–20:00 น.)</h2>
+    <h2 class="sec" id="sop6">SOP-06 ปิดร้าน (19:00–20:00)</h2>
     <div class="timeline">
       <div class="t-step"><div class="t-time">19:00</div><p>อาหารมื้อสุดท้าย ตรวจน้ำ บันทึก <code class="fc">F-02</code></p></div>
-      <div class="t-step"><div class="t-time">19:15</div><p>ตรวจนับสัตว์ครบ 47 ห้อง ตรวจประตูล็อค สังเกตอาการก่อนนอน บันทึก <code class="fc">F-01</code></p></div>
+      <div class="t-step"><div class="t-time">19:15</div><p>ตรวจนับสัตว์ครบ 47 ห้อง ตรวจประตูล็อค บันทึก <code class="fc">F-01</code></p></div>
       <div class="t-step"><div class="t-time">19:30</div><p>ทำความสะอาดพื้นที่ส่วนกลาง สนาม ห้องนั่งเล่นแมว</p></div>
       <div class="t-step"><div class="t-time">19:45</div><p>ตอบ Line OA ที่ค้าง อัปเดตตารางห้องพักวันถัดไป</p></div>
-      <div class="t-step"><div class="t-time">19:50</div><p>หัวหน้าตรวจ + เซ็นรายงาน F-01/F-02 ให้ครบ</p></div>
+      <div class="t-step"><div class="t-time">19:50</div><p>หัวหน้าตรวจ + เซ็นรายงาน F-01/F-02</p></div>
       <div class="t-step"><div class="t-time">20:00</div><p>หัวหน้าตรวจ CCTV ล็อคประตูทุกจุด ส่งกุญแจ (ออกร้านคนสุดท้าย)</p></div>
     </div>
 
     <h2 class="sec" id="forms">แบบฟอร์มที่ต้องรู้จัก</h2>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>รหัส</th><th>ชื่อแบบฟอร์ม</th><th>ใช้เมื่อไหร่</th></tr></thead>
-        <tbody>
-          <tr><td><code class="fc">F-01</code></td><td>บันทึกตรวจสุขภาพประจำวัน</td><td>ทุกเช้าและก่อนปิดร้าน</td></tr>
-          <tr><td><code class="fc">F-02</code></td><td>บันทึกการให้อาหาร</td><td>ทุกมื้ออาหาร</td></tr>
-          <tr><td><code class="fc">F-03</code></td><td>แบบฟอร์มสุขภาพเช็คอิน</td><td>ตอนรับสัตว์เข้าพัก</td></tr>
-          <tr><td><code class="fc">F-04</code></td><td>รายงานสรุปสุขภาพเช็คเอาท์</td><td>มอบให้เจ้าของตอนรับกลับ</td></tr>
-          <tr><td><code class="fc">F-05</code></td><td>รายงานเหตุการณ์พิเศษ</td><td>สัตว์หลุด / ป่วยฉุกเฉิน / ร้องเรียน</td></tr>
-          <tr><td><code class="fc">F-06</code></td><td>บันทึกข้อร้องเรียนลูกค้า</td><td>เมื่อได้รับฟีดแบ็กเชิงลบ</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <div class="table-wrap"><table><thead><tr><th>รหัส</th><th>ชื่อแบบฟอร์ม</th><th>ใช้เมื่อไหร่</th></tr></thead><tbody>
+      <tr><td><code class="fc">F-01</code></td><td>บันทึกตรวจสุขภาพประจำวัน</td><td>ทุกเช้าและก่อนปิดร้าน</td></tr>
+      <tr><td><code class="fc">F-02</code></td><td>บันทึกการให้อาหาร</td><td>ทุกมื้ออาหาร</td></tr>
+      <tr><td><code class="fc">F-03</code></td><td>แบบฟอร์มสุขภาพเช็คอิน</td><td>ตอนรับสัตว์เข้าพัก</td></tr>
+      <tr><td><code class="fc">F-04</code></td><td>รายงานสรุปเช็คเอาท์</td><td>มอบให้เจ้าของตอนรับกลับ</td></tr>
+      <tr><td><code class="fc">F-05</code></td><td>รายงานเหตุการณ์พิเศษ</td><td>สัตว์หลุด / ป่วยฉุกเฉิน / ร้องเรียน</td></tr>
+      <tr><td><code class="fc">F-06</code></td><td>บันทึกข้อร้องเรียนลูกค้า</td><td>เมื่อได้รับฟีดแบ็กเชิงลบ</td></tr>
+    </tbody></table></div>
   </section>
 
-  <!-- ════════════════════════════════════════ CAT 5 ════════════════ -->
+  <!-- ════════════ CAT 5 ════════════ -->
   <section class="page" id="page-cat5">
-    <div class="page-header">
-      <div class="eyebrow">หมวด 5</div>
-      <h1>🧠 ความรู้ในการให้บริการ</h1>
-      <p>เนื้อหาสำคัญที่สุด — อ่านให้ละเอียดและเข้าใจให้ครบทุกข้อ</p>
-    </div>
+    <div class="page-header"><div class="eyebrow">หมวด 5</div><h1>ความรู้ในการให้บริการ</h1><p>เนื้อหาสำคัญที่สุด — อ่านให้ละเอียดและเข้าใจให้ครบทุกข้อ</p></div>
 
-    <div class="alert danger">
-      <h3>⚠️ ทำไมหมวดนี้สำคัญที่สุด</h3>
-      ที่ร้านเคยมีเหตุการณ์ <strong>พี่เลี้ยงถูกแมวกัด</strong> มาแล้วจริง การอ่านสัญญาณเตือนและวิธีจับ-อุ้มที่ถูกต้องคือสิ่งที่ป้องกันอุบัติเหตุแบบนี้ได้มากที่สุด
-    </div>
+    <div class="alert danger"><h3>⚠️ ทำไมหมวดนี้สำคัญที่สุด</h3>ที่ร้านเคยมีเหตุการณ์ <strong>พี่เลี้ยงถูกแมวกัด</strong> มาแล้วจริง การอ่านสัญญาณเตือนและวิธีจับที่ถูกต้องคือสิ่งที่ป้องกันอุบัติเหตุได้มากที่สุด</div>
 
     <h2 class="sec">พื้นฐานงานพี่เลี้ยง</h2>
     <ul>
       <li>ตรวจสุขภาพเบื้องต้นตอนรับ: น้ำหนัก อุณหภูมิ สภาพขน ผิวหนัง</li>
-      <li>สังเกตอาการผิดปกติทุกวัน: ซึม ไม่กินอาหาร อาเจียน ท้องร่วง → แจ้งหัวหน้าทันที</li>
+      <li>สังเกตอาการผิดปกติทุกวัน: ซึม ไม่กิน อาเจียน ท้องร่วง → แจ้งหัวหน้าทันที</li>
       <li>ให้เวลาสัตว์ปรับตัว <strong>30 นาที</strong> หลังเข้าห้องใหม่</li>
       <li>พาสุนัขออกสนาม ≥2 รอบ/วัน แยกตัวก้าวร้าวเล่นคนเดียว</li>
       <li>แมวไม่คุ้นเคยกัน ห้ามปล่อยรวมกันเด็ดขาด</li>
     </ul>
 
-    <h2 class="sec">🚨 ความปลอดภัย — ป้องกันการถูกกัด-ข่วน</h2>
-
+    <h2 class="sec">🚨 ความปลอดภัย — ป้องกันถูกกัด-ข่วน</h2>
     <h3 class="subsec">A. สัญญาณเตือนก่อนสุนัขจะกัด</h3>
     <div class="dosdonts">
-      <div class="dont">
-        <h4>😠 กลุ่มก้าวร้าว / พร้อมเผชิญหน้า</h4>
-        <ul>
-          <li>ทำตัวใหญ่ขึ้น ขนตั้งทั้งตัว</li>
-          <li>หูตั้งชี้หน้า หางตั้งตรงแข็ง</li>
-          <li>ยืนนิ่งเกร็งขา จ้องตรง</li>
-          <li>เผยฟันแนวตั้ง (ต่างจากยิ้ม)</li>
-          <li>คำราม เห่า หรือพุ่งเข้าหา</li>
-        </ul>
-      </div>
-      <div class="dont">
-        <h4>😨 กลุ่มกลัว / วิตกกังวล</h4>
-        <ul>
-          <li>ทำตัวเล็กลง หมอบต่ำ ก้มหัว</li>
-          <li>เลียปากซ้ำๆ หาว (ทั้งที่ไม่เหนื่อย)</li>
-          <li>หางซุกระหว่างขา หูแบนราบหลัง</li>
-          <li><strong>กลุ่มนี้ก็กัดได้</strong> ถ้าถูกบีบจนไม่มีทางหนี</li>
-        </ul>
-      </div>
+      <div class="dont"><h4>😠 กลุ่มก้าวร้าว</h4><ul><li>ทำตัวใหญ่ขึ้น ขนตั้งทั้งตัว</li><li>หูตั้งชี้หน้า หางตั้งแข็ง</li><li>ยืนนิ่งเกร็งขา จ้องตรง</li><li>เผยฟันแนวตั้ง คำราม พุ่งเข้าหา</li></ul></div>
+      <div class="dont"><h4>😨 กลุ่มกลัว/วิตก</h4><ul><li>ทำตัวเล็กลง หมอบต่ำ ก้มหัว</li><li>เลียปากซ้ำๆ หาว (ทั้งที่ไม่เหนื่อย)</li><li>หางซุกระหว่างขา หูแบนหลัง</li><li><strong>กลุ่มนี้ก็กัดได้</strong> ถ้าถูกบีบจนไม่มีทางหนี</li></ul></div>
     </div>
     <div class="alert warn">เห็นสัญญาณเหล่านี้ → หยุดเข้าใกล้ทันที ให้พื้นที่สัตว์ อย่าฝืนจับต่อ</div>
 
     <h3 class="subsec">B. สัญญาณเตือนก่อนแมวจะกัด-ข่วน</h3>
     <div class="dosdonts">
-      <div class="dont">
-        <h4>😨 แมวกลัว</h4>
-        <ul>
-          <li>หูแบนราบ ฟ่อ/ขู่ เผยเขี้ยว</li>
-          <li>หมอบต่ำ หางซุกใต้ตัว ขนลุก</li>
-        </ul>
-      </div>
-      <div class="dont">
-        <h4>😾 หงุดหงิด / พร้อมข่วน-กัด</h4>
-        <ul>
-          <li>หางสะบัด/ฟาดไปมา หูแบนปลาย</li>
-          <li>รูม่านตาขยาย ตัวเกร็งกะทันหัน</li>
-          <li>มักเกิดตอนถูกสัมผัสนานเกินไป</li>
-        </ul>
-      </div>
+      <div class="dont"><h4>😨 แมวกลัว</h4><ul><li>หูแบนราบ ฟ่อ/ขู่ เผยเขี้ยว</li><li>หมอบต่ำ หางซุกใต้ตัว ขนลุก</li></ul></div>
+      <div class="dont"><h4>😾 หงุดหงิด พร้อมข่วน</h4><ul><li>หางสะบัด/ฟาดไปมา หูแบนปลาย</li><li>รูม่านตาขยาย ตัวเกร็งกะทันหัน</li><li>มักเกิดตอนถูกสัมผัสนานเกินไป</li></ul></div>
     </div>
-    <div class="alert warn">
-      <strong>ข้อสำคัญ:</strong> แมวที่นิ่งสนิทผิดปกติ ไม่ขยับ อาจกำลังเครียดสูงสุดก่อนระเบิด — ไม่ใช่สัญญาณว่าปลอดภัย<br>
-      หากสัตว์ก้าวร้าวโดยไม่มีประวัติ อาจเป็นสัญญาณป่วย/บาดเจ็บซ่อนอยู่ → แจ้งหัวหน้าตรวจเพิ่ม
-    </div>
+    <div class="alert warn"><strong>ข้อสำคัญ:</strong> แมวที่นิ่งสนิทผิดปกติ ไม่ขยับ อาจกำลังเครียดสูงสุดก่อนระเบิด — ไม่ใช่สัญญาณว่าปลอดภัย<br>หากสัตว์ก้าวร้าวโดยไม่มีประวัติ อาจเป็นสัญญาณป่วย/บาดเจ็บซ่อนอยู่ → แจ้งหัวหน้า</div>
 
     <h3 class="subsec">C. วิธีจับ-อุ้มแมวอย่างปลอดภัย</h3>
     <div class="dosdonts">
-      <div class="dont">
-        <h4>❌ ห้ามทำ — Scruffing</h4>
-        <ul>
-          <li><strong>ห้ามจับหนังคอแล้วยกขึ้น</strong> — สัตวแพทย์ทั่วโลกไม่แนะนำอีกต่อไป เพราะทำให้เจ็บ อาจบาดเจ็บเนื้อเยื่อ</li>
-          <li>แมวที่ "นิ่งไป" ตอนถูกจับหนังคอ คือกำลังเครียดสุดขีด <strong>ไม่ใช่สงบ</strong></li>
-        </ul>
-      </div>
-      <div class="do">
-        <h4>✅ ควรทำ</h4>
-        <ul>
-          <li>ใช้สองมือรองรับ: มือหนึ่งใต้อกหน้า อีกมือรองสะโพก/ขาหลัง</li>
-          <li>ถ้าแมวตื่นตกใจ ใช้ผ้าขนหนูคลุม (towel wrap) เหลือแค่หัวโผล่</li>
-          <li>ใช้แรงน้อยที่สุด (passive restraint) ปล่อยให้ขยับได้บ้าง ดิ้นน้อยกว่ากดแน่น</li>
-          <li>ตัดเล็บแมวให้สั้นสม่ำเสมอ</li>
-        </ul>
-      </div>
+      <div class="dont"><h4>❌ ห้ามทำ — Scruffing</h4><ul><li><strong>ห้ามจับหนังคอแล้วยกขึ้น</strong> — สัตวแพทย์ทั่วโลกไม่แนะนำ เพราะเจ็บ อาจบาดเจ็บเนื้อเยื่อ</li><li>แมวที่ "นิ่งไป" ตอนถูกจับหนังคอ คือกำลังเครียดสุดขีด <strong>ไม่ใช่สงบ</strong></li></ul></div>
+      <div class="do"><h4>✅ ควรทำ</h4><ul><li>ใช้สองมือรองรับ: มือหนึ่งใต้อกหน้า อีกมือรองสะโพก/ขาหลัง</li><li>ถ้าแมวตื่น ใช้ผ้าขนหนูคลุม (towel wrap) เหลือหัวโผล่</li><li>ใช้แรงน้อยที่สุด ปล่อยให้ขยับได้บ้าง ดิ้นน้อยกว่ากดแน่น</li><li>ตัดเล็บแมวสั้นสม่ำเสมอ</li></ul></div>
     </div>
 
     <h3 class="subsec">D. กฎความปลอดภัยทั่วไป</h3>
     <ul class="checklist">
       <li>ประเมินสัตว์ด้วยตาก่อนเข้าใกล้ทุกครั้ง</li>
-      <li>มีสมาธิเต็มที่ขณะจับสัตว์ที่ไม่คุ้นเคย — ไม่ใช้โทรศัพท์ขณะจับ</li>
+      <li>มีสมาธิเต็มที่ขณะจับสัตว์ที่ไม่คุ้นเคย — ไม่ใช้โทรศัพท์</li>
       <li>ให้สัตว์ใหม่ปรับตัว 30 นาทีก่อนทำกิจกรรม</li>
       <li>ไม่ปล่อยสัตว์ที่ไม่คุ้นเคยกันไว้ด้วยกันโดยไม่มีคนดูแล</li>
       <li>ห้ามทิ้งสัตว์ในกล่องเป่าแห้งคนเดียว</li>
     </ul>
-
-    <div class="alert danger">
-      <h3>หากถูกกัด/ข่วน</h3>
-      แจ้งหัวหน้าทันที → ทำความสะอาดแผลทันที → บันทึกใน <code class="fc">F-05</code>
-    </div>
+    <div class="alert danger"><h3>หากถูกกัด/ข่วน</h3>แจ้งหัวหน้าทันที → ทำความสะอาดแผลทันที → บันทึกใน <code class="fc">F-05</code></div>
 
     <h2 class="sec">มาตรฐานความสะอาด</h2>
     <ul>
-      <li>ทำความสะอาดทุก 2 ชม. ฆ่าเชื้อด้วยน้ำยาเกรดสัตวแพทย์ ทิ้งไว้ 5 นาทีก่อนเช็ดออก</li>
+      <li>ทำความสะอาดทุก 2 ชม. ฆ่าเชื้อด้วยน้ำยาเกรดสัตวแพทย์ ทิ้ง 5 นาทีก่อนเช็ดออก</li>
       <li>สวมถุงมือ + หน้ากากทุกครั้ง</li>
       <li>แยกสัตว์ป่วยทันทีที่พบอาการผิดปกติ</li>
     </ul>
-
-    <div class="source-list">
-      <strong>แหล่งอ้างอิง:</strong> ASPCA · Best Friends Animal Society · International Cat Care · PetMD · Catster
-    </div>
+    <div class="source-list"><strong>แหล่งอ้างอิง:</strong> ASPCA · Best Friends Animal Society · International Cat Care · PetMD · Catster</div>
   </section>
 
-  <!-- ════════════════════════════════════════ CAT 6 ════════════════ -->
+  <!-- ════════════ CAT 6 ════════════ -->
   <section class="page" id="page-cat6">
-    <div class="page-header">
-      <div class="eyebrow">หมวด 6</div>
-      <h1>🐶🐱 ความรู้เกี่ยวกับสุนัขและแมว</h1>
-      <p>ความรู้พื้นฐานที่พนักงานทุกคนต้องเข้าใจ</p>
-    </div>
+    <div class="page-header"><div class="eyebrow">หมวด 6</div><h1>ความรู้เกี่ยวกับสุนัขและแมว</h1><p>ความรู้พื้นฐานที่พนักงานทุกคนต้องเข้าใจ</p></div>
 
     <h2 class="sec">อาการที่ต้องรายงานทันที</h2>
-    <div class="alert danger">
-      <h3>⚠️ แจ้งหัวหน้าทีมทันทีถ้าพบ</h3>
-      ซึม · ไม่กินอาหาร · อาเจียน · ท้องร่วง
-    </div>
+    <div class="alert danger"><h3>⚠️ แจ้งหัวหน้าทีมทันทีถ้าพบ</h3>ซึม · ไม่กินอาหาร · อาเจียน · ท้องร่วง</div>
 
     <h2 class="sec">ค่าอุณหภูมิที่ต้องรู้</h2>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>รายการ</th><th>ค่าที่เหมาะสม</th></tr></thead>
-        <tbody>
-          <tr><td>อุณหภูมิห้องพักสัตว์เลี้ยง</td><td><strong>25–28°C</strong></td></tr>
-          <tr><td>อุณหภูมิน้ำอาบ</td><td><strong>35–38°C</strong> (อุ่น ไม่ร้อนไม่เย็น)</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <div class="table-wrap"><table><thead><tr><th>รายการ</th><th>ค่าที่เหมาะสม</th></tr></thead><tbody>
+      <tr><td>อุณหภูมิห้องพักสัตว์เลี้ยง</td><td><strong>25–28°C</strong></td></tr>
+      <tr><td>อุณหภูมิน้ำอาบ</td><td><strong>35–38°C</strong> (อุ่น ไม่ร้อนไม่เย็น)</td></tr>
+    </tbody></table></div>
     <p>น้ำดื่มเปลี่ยนใหม่ทุกเช้าและทุกมื้ออาหาร อาหาร-น้ำยึดตามใบจองเท่านั้น ห้ามให้ข้ามห้อง</p>
 
-    <h2 class="sec">ภาษากายสุนัข (Canine Body Language)</h2>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>อาการที่สังเกต</th><th>ความหมาย</th></tr></thead>
-        <tbody>
-          <tr><td>หูตั้งชี้หน้า · ขนตั้ง · หางตั้งแข็ง · จ้องตรง · เผยฟัน · คำราม</td><td>🔴 ก้าวร้าว เตรียมกัด</td></tr>
-          <tr><td>หมอบต่ำ · ก้มหัว · เลียปาก · หางซุก · หูแบนหลัง · หาว</td><td>🟡 กลัว / วิตก (เสี่ยงกัดถ้าบีบ)</td></tr>
-          <tr><td>หางส่ายแกว่ง · ตัวผ่อนคลาย · ปากอ้าหย่อน</td><td>🟢 ผ่อนคลาย ปกติ</td></tr>
-        </tbody>
-      </table>
+    <h2 class="sec">ภาษากายสุนัข</h2>
+    <div class="table-wrap"><table><thead><tr><th>อาการที่สังเกต</th><th>ความหมาย</th></tr></thead><tbody>
+      <tr><td>หูตั้งชี้หน้า · ขนตั้ง · หางตั้งแข็ง · จ้องตรง · เผยฟัน · คำราม</td><td>🔴 ก้าวร้าว เตรียมกัด</td></tr>
+      <tr><td>หมอบต่ำ · ก้มหัว · เลียปาก · หางซุก · หูแบนหลัง · หาว</td><td>🟡 กลัว/วิตก (เสี่ยงกัดถ้าบีบ)</td></tr>
+      <tr><td>หางส่ายแกว่ง · ตัวผ่อนคลาย · ปากอ้าหย่อน</td><td>🟢 ผ่อนคลาย ปกติ</td></tr>
+    </tbody></table></div>
+
+    <h2 class="sec">ภาษากายแมว</h2>
+    <div class="table-wrap"><table><thead><tr><th>อาการที่สังเกต</th><th>ความหมาย</th></tr></thead><tbody>
+      <tr><td>หูแบนราบ · ฟ่อขู่ · หมอบต่ำ · หางซุก · ขนลุก</td><td>🔴 กลัว</td></tr>
+      <tr><td>หางสะบัดไปมา · หูแบนปลาย · รูม่านตาขยาย · ตัวเกร็ง</td><td>🔴 หงุดหงิด พร้อมข่วน-กัด</td></tr>
+      <tr><td>หางตั้งปลายงอ · เดินเข้าถูตัว · kneading · หลับตาช้า</td><td>🟢 ผ่อนคลาย ไว้ใจ</td></tr>
+    </tbody></table></div>
+    <div class="alert info">เนื้อหาภาษากายนี้สัมพันธ์กับหมวด 5 และ 9 โดยตรง — แนะนำอ่านควบคู่กัน</div>
+    <div class="source-list"><strong>แหล่งอ้างอิง:</strong> ASPCA · Best Friends Animal Society · International Cat Care · PetMD · Catster</div>
+  </section>
+
+  <!-- ════════════ CAT 7: สื่อสารกับเจ้าของ ════════════ -->
+  <section class="page" id="page-cat7">
+    <div class="page-header"><div class="eyebrow">หมวด 7 · ทักษะขั้นสูง</div><h1>การสื่อสารกับเจ้าของ</h1><p>หัวใจของงานบริการ — เจ้าของจ่ายเงินเพื่อ "ความสบายใจ" พอๆ กับการดูแลน้อง</p></div>
+
+    <h2 class="sec">หลักการสื่อสาร 3 ข้อ</h2>
+    <div class="quick-grid">
+      <div class="quick-card"><div class="ic">⚡</div><h3>เร็ว</h3><p>ตอบภายใน 15 นาทีในเวลาทำการ ส่งรายงานตรงเวลาทุกรอบ</p></div>
+      <div class="quick-card"><div class="ic">💛</div><h3>อุ่นใจ</h3><p>มีรูปน้องเสมอ เล่ารายละเอียดเล็กๆ ให้เจ้าของเห็นภาพ</p></div>
+      <div class="quick-card"><div class="ic">🤝</div><h3>จริงใจ</h3><p>มีปัญหาแจ้งทันที ไม่ปิดบัง — ความไว้ใจสำคัญกว่าการดูดี</p></div>
     </div>
 
-    <h2 class="sec">ภาษากายแมว (Feline Body Language)</h2>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>อาการที่สังเกต</th><th>ความหมาย</th></tr></thead>
-        <tbody>
-          <tr><td>หูแบนราบ · ฟ่อขู่ · หมอบต่ำ · หางซุก · ขนลุก</td><td>🔴 กลัว</td></tr>
-          <tr><td>หางสะบัดไปมา · หูแบนปลาย · รูม่านตาขยาย · ตัวเกร็งกะทันหัน</td><td>🔴 หงุดหงิด พร้อมข่วน-กัด</td></tr>
-          <tr><td>หางตั้งปลายงอนิดๆ · เดินเข้าถูตัว · kneading · หลับตาช้า</td><td>🟢 ผ่อนคลาย ไว้ใจ</td></tr>
-        </tbody>
-      </table>
+    <h2 class="sec">เรียกน้องด้วยคำที่อบอุ่น</h2>
+    <div class="dosdonts">
+      <div class="do"><h4>✅ ใช้คำเหล่านี้</h4><ul><li>"น้อง[ชื่อ]" เช่น น้องโกโก้ น้องมีโซ</li><li>"น้องหมา / น้องแมว"</li><li>"คุณแม่ / คุณพ่อ" (เรียกเจ้าของ)</li></ul></div>
+      <div class="dont"><h4>❌ หลีกเลี่ยง</h4><ul><li>"สัตว์เลี้ยงของท่าน" (ทางการเกินไป)</li><li>"มัน" (เย็นชา)</li><li>เรียกผิดชื่อน้อง — เช็คใบจองทุกครั้ง</li></ul></div>
     </div>
 
-    <div class="alert info">เนื้อหาภาษากายนี้สัมพันธ์กับหมวด 5 (ความปลอดภัย) โดยตรง — แนะนำอ่านควบคู่กัน</div>
+    <h2 class="sec">Template รายงานประจำวัน 3 รอบ</h2>
+    <p>คัดลอกไปปรับใช้ได้เลย — เปลี่ยนชื่อน้องและรายละเอียดตามจริง พร้อมแนบรูป 2-3 รูป</p>
 
-    <div class="source-list">
-      <strong>แหล่งอ้างอิง:</strong> ASPCA · Best Friends Animal Society · International Cat Care · PetMD · Catster
+    <h3 class="subsec">รอบเช้า (09:00)</h3>
+    <div class="chat">
+      <div class="chat-head"><span class="dot"></span> Perfect Pet House · Line OA</div>
+      <div class="bubble shop"><span class="who">ร้าน</span>สวัสดีตอนเช้าค่ะคุณแม่ 🌞 น้องโกโก้ตื่นมาอารมณ์ดีมากเลยค่ะ เมื่อกี้กินอาหารเช้าหมดชาม ขับถ่ายปกติดีค่ะ เดี๋ยวสายๆ จะพาไปวิ่งเล่นที่สนาม แล้วจะส่งรูปมาให้ดูอีกนะคะ 🐶</div>
+    </div>
+
+    <h3 class="subsec">รอบกลางวัน (13:00)</h3>
+    <div class="chat">
+      <div class="chat-head"><span class="dot"></span> Perfect Pet House · Line OA</div>
+      <div class="bubble shop"><span class="who">ร้าน</span>อัปเดตน้องโกโก้ช่วงบ่ายค่ะ 📸 เล่นที่สนามสนุกมาก วิ่งไล่ลูกบอลกับเพื่อนๆ ตอนนี้พักเล่นเสร็จ กินน้ำแล้วนอนพักในห้องแอร์เย็นๆ สบายๆ ค่ะ ทุกอย่างปกติดีนะคะ 💛</div>
+    </div>
+
+    <h3 class="subsec">รอบเย็น (18:00)</h3>
+    <div class="chat">
+      <div class="chat-head"><span class="dot"></span> Perfect Pet House · Line OA</div>
+      <div class="bubble shop"><span class="who">ร้าน</span>สรุปวันนี้ของน้องโกโก้ค่ะ 🌙 กินอาหารครบ 3 มื้อ ขับถ่ายปกติ ร่าเริงดีตลอดวัน สุขภาพแข็งแรงค่ะ พรุ่งนี้คุณแม่มีอะไรอยากให้ดูแลเพิ่มเป็นพิเศษไหมคะ? เดี๋ยวทางเราจัดให้เลยค่ะ 😊</div>
+    </div>
+
+    <h2 class="sec">การแจ้ง "ข่าวไม่ดี" อย่างมืออาชีพ</h2>
+    <p>เมื่อน้องป่วย/บาดเจ็บ/ไม่ยอมกิน — วิธีพูดสำคัญมาก ใช้โครง <strong>5 ขั้น</strong> นี้:</p>
+    <div class="timeline">
+      <div class="t-step"><div class="t-time">1. เปิดด้วยความห่วงใย</div><p>ไม่เริ่มด้วยคำที่ทำให้ตกใจทันที</p></div>
+      <div class="t-step"><div class="t-time">2. บอกข้อเท็จจริง</div><p>อะไรเกิดขึ้น เกิดเมื่อไหร่ — ตรงไปตรงมา ไม่อ้อม</p></div>
+      <div class="t-step"><div class="t-time">3. สิ่งที่เราทำไปแล้ว</div><p>แสดงว่าร้านดูแลและจัดการทันที</p></div>
+      <div class="t-step"><div class="t-time">4. ขั้นต่อไป</div><p>เสนอทางเลือก/แผนชัดเจน</p></div>
+      <div class="t-step"><div class="t-time">5. เปิดให้ถาม</div><p>ให้เจ้าของรู้สึกได้ร่วมตัดสินใจ</p></div>
+    </div>
+
+    <h3 class="subsec">ตัวอย่างจริง: น้องไม่ยอมกินอาหาร</h3>
+    <div class="chat">
+      <div class="chat-head"><span class="dot"></span> Perfect Pet House · Line OA</div>
+      <div class="bubble shop"><span class="who">ร้าน</span>สวัสดีค่ะคุณแม่ ทางเราอยากอัปเดตเรื่องน้องมีโซนิดนึงนะคะ 💛 พอดีมื้อเช้าวันนี้น้องกินได้น้อยกว่าปกติค่ะ (กินประมาณครึ่งชาม)</div>
+      <div class="bubble shop"><span class="who">ร้าน</span>ทางเราลองอุ่นอาหารให้หอมขึ้นและเปลี่ยนมุมวางชามให้แล้ว น้องเริ่มสนใจมากขึ้นค่ะ ส่วนอื่นๆ ร่าเริงปกติ ขับถ่ายดีค่ะ</div>
+      <div class="bubble shop"><span class="who">ร้าน</span>รบกวนถามคุณแม่ว่าปกติน้องมีของโปรดหรือวิธีให้กินแบบไหนเป็นพิเศษไหมคะ? หรือถ้าคุณแม่สะดวกฝากขนม/อาหารที่น้องชอบเข้ามาเพิ่ม เดี๋ยวเราดูแลให้เต็มที่เลยค่ะ 🐱</div>
+      <div class="bubble cust"><span class="who">ลูกค้า</span>น้องชอบกินแบบคลุกน้ำอุ่นค่ะ เดี๋ยวจะฝากของโปรดไปให้นะคะ ขอบคุณที่ดูแลดีมากเลยค่ะ 🙏</div>
+    </div>
+    <div class="alert success">สังเกต: เริ่มนุ่มนวล → บอกข้อเท็จจริง → บอกสิ่งที่ทำไปแล้ว → ชวนเจ้าของร่วมแก้ → เจ้าของรู้สึกอุ่นใจแทนที่จะตกใจ</div>
+
+    <h2 class="sec">Do &amp; Don't ภาษา Line</h2>
+    <div class="dosdonts">
+      <div class="do"><h4>✅ ควรทำ</h4><ul><li>ลงท้าย "ค่ะ/ครับ" เสมอ</li><li>ใช้ emoji พอดี 1-2 ตัว/ข้อความ</li><li>มีรูปน้องแนบเสมอ</li><li>เรียกชื่อน้องให้ถูก</li></ul></div>
+      <div class="dont"><h4>❌ ห้ามทำ</h4><ul><li>ตอบห้วนสั้น "ค่ะ" "โอเค" คำเดียว</li><li>ปล่อยข้อความค้างเกิน 15 นาที</li><li>พิมพ์ผิด/ตัวย่อแชท (จ้า, คับ, 555)</li><li>แจ้งข่าวร้ายแบบห้วนๆ ไม่มีบริบท</li></ul></div>
     </div>
   </section>
 
-  <!-- ════════════════════════════════════════ QUIZ ════════════════ -->
-  <section class="page" id="page-quiz">
-    <div class="page-header">
-      <div class="eyebrow">ปิดท้าย</div>
-      <h1>📝 แบบทดสอบท้ายบทเรียน</h1>
-      <p>15 ข้อ เน้นทักษะการให้บริการ + ความรู้สัตว์เลี้ยง · มีข้อเขียน 1 ข้อ</p>
+  <!-- ════════════ CAT 8: โรค & สุขภาพ ════════════ -->
+  <section class="page" id="page-cat8">
+    <div class="page-header"><div class="eyebrow">หมวด 8 · ทักษะขั้นสูง</div><h1>โรคและปัญหาสุขภาพที่พบบ่อย</h1><p>พี่เลี้ยงไม่ใช่สัตวแพทย์ แต่ต้อง "สังเกตเป็น" และรู้ว่าเมื่อไหร่ต้องส่งต่อทันที</p></div>
+
+    <div class="alert info"><h3>📌 หน้าที่ของพี่เลี้ยง</h3>ไม่ใช่การวินิจฉัยหรือรักษาเอง แต่คือ <strong>สังเกต → แยกสัตว์ → รายงานหัวหน้า</strong> ให้เร็วที่สุด การรักษาเป็นหน้าที่ของสัตวแพทย์เท่านั้น</div>
+
+    <h2 class="sec">ระบบสัญญาณไฟจราจร (ความเร่งด่วน)</h2>
+    <div class="dosdonts" style="grid-template-columns:1fr 1fr 1fr;">
+      <div class="dont" style="background:var(--danger-bg)"><h4>🔴 ฉุกเฉิน</h4><ul><li>แจ้งหัวหน้า "ทันที"</li><li>เตรียมส่งคลินิก</li></ul></div>
+      <div class="dont" style="background:var(--warn-bg); border-color:rgba(184,134,11,.3)"><h4 style="color:#6b5410">🟡 เฝ้าระวัง</h4><ul><li>แยกสัตว์ออกมา</li><li>รายงาน + จับตาดูใกล้ชิด</li></ul></div>
+      <div class="do"><h4>🟢 สังเกตต่อ</h4><ul><li>บันทึก F-01</li><li>ดูแนวโน้มอาการ</li></ul></div>
     </div>
+
+    <h2 class="sec">ตารางโรคที่พบบ่อยในโรงแรมสัตว์</h2>
+    <div class="table-wrap"><table><thead><tr><th>โรค/ภาวะ</th><th>อาการที่สังเกต</th><th>การดูแลเบื้องต้น</th><th>ระดับ</th></tr></thead><tbody>
+      <tr><td><strong>ลมแดด (Heat Stroke)</strong></td><td>หอบหนัก ลิ้น/เหงือกแดงจัด น้ำลายไหล เซ ล้ม</td><td>ย้ายเข้าที่เย็นทันที เช็ดตัวด้วยน้ำอุณหภูมิห้อง (ไม่ใช่น้ำแข็ง) ส่งหมอด่วน</td><td>🔴</td></tr>
+      <tr><td><strong>หายใจลำบาก/สำลัก</strong></td><td>หายใจเสียงดัง เหงือกซีด/ม่วง อ้าปากหอบ</td><td>ลดความเครียด ไม่จับบีบ ส่งหมอด่วน</td><td>🔴</td></tr>
+      <tr><td><strong>อาเจียน/ท้องเสียรุนแรง</strong></td><td>อาเจียนซ้ำหลายครั้ง ถ่ายเหลวมีเลือด ซึมไม่กิน</td><td>แยกสัตว์ งดอาหารชั่วคราว มีน้ำสะอาด รายงานทันที</td><td>🔴</td></tr>
+      <tr><td><strong>เคนเนลคอฟ (Kennel Cough)</strong></td><td>ไอแห้งเสียงก้อง เหมือนมีอะไรติดคอ จาม น้ำมูก</td><td>แยกออกจากสัตว์อื่นทันที (ติดต่อง่ายมาก) รายงานหัวหน้า</td><td>🟡</td></tr>
+      <tr><td><strong>ลำไส้อักเสบจากเครียด</strong></td><td>ถ่ายเหลว/มีมูก หลังเข้าพักใหม่ ยังร่าเริง กินได้</td><td>ลดความเครียด ให้พื้นที่สงบ จดบันทึก เฝ้าดูใกล้ชิด</td><td>🟡</td></tr>
+      <tr><td><strong>เห็บ-หมัด</strong></td><td>เกาบ่อย มีจุดดำ/ตัวเห็บตามขน หนังแดง</td><td>แยกทันที (กันแพร่) แจ้งหัวหน้า ไม่ปล่อยเข้าพื้นที่รวม</td><td>🟡</td></tr>
+      <tr><td><strong>เชื้อรา/ขี้เรื้อน</strong></td><td>ขนร่วงเป็นวง ผิวแดง สะเก็ด เกาคัน</td><td>แยกสัตว์ สวมถุงมือเมื่อสัมผัส แจ้งหัวหน้า</td><td>🟡</td></tr>
+      <tr><td><strong>ภาวะขาดน้ำ</strong></td><td>เหงือกแห้ง ผิวหนังคืนตัวช้าเมื่อดึงเบาๆ ซึม</td><td>จัดน้ำสะอาดให้เข้าถึงง่าย รายงานหัวหน้า</td><td>🟡</td></tr>
+      <tr><td><strong>เครียด/ปรับตัว (วันแรก)</strong></td><td>ซ่อนตัว ร้องบ่อย กินน้อยเล็กน้อย แต่อาการคงที่</td><td>ให้เวลา 30 นาที+ พื้นที่สงบ มีที่ซ่อน บันทึกอาการ</td><td>🟢</td></tr>
+    </tbody></table></div>
+    <div class="alert warn"><strong>กฎทอง:</strong> ถ้าไม่แน่ใจว่าระดับไหน → ให้ถือเป็นระดับสูงกว่าเสมอ แจ้งหัวหน้าไว้ก่อนดีกว่าปล่อยผ่าน</div>
+
+    <h2 class="sec">5 สัญญาณ "ส่งหมอทันที" (จำให้ขึ้นใจ)</h2>
+    <ul class="checklist">
+      <li>หายใจลำบาก เหงือกซีด/ม่วง</li>
+      <li>อาเจียนหรือถ่ายเป็นเลือด</li>
+      <li>ชัก เกร็ง หมดสติ</li>
+      <li>หอบจากความร้อนจัด (สงสัยลมแดด)</li>
+      <li>ซึมหนัก ไม่ตอบสนอง ไม่ลุก</li>
+    </ul>
+  </section>
+
+  <!-- ════════════ CAT 9: Fear-Free Handling ════════════ -->
+  <section class="page" id="page-cat9">
+    <div class="page-header"><div class="eyebrow">หมวด 9 · ทักษะขั้นสูง</div><h1>Fear-Free Handling</h1><p>ศิลปะการจับสัตว์แบบลดความกลัว — สัตว์ที่ไม่เครียด = ปลอดภัยกับทั้งน้องและพี่เลี้ยง</p></div>
+
+    <div class="alert info"><h3>🎯 หลักคิด Fear-Free</h3>ความก้าวร้าวส่วนใหญ่มาจาก "ความกลัว" ไม่ใช่นิสัยดุ — ถ้าเราลดความกลัวได้ การถูกกัด-ข่วนจะลดลงมาก หัวใจคือ <strong>ช้า เบา และให้ทางเลือก</strong></div>
+
+    <h2 class="sec">6 เทคนิคลดความเครียดสัตว์</h2>
+    <div class="quick-grid">
+      <div class="quick-card"><div class="ic">🐢</div><h3>เข้าหาช้าๆ</h3><p>ไม่รีบ ไม่เดินตรงดิ่ง เข้าด้านข้างแทนการเผชิญหน้า</p></div>
+      <div class="quick-card"><div class="ic">👀</div><h3>ไม่จ้องตา</h3><p>การจ้องตาตรงๆ = การข่มขู่ในภาษาสัตว์ ให้มองเฉียงๆ</p></div>
+      <div class="quick-card"><div class="ic">🔉</div><h3>เสียงเบานุ่ม</h3><p>พูดเบาๆ ช้าๆ ไม่ส่งเสียงดังหรือเคลื่อนไหวฉับพลัน</p></div>
+      <div class="quick-card"><div class="ic">🏠</div><h3>มีที่ซ่อน</h3><p>วางกล่อง/ผ้าให้แมวมุดซ่อน จะรู้สึกปลอดภัยและสงบลง</p></div>
+      <div class="quick-card"><div class="ic">🌿</div><h3>ฟีโรโมน</h3><p>สเปรย์ฟีโรโมนสังเคราะห์ (เช่น Feliway) ช่วยให้แมวผ่อนคลาย</p></div>
+      <div class="quick-card"><div class="ic">🍖</div><h3>ขนมล่อใจ</h3><p>ใช้ขนมสร้างความคุ้นเคย เปลี่ยนการจับให้เป็นเรื่องดี</p></div>
+    </div>
+
+    <h2 class="sec">📋 Workflow: เมื่อต้องจับสัตว์ที่ดูเครียด</h2>
+    <div class="flow">
+      <div class="flow-node start">เริ่ม: ต้องจับ/อุ้มสัตว์</div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node action">ประเมินด้วยตาก่อน — สังเกตภาษากาย (หู หาง ขน ตา)</div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node decision"><span class="q">มีสัญญาณกลัว/ก้าวร้าวไหม?</span></div>
+      <div class="flow-branch">
+        <div class="col">
+          <span class="branch-label no">ไม่มี — สงบดี</span>
+          <div class="flow-arrow"></div>
+          <div class="flow-node success">เข้าหาช้าๆ พูดเบาๆ จับด้วยสองมือรองรับ</div>
+        </div>
+        <div class="col">
+          <span class="branch-label yes">มีสัญญาณ</span>
+          <div class="flow-arrow"></div>
+          <div class="flow-node danger">หยุด! ถอยให้พื้นที่ ลองเทคนิคลดเครียด (ที่ซ่อน/ขนม/ฟีโรโมน)</div>
+          <div class="flow-arrow"></div>
+          <div class="flow-node decision"><span class="q">สงบลงไหม?</span></div>
+        </div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node action">ถ้ายังไม่สงบ → ใช้ผ้าขนหนูคลุม (towel wrap) · ถ้ายังไม่ได้ → แจ้งหัวหน้า อย่าฝืนคนเดียว</div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node success">จับสำเร็จอย่างปลอดภัย ✓ บันทึกพฤติกรรมในประวัติน้อง</div>
+    </div>
+
+    <h2 class="sec">📋 Workflow: สัตว์ก้าวร้าวกะทันหันระหว่างอาบน้ำ</h2>
+    <div class="flow">
+      <div class="flow-node start">น้องเริ่มดิ้น/ขู่/งับ ระหว่างอาบน้ำ</div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node danger">หยุดทันที ปิดน้ำ/ที่เป่า ไม่บีบจับสู้</div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node action">ปล่อยให้น้องตั้งตัว พูดเสียงเบา ลดสิ่งกระตุ้น (เสียง/แสง)</div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node decision"><span class="q">น้องสงบลงและปลอดภัยพอจะทำต่อ?</span></div>
+      <div class="flow-branch">
+        <div class="col"><span class="branch-label yes">ใช่</span><div class="flow-arrow"></div><div class="flow-node success">ทำต่ออย่างนุ่มนวล จบให้เร็วที่สุด</div></div>
+        <div class="col"><span class="branch-label no">ไม่</span><div class="flow-arrow"></div><div class="flow-node danger">หยุดบริการ แจ้งหัวหน้า + เจ้าของ บันทึก F-05 ไม่ฝืนต่อ</div></div>
+      </div>
+    </div>
+    <div class="alert warn">จำไว้: ความปลอดภัยมาก่อนทรงขนสวยเสมอ — ไม่มีงาน Grooming ไหนคุ้มกับการบาดเจ็บของน้องหรือพี่เลี้ยง</div>
+  </section>
+
+  <!-- ════════════ CAT 10: สัตว์ต้องการพิเศษ ════════════ -->
+  <section class="page" id="page-cat10">
+    <div class="page-header"><div class="eyebrow">หมวด 10 · ทักษะขั้นสูง</div><h1>การดูแลสัตว์ที่ต้องการพิเศษ</h1><p>สัตว์บางตัวต้องการการดูแลเฉพาะ — ความใส่ใจรายตัวคือจุดแข็งของร้านเล็ก</p></div>
+
+    <div class="alert info"><h3>📌 กฎสำคัญ</h3>สัตว์กลุ่มพิเศษทุกตัวต้องมี <strong>บันทึกเฉพาะ</strong> และแจ้งให้ทุกกะรับทราบ — ข้อมูลต้องส่งต่อระหว่างกะไม่ตกหล่น</div>
+
+    <h2 class="sec">🐕 สัตว์สูงวัย (Senior)</h2>
+    <div class="card"><ul>
+      <li>เคลื่อนไหวช้า ข้อต่อไม่ดี — จัดที่นอนนุ่ม หลีกเลี่ยงพื้นลื่น</li>
+      <li>อาจมองเห็น/ได้ยินไม่ดี — เข้าหาให้น้องเห็นตัวก่อน อย่าทำให้ตกใจ</li>
+      <li>สังเกตการกิน-ขับถ่ายใกล้ชิด (ปัญหาสุขภาพซ่อนเร้นบ่อย)</li>
+      <li>ไม่จัดกิจกรรมหนัก พักบ่อยขึ้น</li>
+    </ul></div>
+
+    <h2 class="sec">🍽️ สัตว์แพ้อาหาร</h2>
+    <div class="card"><ul>
+      <li><strong>เด็ดขาด:</strong> ให้เฉพาะอาหารที่เจ้าของจัดมา/ระบุในใบจองเท่านั้น</li>
+      <li>ห้ามให้ขนมหรืออาหารร้านโดยไม่เช็ค — แม้น้องจะขอ</li>
+      <li>ติดป้ายเตือน "แพ้อาหาร" ที่หน้าห้องให้ชัด</li>
+      <li>แจ้งทุกคนในกะ + เขียนในบันทึกส่งต่อ</li>
+    </ul></div>
+
+    <h2 class="sec">💊 สัตว์ที่กินยาประจำ</h2>
+    <div class="card">
+      <p>บันทึกให้ครบทุกครั้ง: <strong>ชื่อยา · ขนาด · เวลา · ใครเป็นคนป้อน</strong></p>
+      <h3 class="subsec">ขั้นตอนป้อนยาที่ปลอดภัย</h3>
+      <div class="timeline">
+        <div class="t-step"><p>ตรวจสอบฉลาก/คำสั่งเจ้าของให้ตรง (ยา-ขนาด-เวลา) ก่อนทุกครั้ง</p></div>
+        <div class="t-step"><p>ป้อนตามวิธีที่เจ้าของแจ้ง (ซ่อนในอาหาร/ป้อนตรง) อย่างนุ่มนวล</p></div>
+        <div class="t-step"><p>ยืนยันว่าน้องกลืนยาแล้วจริง</p></div>
+        <div class="t-step"><p>บันทึกทันที + ถ่ายรูป/แจ้งเจ้าของว่าป้อนยาเรียบร้อย</p></div>
+      </div>
+      <div class="alert danger" style="margin-bottom:0"><strong>ห้าม</strong> ปรับขนาดยาเอง หรือป้อนยาที่ไม่แน่ใจ — สงสัยเมื่อไหร่ถามหัวหน้า/เจ้าของก่อนเสมอ</div>
+    </div>
+
+    <h2 class="sec">😿 สัตว์วิตกกังวล / แยกจากเจ้าของไม่ได้</h2>
+    <div class="card"><ul>
+      <li>ให้ของที่มีกลิ่นเจ้าของ (ผ้า/เสื้อ) อยู่ด้วย ช่วยให้อุ่นใจ</li>
+      <li>ใช้เทคนิค Fear-Free (หมวด 9) — ที่ซ่อน ฟีโรโมน เสียงเบา</li>
+      <li>เพิ่มความถี่การเข้าไปดู แต่ไม่บังคับให้เล่น</li>
+      <li>ส่งรูป/วิดีโอให้เจ้าของบ่อยขึ้น (ช่วยทั้งน้องและเจ้าของ)</li>
+      <li>ถ้าเครียดจัดจนไม่กิน/ไม่ถ่ายข้ามวัน → รายงานหัวหน้า</li>
+    </ul></div>
+  </section>
+
+  <!-- ════════════ CAT 11: รับมือลูกค้ายาก ════════════ -->
+  <section class="page" id="page-cat11">
+    <div class="page-header"><div class="eyebrow">หมวด 11 · ทักษะขั้นสูง</div><h1>การรับมือลูกค้าในสถานการณ์ยาก</h1><p>ลูกค้าที่ไม่พอใจ ถ้ารับมือดี กลายเป็นลูกค้าประจำได้ — ถ้ารับมือพลาด เสียทั้งลูกค้าและรีวิว</p></div>
+
+    <h2 class="sec">หลักการ "HEARD" — 5 ขั้นรับมือทุกสถานการณ์</h2>
+    <div class="timeline">
+      <div class="t-step"><div class="t-time">H — Hear (รับฟัง)</div><p>ฟังให้จบ ไม่ขัด ไม่แก้ตัว ปล่อยให้ลูกค้าระบายก่อน</p></div>
+      <div class="t-step"><div class="t-time">E — Empathize (เห็นใจ)</div><p>"เราเข้าใจความรู้สึกคุณแม่เลยค่ะ" — ยอมรับอารมณ์เขา</p></div>
+      <div class="t-step"><div class="t-time">A — Apologize (ขอโทษ)</div><p>ขอโทษอย่างจริงใจที่ทำให้กังวล แม้ยังไม่รู้ใครผิด</p></div>
+      <div class="t-step"><div class="t-time">R — Resolve (แก้ไข)</div><p>เสนอทางแก้ที่ทำได้จริง หรือส่งต่อหัวหน้าทันที</p></div>
+      <div class="t-step"><div class="t-time">D — Document (บันทึก)</div><p>จดลงแบบฟอร์ม <code class="fc">F-06</code> เพื่อป้องกันและปรับปรุง</p></div>
+    </div>
+    <div class="alert danger"><strong>กฎเหล็ก:</strong> ห้ามโต้เถียง · ห้ามโทษลูกค้า · ห้ามให้สัญญาเกินอำนาจตัวเอง — เรื่องใหญ่ส่งหัวหน้าเสมอ</div>
+
+    <h2 class="sec">🎭 สคริปต์รับมือ 4 สถานการณ์จริง</h2>
+
+    <div class="script">
+      <div class="script-head"><span class="badge">สถานการณ์ 1</span> ลูกค้าโกรธที่น้องกินอาหารน้อยลง</div>
+      <div class="script-body">
+        <div class="line"><div class="role cust">ลูกค้า</div><div class="txt">"ทำไมน้องกินน้อยลง! ที่บ้านกินเก่งมาก พวกคุณดูแลยังไง?"</div></div>
+        <div class="line"><div class="role staff">พนักงาน</div><div class="txt">"เข้าใจความเป็นห่วงของคุณแม่เลยค่ะ 🙏 ต้องขอโทษที่ทำให้กังวลนะคะ"<em>(เห็นใจ + ขอโทษก่อน ไม่แก้ตัว)</em></div></div>
+        <div class="line"><div class="role staff">พนักงาน</div><div class="txt">"จริงๆ แล้วน้องที่มาพักช่วงแรกมักกินน้อยลงเล็กน้อยเพราะปรับตัวกับที่ใหม่ค่ะ เป็นเรื่องปกติที่พบได้บ่อย ส่วนอื่นน้องร่าเริงดี ขับถ่ายปกติค่ะ"<em>(ให้ข้อเท็จจริงด้วยความรู้ ลดความตกใจ)</em></div></div>
+        <div class="line"><div class="role staff">พนักงาน</div><div class="txt">"ทางเราอุ่นอาหารให้หอมขึ้นและคอยกระตุ้นให้น้องกินอยู่ค่ะ ถ้าคุณแม่สะดวกฝากของโปรดน้องมาเพิ่ม จะช่วยได้มากเลยค่ะ 💛"<em>(สิ่งที่ทำไปแล้ว + ชวนร่วมแก้)</em></div></div>
+      </div>
+    </div>
+
+    <div class="script">
+      <div class="script-head"><span class="badge">สถานการณ์ 2</span> ลูกค้าขอขยายเวลาเข้าพักกะทันหัน แต่ห้องเต็ม</div>
+      <div class="script-body">
+        <div class="line"><div class="role cust">ลูกค้า</div><div class="txt">"ขอต่ออีก 2 คืนนะ ธุระยังไม่เสร็จ"</div></div>
+        <div class="line"><div class="role staff">พนักงาน</div><div class="txt">"ได้เลยค่ะ เดี๋ยวขอเช็คห้องว่างให้นะคะ สักครู่ค่ะ 🙏"<em>(รับเรื่องเชิงบวกก่อน ไม่ปฏิเสธทันที)</em></div></div>
+        <div class="line"><div class="role staff">พนักงาน</div><div class="txt">"พอดีช่วงวันที่คุณแม่ต้องการ ห้องเต็มพอดีเลยค่ะ 😔 แต่หนูไม่อยากให้คุณแม่ลำบาก ขอแจ้งหัวหน้าเพื่อหาทางช่วยให้นะคะ เผื่อมีห้องประเภทอื่นหรือคิวยกเลิกค่ะ"<em>(ไม่ตัดจบ ส่งต่อหัวหน้า = ไม่ให้สัญญาเกินอำนาจ)</em></div></div>
+        <div class="line"><div class="role staff">พนักงาน</div><div class="txt">"ระหว่างนี้รบกวนคุณแม่ยืนยันวันที่แน่นอน เดี๋ยวเราพยายามหาทางที่ดีที่สุดให้ค่ะ"<em>(ให้ความหวังที่ทำได้จริง ไม่หลอก)</em></div></div>
+      </div>
+    </div>
+
+    <div class="script">
+      <div class="script-head"><span class="badge">สถานการณ์ 3</span> ลูกค้าไม่ยอมรับว่าน้องมีปัญหาสุขภาพก่อนฝาก</div>
+      <div class="script-body">
+        <div class="line"><div class="role cust">ลูกค้า</div><div class="txt">"น้องไม่ได้เป็นอะไรนะ! ที่บ้านปกติดี อย่ามาปฏิเสธรับฝาก"</div></div>
+        <div class="line"><div class="role staff">พนักงาน</div><div class="txt">"เข้าใจค่ะ คุณแม่รู้จักน้องดีที่สุดแน่นอนค่ะ 🙏"<em>(ยอมรับ ไม่เถียงตรงๆ)</em></div></div>
+        <div class="line"><div class="role staff">พนักงาน</div><div class="txt">"พอดีตอนตรวจรับ เราสังเกตเห็น [อาการที่พบ] นิดหน่อยค่ะ ซึ่งตามมาตรฐานความปลอดภัยของร้าน เราต้องดูแลให้แน่ใจว่าน้องและเพื่อนๆ ตัวอื่นปลอดภัยทุกตัวค่ะ"<em>(อิงมาตรฐาน/นโยบาย ไม่ใช่ความเห็นส่วนตัว)</em></div></div>
+        <div class="line"><div class="role staff">พนักงาน</div><div class="txt">"หนูขอแจ้งหัวหน้ามาช่วยดูและอธิบายเพิ่มเติมนะคะ เพื่อหาทางออกที่ดีที่สุดให้น้องค่ะ"<em>(ส่งต่อหัวหน้า — เรื่องปฏิเสธรับฝากเกินอำนาจพนักงาน)</em></div></div>
+      </div>
+    </div>
+
+    <div class="script">
+      <div class="script-head"><span class="badge">สถานการณ์ 4</span> ลูกค้าไม่พอใจทรงตัดขน</div>
+      <div class="script-body">
+        <div class="line"><div class="role cust">ลูกค้า</div><div class="txt">"ตัดสั้นไปมาก! ไม่ได้สั่งแบบนี้นะ"</div></div>
+        <div class="line"><div class="role staff">พนักงาน</div><div class="txt">"ต้องขอโทษจริงๆ ค่ะที่ทรงออกมาไม่ตรงใจคุณแม่ 🙏 หนูเสียใจด้วยค่ะ"<em>(ขอโทษจริงใจก่อน ไม่ป้องกันตัว)</em></div></div>
+        <div class="line"><div class="role staff">พนักงาน</div><div class="txt">"รบกวนคุณแม่บอกหนูได้ไหมคะว่าอยากให้เป็นทรงแบบไหน เดี๋ยวหนูจดบันทึกไว้ในประวัติน้องให้ละเอียด ครั้งหน้าจะได้ตรงใจที่สุดค่ะ"<em>(โฟกัสทางแก้ + ป้องกันครั้งหน้า)</em></div></div>
+        <div class="line"><div class="role staff">พนักงาน</div><div class="txt">"ขนจะยาวกลับมาภายในไม่กี่สัปดาห์นะคะ และหนูจะแจ้งหัวหน้าเรื่องนี้เพื่อดูแลคุณแม่เป็นพิเศษในครั้งต่อไปค่ะ 💛"<em>(ให้ความมั่นใจ + ส่งต่อหัวหน้า)</em></div></div>
+      </div>
+    </div>
+
+    <h2 class="sec">📋 Workflow: เมื่อเจอข้อร้องเรียน</h2>
+    <div class="flow">
+      <div class="flow-node start">ลูกค้าแสดงความไม่พอใจ</div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node action">รับฟังจนจบ + เห็นใจ + ขอโทษ (H-E-A)</div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node decision"><span class="q">แก้ไขได้ในอำนาจพนักงานไหม?</span></div>
+      <div class="flow-branch">
+        <div class="col"><span class="branch-label yes">ได้</span><div class="flow-arrow"></div><div class="flow-node success">แก้ทันที + ยืนยันลูกค้าพอใจ</div></div>
+        <div class="col"><span class="branch-label no">เกินอำนาจ / เรื่องใหญ่</span><div class="flow-arrow"></div><div class="flow-node danger">แจ้งหัวหน้าทันที ไม่ให้สัญญาเอง</div></div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node action">บันทึกใน F-06 — หัวหน้าพิจารณาภายใน 24 ชม.</div>
+    </div>
+  </section>
+
+  <!-- ════════════ QUIZ ════════════ -->
+  <section class="page" id="page-quiz">
+    <div class="page-header"><div class="eyebrow">ปิดท้าย</div><h1>แบบทดสอบท้ายบทเรียน</h1><p>15 ข้อ เน้นทักษะการให้บริการ + ความรู้สัตว์เลี้ยง · มีข้อเขียน 1 ข้อ</p></div>
 
     <div class="quizbox">
       <h2>พร้อมทดสอบความเข้าใจแล้วหรือยัง? 🐾</h2>
       <p>15 ข้อ · บันทึกคะแนนอัตโนมัติผ่าน Google Form → Google Sheets</p>
       <!-- ════ วางลิงก์ Google Form ที่นี่ ════
-           แทนที่บรรทัด <span> ด้านล่าง ด้วย:
-           <a class="quiz-btn" href="https://forms.gle/XXXXXXXXX" target="_blank">เริ่มทำแบบทดสอบ →</a>
-      ════════════════════════════════════════ -->
-      <span class="quiz-btn" id="QUIZ_FORM_LINK" style="cursor:default; opacity:.75;">⏳ รอลิงก์ Google Form จากกาย</span>
-      <p class="quiz-note">📋 ไฟล์คำถาม 15 ข้อพร้อมเฉลย → <strong>แบบทดสอบ-15ข้อ.md</strong><br>copy ไปสร้าง Google Form ได้เลย แล้วนำลิงก์มาแทน span ด้านบน</p>
+           แทนที่ <span> ด้านล่างด้วย:
+           <a class="quiz-btn" href="https://forms.gle/XXXXXX" target="_blank" rel="noopener">เริ่มทำแบบทดสอบ →</a>
+      ════════════════════════════════════ -->
+      <span class="quiz-btn" id="QUIZ_FORM_LINK" style="cursor:default; opacity:.8;">⏳ รอลิงก์ Google Form จากกาย</span>
+      <p class="quiz-note">📋 ไฟล์คำถาม 15 ข้อพร้อมเฉลย → <strong>แบบทดสอบ-15ข้อ.md</strong></p>
     </div>
 
-    <h2 class="sec" style="margin-top:36px;">ตัวอย่างคำถาม 15 ข้อ</h2>
-    <p style="color:var(--apple-gray); font-size:.88rem; margin-bottom:20px;">คำถามในแบบทดสอบจริงอยู่ใน Google Form — ด้านล่างนี้เป็นตัวอย่างเพื่อให้พนักงานเตรียมตัวก่อนทำ</p>
-
-    <div class="card">
-      <h3 class="subsec">📌 ชุดที่ 1: ทักษะการให้บริการ (ข้อ 1–10)</h3>
-      <ul style="margin-top:10px; color:var(--apple-gray);">
-        <li>อุณหภูมิน้ำที่เหมาะสมสำหรับอาบน้ำ</li>
-        <li>เวลาให้สัตว์ปรับตัวหลังเข้าห้องใหม่</li>
-        <li>ขั้นตอนเมื่อพบรอยแผลก่อนอาบน้ำ</li>
-        <li>การดูแลระหว่างเป่าแห้งในกล่อง</li>
-        <li>สัญญาณสุนัขกลัว/วิตกกังวล</li>
-        <li>วิธีรับมือเมื่อสัตว์แสดงสัญญาณเครียด</li>
-        <li>วิธีอุ้มแมวที่ถูกต้อง</li>
-        <li>ความหมายของ "แมวนิ่งผิดปกติ" ตอนถูกจับหนังคอ</li>
-        <li>วิธีรับมือแมวที่ตื่นตกใจระหว่างอาบน้ำ</li>
-        <li>ขั้นตอนเมื่อถูกกัด/ข่วน</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3 class="subsec">📌 ชุดที่ 2: ความรู้สัตว์เลี้ยง (ข้อ 11–14)</h3>
-      <ul style="margin-top:10px; color:var(--apple-gray);">
-        <li>อาการที่ต้องรายงานหัวหน้าทันที</li>
-        <li>ความหมายของภาษากายแมวที่ผ่อนคลาย</li>
-        <li>เหตุผลที่ห้ามปล่อยแมวแปลกหน้าไว้ด้วยกัน</li>
-        <li>ความถี่ในการเปลี่ยนน้ำดื่มสัตว์เลี้ยง</li>
-      </ul>
-    </div>
-
-    <div class="card" style="border-left: 4px solid var(--brand-orange);">
-      <h3 class="subsec">✏️ ชุดที่ 3: ข้อเขียน (ข้อ 15)</h3>
-      <p style="font-size:.9rem; margin-top:8px;"><strong>โจทย์:</strong> คุณกำลังจะยกแมวที่ไม่รู้จักขึ้นมาอาบน้ำ พบว่าแมวมีท่าทาง: หูแบนราบ รูม่านตาขยาย หางสะบัดไปมา และตัวเกร็งกะทันหัน</p>
-      <p style="font-size:.9rem; color:var(--apple-gray); margin:0;"><strong>ต้องตอบ 2 ส่วน:</strong> (1) สัญญาณเหล่านี้บอกอะไร? (2) คุณจะทำอย่างไรต่อ?</p>
-    </div>
-
+    <h2 class="sec">ตัวอย่างคำถาม</h2>
+    <p style="color:var(--gray); font-size:.88rem;">คำถามจริงอยู่ใน Google Form — ด้านล่างเป็นตัวอย่างให้พนักงานเตรียมตัว</p>
+    <div class="card"><h3 class="subsec">📌 ชุดที่ 1: ทักษะการให้บริการ (ข้อ 1–10)</h3><ul style="color:var(--gray)"><li>อุณหภูมิน้ำอาบที่เหมาะสม</li><li>เวลาให้สัตว์ปรับตัวหลังเข้าห้องใหม่</li><li>ขั้นตอนเมื่อพบรอยแผลก่อนอาบน้ำ</li><li>การดูแลระหว่างเป่าแห้ง</li><li>สัญญาณสุนัขกลัว/วิตกกังวล</li><li>การรับมือเมื่อสัตว์แสดงสัญญาณเครียด</li><li>วิธีอุ้มแมวที่ถูกต้อง</li><li>ความหมาย "แมวนิ่งผิดปกติ"</li><li>การรับมือแมวตื่นตกใจระหว่างอาบน้ำ</li><li>ขั้นตอนเมื่อถูกกัด/ข่วน</li></ul></div>
+    <div class="card"><h3 class="subsec">📌 ชุดที่ 2: ความรู้สัตว์เลี้ยง (ข้อ 11–14)</h3><ul style="color:var(--gray)"><li>อาการที่ต้องรายงานทันที</li><li>ภาษากายแมวที่ผ่อนคลาย</li><li>เหตุผลที่ห้ามปล่อยแมวแปลกหน้าไว้ด้วยกัน</li><li>ความถี่ในการเปลี่ยนน้ำดื่ม</li></ul></div>
+    <div class="card" style="border-left:4px solid var(--orange)"><h3 class="subsec">✏️ ชุดที่ 3: ข้อเขียน (ข้อ 15)</h3><p style="font-size:.9rem"><strong>โจทย์:</strong> คุณกำลังจะยกแมวที่ไม่รู้จักขึ้นมาอาบน้ำ พบว่าแมวมี: หูแบนราบ รูม่านตาขยาย หางสะบัดไปมา ตัวเกร็งกะทันหัน</p><p style="font-size:.9rem; color:var(--gray); margin:0"><strong>ตอบ 2 ส่วน:</strong> (1) สัญญาณเหล่านี้บอกอะไร? (2) คุณจะทำอย่างไรต่อ?</p></div>
   </section>
 
-</div><!-- /main-wrap -->
+  <div class="no-result" id="noResult">🔍 ไม่พบหัวข้อที่ค้นหา ลองคำอื่นดูนะคะ</div>
+
+</main>
 
 <footer>
   Perfect Pet House — คู่มือพนักงานฉบับศึกษา · ปรับปรุงล่าสุด 28 มิ.ย. 2569<br>
@@ -1206,32 +1031,65 @@
 
 <script>
   const navBtns = document.querySelectorAll('.navbtn');
-  const pages   = document.querySelectorAll('section.page');
-  const drawer  = document.getElementById('drawer');
-  const overlay = document.getElementById('drawerOverlay');
+  const pages = document.querySelectorAll('section.page');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
   const menuBtn = document.getElementById('menuBtn');
+  const searchBox = document.getElementById('searchBox');
+  const noResult = document.getElementById('noResult');
+
+  function closeSidebar() { sidebar.classList.remove('open'); overlay.classList.remove('open'); }
 
   function showPage(target) {
     navBtns.forEach(b => b.classList.toggle('active', b.dataset.target === target));
-    pages.forEach(p => {
-      const active = p.id === 'page-' + target;
-      p.classList.toggle('active', active);
-    });
+    pages.forEach(p => p.classList.toggle('active', p.id === 'page-' + target));
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    drawer.classList.remove('open');
-    overlay.classList.remove('open');
+    closeSidebar();
+    if (searchBox.value) { searchBox.value = ''; runSearch(''); }
   }
 
   navBtns.forEach(btn => btn.addEventListener('click', () => showPage(btn.dataset.target)));
+  menuBtn.addEventListener('click', () => { sidebar.classList.toggle('open'); overlay.classList.toggle('open'); });
+  overlay.addEventListener('click', closeSidebar);
 
-  menuBtn.addEventListener('click', () => {
-    drawer.classList.toggle('open');
-    overlay.classList.toggle('open');
-  });
-  overlay.addEventListener('click', () => {
-    drawer.classList.remove('open');
-    overlay.classList.remove('open');
-  });
+  // ─── SEARCH: jump to first matching section ───
+  const sectionKeywords = {
+    home:'หน้าแรก ภาพรวม เกี่ยวกับร้าน',
+    cat1:'ตัวบุคคล โครงสร้าง องค์กร แผนก ตำแหน่ง เวลาทำงาน บริหาร',
+    cat2:'บริการ ราคา ห้องพัก อาบน้ำ ตัดขน grooming day care จอง ยกเลิก มัดจำ เช็คอิน เช็คเอาท์',
+    cat3:'กฎ ระเบียบ วัคซีน เอกสาร ฉุกเฉิน สัตว์หลุด ร้องเรียน line',
+    cat4:'sop มาตรฐาน เปิดร้าน ปิดร้าน ดูแลประจำวัน แบบฟอร์ม f-01 f-02',
+    cat5:'ความปลอดภัย กัด ข่วน สัญญาณ จับแมว อุ้ม scruffing ภาษากาย',
+    cat6:'ความรู้ สุนัข แมว อุณหภูมิ อาการ ภาษากาย รายงาน',
+    cat7:'สื่อสาร เจ้าของ line รายงาน ข่าวร้าย แชท template สคริปต์',
+    cat8:'โรค สุขภาพ ลมแดด เคนเนลคอฟ ท้องเสีย เห็บ หมัด เชื้อรา ขาดน้ำ ฉุกเฉิน',
+    cat9:'fear free จับสัตว์ ลดเครียด ฟีโรโมน feliway workflow ก้าวร้าว',
+    cat10:'พิเศษ สูงวัย senior แพ้อาหาร ยา ป้อนยา วิตกกังวล',
+    cat11:'ลูกค้า ยาก ร้องเรียน heard สคริปต์ role play ตัดขน',
+    quiz:'แบบทดสอบ ข้อสอบ quiz google form'
+  };
+  function runSearch(q) {
+    q = q.trim().toLowerCase();
+    if (!q) { noResult.style.display = 'none'; return; }
+    let match = null;
+    for (const [key, kw] of Object.entries(sectionKeywords)) {
+      const btn = document.querySelector('.navbtn[data-target="'+key+'"]');
+      const label = btn ? btn.textContent.toLowerCase() : '';
+      if (kw.toLowerCase().includes(q) || label.includes(q)) { match = key; break; }
+    }
+    if (match) {
+      noResult.style.display = 'none';
+      navBtns.forEach(b => b.classList.toggle('active', b.dataset.target === match));
+      pages.forEach(p => p.classList.toggle('active', p.id === 'page-' + match));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      pages.forEach(p => p.classList.remove('active'));
+      noResult.style.display = 'block';
+    }
+  }
+  let st;
+  searchBox.addEventListener('input', e => { clearTimeout(st); st = setTimeout(() => runSearch(e.target.value), 250); });
+  searchBox.addEventListener('keydown', e => { if (e.key === 'Enter') runSearch(e.target.value); });
 </script>
 
 </body>
