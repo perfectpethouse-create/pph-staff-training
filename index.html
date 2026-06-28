@@ -290,6 +290,43 @@
   .quiz-btn { display: inline-block; background: #fff; color: var(--orange-dark); font-weight: 700; padding: 13px 30px; border-radius: 999px; text-decoration: none; transition: transform .2s, box-shadow .2s; box-shadow: 0 4px 16px rgba(0,0,0,.12); }
   .quiz-btn:hover { transform: scale(1.04); box-shadow: 0 8px 24px rgba(0,0,0,.18); }
   .quiz-note { font-size: .8rem; opacity: .8; margin-top: 18px; line-height: 1.6; }
+  .quiz-name-input { width: 100%; max-width: 320px; margin: 0 auto 18px; display: block; border: none; border-radius: 12px; padding: 13px 16px; font-family: var(--font-body); font-size: .95rem; outline: none; text-align: center; }
+  .quiz-name-input:focus { box-shadow: 0 0 0 4px rgba(255,255,255,.35); }
+  .quiz-progress { font-family: var(--font-head); color: var(--gray); font-size: .9rem; margin: 4px 0 18px; }
+  .quiz-progress b { color: var(--orange-dark); }
+  .quiz-q { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 22px; margin-bottom: 14px; box-shadow: var(--shadow-sm); }
+  .quiz-q .qn { display: flex; gap: 10px; align-items: baseline; margin-bottom: 14px; }
+  .quiz-q .qnum { background: var(--orange); color: #fff; font-family: var(--font-head); font-size: .82rem; min-width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center; flex-shrink: 0; }
+  .quiz-q .qtext { font-weight: 600; font-size: .96rem; }
+  .quiz-q .qcat { font-size: .7rem; font-weight: 700; color: var(--gray-2); text-transform: uppercase; letter-spacing: .04em; margin-left: 38px; margin-top: -8px; margin-bottom: 12px; }
+  .quiz-opt { display: flex; align-items: center; gap: 11px; border: 1.5px solid var(--border); border-radius: 12px; padding: 12px 15px; margin-bottom: 8px; cursor: pointer; transition: border-color .15s, background .15s; font-size: .92rem; }
+  .quiz-opt:hover { border-color: var(--orange); background: var(--orange-soft); }
+  .quiz-opt input { accent-color: var(--orange); width: 18px; height: 18px; flex-shrink: 0; }
+  .quiz-opt.sel { border-color: var(--orange); background: var(--orange-soft); }
+  .quiz-opt.correct { border-color: var(--success); background: var(--success-bg); }
+  .quiz-opt.wrong { border-color: var(--danger); background: var(--danger-bg); }
+  .quiz-opt .mark { margin-left: auto; font-weight: 900; }
+  .quiz-opt.correct .mark { color: var(--success); }
+  .quiz-opt.wrong .mark { color: var(--danger); }
+  .quiz-textarea { width: 100%; border: 1.5px solid var(--border); border-radius: 12px; padding: 13px 15px; font-family: var(--font-body); font-size: .92rem; resize: vertical; min-height: 110px; outline: none; }
+  .quiz-textarea:focus { border-color: var(--orange); box-shadow: 0 0 0 3px var(--orange-soft); }
+  .quiz-submit { display: block; width: 100%; max-width: 320px; margin: 24px auto 0; background: var(--orange); color: #fff; border: none; border-radius: 999px; padding: 15px; font-family: var(--font-head); font-size: 1.05rem; cursor: pointer; transition: transform .2s, box-shadow .2s; box-shadow: 0 6px 20px rgba(227,127,51,.3); }
+  .quiz-submit:hover { transform: scale(1.02); box-shadow: 0 10px 28px rgba(227,127,51,.4); }
+  .quiz-submit:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+  .score-ring { width: 150px; height: 150px; margin: 0 auto 16px; border-radius: 50%; display: grid; place-items: center; background: conic-gradient(var(--ring-c) calc(var(--p) * 1%), rgba(0,0,0,.07) 0); }
+  .score-ring .inner { width: 120px; height: 120px; border-radius: 50%; background: var(--white); display: grid; place-items: center; flex-direction: column; }
+  .score-ring .pct { font-family: var(--font-head); font-size: 2.2rem; line-height: 1; }
+  .score-ring .frac { font-size: .82rem; color: var(--gray); margin-top: 4px; }
+  .result-banner { text-align: center; padding: 26px; border-radius: var(--radius); margin-bottom: 18px; }
+  .result-banner.pass { background: var(--success-bg); border: 1px solid rgba(26,158,75,.3); }
+  .result-banner.fail { background: var(--warn-bg); border: 1px solid rgba(184,134,11,.3); }
+  .result-banner h2 { font-family: var(--font-head); font-size: 1.5rem; margin-bottom: 6px; }
+  .result-banner.pass h2 { color: var(--success); }
+  .result-banner.fail h2 { color: var(--warn); }
+  .save-status { text-align: center; font-size: .85rem; padding: 10px; border-radius: 10px; margin-bottom: 16px; }
+  .save-status.ok { background: var(--success-bg); color: #136336; }
+  .save-status.pending { background: var(--info-bg); color: #0a4a8c; }
+  .save-status.off { background: var(--bg); color: var(--gray); }
 
   .source-list { font-size: .8rem; color: var(--gray-2); margin-top: 24px; line-height: 1.8; }
   p { font-size: .93rem; line-height: 1.7; margin-bottom: 12px; }
@@ -1002,22 +1039,24 @@
   <section class="page" id="page-quiz">
     <div class="page-header"><div class="eyebrow">ปิดท้าย</div><h1>แบบทดสอบท้ายบทเรียน</h1><p>15 ข้อ เน้นทักษะการให้บริการ + ความรู้สัตว์เลี้ยง · มีข้อเขียน 1 ข้อ</p></div>
 
-    <div class="quizbox">
+    <!-- INTRO -->
+    <div class="quizbox" id="quizIntro">
       <h2>พร้อมทดสอบความเข้าใจแล้วหรือยัง? 🐾</h2>
-      <p>15 ข้อ · บันทึกคะแนนอัตโนมัติผ่าน Google Form → Google Sheets</p>
-      <!-- ════ วางลิงก์ Google Form ที่นี่ ════
-           แทนที่ <span> ด้านล่างด้วย:
-           <a class="quiz-btn" href="https://forms.gle/XXXXXX" target="_blank" rel="noopener">เริ่มทำแบบทดสอบ →</a>
-      ════════════════════════════════════ -->
-      <span class="quiz-btn" id="QUIZ_FORM_LINK" style="cursor:default; opacity:.8;">⏳ รอลิงก์ Google Form จากกาย</span>
-      <p class="quiz-note">📋 ไฟล์คำถาม 15 ข้อพร้อมเฉลย → <strong>แบบทดสอบ-15ข้อ.md</strong></p>
+      <p>14 ข้อปรนัย (ตรวจคะแนนอัตโนมัติ) + 1 ข้อเขียน<br>ทำเสร็จคะแนนจะถูกบันทึกลง Google Sheet ทันที</p>
+      <input type="text" class="quiz-name-input" id="quizName" placeholder="พิมพ์ชื่อ–ชื่อเล่นของคุณ" autocomplete="name">
+      <button class="quiz-btn" id="startQuiz" type="button">เริ่มทำแบบทดสอบ →</button>
+      <p class="quiz-note">เกณฑ์ผ่าน: ตอบถูก 11 จาก 14 ข้อขึ้นไป (ราว 80%)</p>
     </div>
 
-    <h2 class="sec">ตัวอย่างคำถาม</h2>
-    <p style="color:var(--gray); font-size:.88rem;">คำถามจริงอยู่ใน Google Form — ด้านล่างเป็นตัวอย่างให้พนักงานเตรียมตัว</p>
-    <div class="card"><h3 class="subsec">📌 ชุดที่ 1: ทักษะการให้บริการ (ข้อ 1–10)</h3><ul style="color:var(--gray)"><li>อุณหภูมิน้ำอาบที่เหมาะสม</li><li>เวลาให้สัตว์ปรับตัวหลังเข้าห้องใหม่</li><li>ขั้นตอนเมื่อพบรอยแผลก่อนอาบน้ำ</li><li>การดูแลระหว่างเป่าแห้ง</li><li>สัญญาณสุนัขกลัว/วิตกกังวล</li><li>การรับมือเมื่อสัตว์แสดงสัญญาณเครียด</li><li>วิธีอุ้มแมวที่ถูกต้อง</li><li>ความหมาย "แมวนิ่งผิดปกติ"</li><li>การรับมือแมวตื่นตกใจระหว่างอาบน้ำ</li><li>ขั้นตอนเมื่อถูกกัด/ข่วน</li></ul></div>
-    <div class="card"><h3 class="subsec">📌 ชุดที่ 2: ความรู้สัตว์เลี้ยง (ข้อ 11–14)</h3><ul style="color:var(--gray)"><li>อาการที่ต้องรายงานทันที</li><li>ภาษากายแมวที่ผ่อนคลาย</li><li>เหตุผลที่ห้ามปล่อยแมวแปลกหน้าไว้ด้วยกัน</li><li>ความถี่ในการเปลี่ยนน้ำดื่ม</li></ul></div>
-    <div class="card" style="border-left:4px solid var(--orange)"><h3 class="subsec">✏️ ชุดที่ 3: ข้อเขียน (ข้อ 15)</h3><p style="font-size:.9rem"><strong>โจทย์:</strong> คุณกำลังจะยกแมวที่ไม่รู้จักขึ้นมาอาบน้ำ พบว่าแมวมี: หูแบนราบ รูม่านตาขยาย หางสะบัดไปมา ตัวเกร็งกะทันหัน</p><p style="font-size:.9rem; color:var(--gray); margin:0"><strong>ตอบ 2 ส่วน:</strong> (1) สัญญาณเหล่านี้บอกอะไร? (2) คุณจะทำอย่างไรต่อ?</p></div>
+    <!-- QUIZ FORM -->
+    <form id="quizForm" style="display:none;">
+      <div class="quiz-progress">ทำแบบทดสอบของ: <b id="quizWho"></b></div>
+      <div id="quizQuestions"></div>
+      <button type="submit" class="quiz-submit" id="quizSubmitBtn">ส่งคำตอบ + ดูคะแนน</button>
+    </form>
+
+    <!-- RESULT -->
+    <div id="quizResult" style="display:none;"></div>
   </section>
 
   <div class="no-result" id="noResult">🔍 ไม่พบหัวข้อที่ค้นหา ลองคำอื่นดูนะคะ</div>
@@ -1090,6 +1129,161 @@
   let st;
   searchBox.addEventListener('input', e => { clearTimeout(st); st = setTimeout(() => runSearch(e.target.value), 250); });
   searchBox.addEventListener('keydown', e => { if (e.key === 'Enter') runSearch(e.target.value); });
+
+  /* ════════════════════════════════════════════════════════════════
+     ควิซ + บันทึกลง Google Sheet
+     ── วิธีต่อ Google Sheet (ทำครั้งเดียว ดูไฟล์ google-apps-script.gs):
+        1. สร้าง Google Sheet ใหม่ → Extensions → Apps Script
+        2. วางโค้ดจากไฟล์ google-apps-script.gs → Deploy → Web app
+           (Execute as: Me / Who has access: Anyone) → คัดลอก URL
+        3. นำ URL มาวางในบรรทัด SHEET_WEBHOOK ด้านล่างนี้ (ในเครื่องหมาย "")
+     ════════════════════════════════════════════════════════════════ */
+  const SHEET_WEBHOOK = ""; // ⬅️ วางลิงก์ Apps Script Web app ที่นี่
+
+  const QUIZ = [
+    { cat:'ทักษะบริการ', q:'อุณหภูมิน้ำที่เหมาะสมสำหรับอาบน้ำสุนัขและแมวคือเท่าไหร่?', o:['25–28°C (เย็นเหมือนห้องแอร์)','35–38°C (อุ่นนิดๆ ไม่ร้อนไม่เย็น)','40–45°C (ร้อนเพื่อฆ่าเชื้อ)','ใช้น้ำอุณหภูมิห้องปกติได้เลย'], a:1 },
+    { cat:'ทักษะบริการ', q:'หลังนำสัตว์เลี้ยงเข้าห้องใหม่ครั้งแรก ต้องให้เวลาปรับตัวนานเท่าไหร่ก่อนทำกิจกรรมอื่น?', o:['5 นาที','15 นาที','30 นาที','1 ชั่วโมง'], a:2 },
+    { cat:'ทักษะบริการ', q:'ถ้าพบว่าสุนัขมีรอยแผลหรือผื่นผิวหนัง ก่อนเริ่มอาบน้ำต้องทำอะไรก่อน?', o:['อาบน้ำต่อได้เลย ไม่ต้องรายงาน','ถ่ายรูปไว้ก่อน แล้วแจ้งหัวหน้าและเจ้าของทันที','ใช้แชมพูพิเศษอาบเลยโดยไม่ต้องแจ้งใคร','รอให้หัวหน้ามาดูก่อนค่อยตัดสินใจ'], a:1 },
+    { cat:'ทักษะบริการ', q:'ขณะเป่าแห้งสัตว์เลี้ยงในกล่องเป่า พี่เลี้ยงต้องทำอย่างไร?', o:['ปิดฝากล่องแล้วรอจนเสียงหยุดเองได้','ตั้งอุณหภูมิร้อนสูงไว้เพื่อให้เสร็จเร็ว','ดูแลอยู่ตลอดเวลา เช็คความร้อนที่ผิวหนังทุก 2–3 นาที','วางกล่องไว้แล้วไปทำงานอื่นพร้อมกันได้'], a:2 },
+    { cat:'ทักษะบริการ', q:'สุนัขที่กำลัง "กลัว/วิตกกังวล" มักแสดงท่าทางแบบใด?', o:['หูตั้งชี้หน้า หางตั้งแข็ง คำราม','หางส่ายแกว่งสบายๆ ปากอ้าหย่อน ผ่อนคลาย','หมอบตัวต่ำ หางซุกระหว่างขา เลียปากซ้ำๆ หูแบนราบ','วิ่งกระโจนเข้าหาพนักงาน'], a:2 },
+    { cat:'ทักษะบริการ', q:'เมื่อเห็นสัญญาณว่าสุนัขหรือแมวกำลังตึงเครียด/พร้อมกัด พี่เลี้ยงควรทำอย่างไร?', o:['รีบจับแน่นๆ ไว้ก่อนเพื่อควบคุมสถานการณ์','หยุดเข้าใกล้ทันที ถอยออกมาให้พื้นที่สัตว์ อย่าฝืนจับต่อ','พูดเสียงดังเพื่อให้สัตว์รู้ว่าเราควบคุมอยู่','ใช้ของเล่นล่อความสนใจแล้วจับทันที'], a:1 },
+    { cat:'ทักษะบริการ', q:'วิธีอุ้มแมวที่ถูกต้องและปลอดภัยที่สุดคือข้อใด?', o:['จับหนังคอแล้วยกขึ้น (Scruffing) เพราะแมวจะนิ่งทันที','จับหางดึงเข้าหาตัวเพื่อควบคุม','ใช้สองมือรองรับ มือหนึ่งรองใต้อกหน้า อีกมือรองสะโพก/ขาหลัง','กดตัวแมวให้แน่นที่สุดเพื่อไม่ให้ดิ้น'], a:2 },
+    { cat:'ทักษะบริการ', q:'แมวที่ "นิ่งสนิทผิดปกติ" ตอนถูกจับหนังคอ ควรเข้าใจว่าอย่างไร?', o:['แมวรู้สึกสบายและปลอดภัยดี','แมวกำลังจะหลับ','แมวกำลังเครียดสุดขีดจนหยุดสู้ — ไม่ใช่สัญญาณว่าปลอดภัย','แมวพอใจกับการถูกจับแบบนี้'], a:2 },
+    { cat:'ทักษะบริการ', q:'ถ้าแมวตื่นตกใจมากและไม่ยอมให้จับระหว่างอาบน้ำ วิธีที่ถูกต้องคืออะไร?', o:['บีบจับแน่นๆ ให้ได้ เพราะต้องอาบให้เสร็จ','คลุมด้วยผ้าขนหนู (towel wrap) เหลือหัวโผล่ เพื่อลดการดิ้นและความเครียด','จับหนังคอไว้ก่อนแล้วค่อยทำ','วางแมวลงและรอจนกว่าจะสงบเองโดยไม่ทำอะไร'], a:1 },
+    { cat:'ทักษะบริการ', q:'ถ้าพี่เลี้ยงถูกสัตว์เลี้ยงกัดหรือข่วนจนมีแผล ต้องทำอะไรเป็นลำดับแรก?', o:['ซ่อนไว้ก่อน รอดูว่าแผลหายเองหรือเปล่า','แจ้งหัวหน้าทันที และทำความสะอาดแผลทันที','แจ้งเจ้าของสัตว์เลี้ยงก่อนเป็นอันดับแรก','ทำความสะอาดแผลเองแล้วทำงานต่อได้เลย'], a:1 },
+    { cat:'ความรู้สัตว์', q:'อาการใดที่พี่เลี้ยงต้องรายงานหัวหน้าทีมทันทีโดยไม่รอ?', o:['ขนยาวขึ้นผิดปกติ','ซึม ไม่กินอาหาร อาเจียน หรือท้องร่วง','ชอบนอนหลับเยอะตอนกลางวัน','ร้องเหมียว/เห่าเล่นปกติ'], a:1 },
+    { cat:'ความรู้สัตว์', q:'แมวที่หางตั้งตรงปลายงอนิดๆ เดินเข้ามาถูตัวพนักงาน หมายความว่าอะไร?', o:['กำลังหิวและต้องการอาหาร','กำลังจะกัดหรือข่วน','ผ่อนคลายและแสดงความไว้ใจ','กลัวและพยายามหนี'], a:2 },
+    { cat:'ความรู้สัตว์', q:'ทำไมจึงห้ามปล่อยแมวที่ไม่รู้จักกันไว้ในพื้นที่เดียวกันโดยไม่มีพนักงานดูแล?', o:['เพราะแมวจะกินอาหารของกันและกัน','เพราะแมวเป็นสัตว์ที่ใช้อาณาเขต การพบกันครั้งแรกอาจเกิดการต่อสู้บาดเจ็บได้','เพราะแมวจะส่งเสียงดังรบกวนสัตว์ห้องอื่น','เพราะกฎของร้านเท่านั้น ไม่มีเหตุผลอื่น'], a:1 },
+    { cat:'ความรู้สัตว์', q:'น้ำดื่มของสัตว์เลี้ยงต้องเปลี่ยนใหม่เมื่อไหร่?', o:['วันละ 1 ครั้ง ตอนเช้าเท่านั้น','ทุกเช้าและทุกครั้งที่ให้อาหาร','เมื่อน้ำในชามหมดเท่านั้น','ทุก 2 วัน ถ้าน้ำยังดูสะอาดอยู่'], a:1 }
+  ];
+  const WRITTEN_Q = 'คุณกำลังจะยกแมวที่ไม่รู้จักขึ้นมาอาบน้ำ พบว่าแมวมีท่าทาง: หูแบนราบ รูม่านตาขยายใหญ่ หางสะบัดไปมา และตัวเกร็งนิ่งกะทันหัน — จงอธิบาย (1) สัญญาณเหล่านี้บอกอะไรเกี่ยวกับสภาวะจิตใจของแมว? (2) คุณควรทำอย่างไรต่อ?';
+  const PASS_SCORE = 11;
+
+  const intro = document.getElementById('quizIntro');
+  const quizForm = document.getElementById('quizForm');
+  const quizResult = document.getElementById('quizResult');
+  const quizName = document.getElementById('quizName');
+  const startBtn = document.getElementById('startQuiz');
+  const qContainer = document.getElementById('quizQuestions');
+  let answers = {};
+
+  function buildQuiz() {
+    let html = '';
+    QUIZ.forEach((item, i) => {
+      html += '<div class="quiz-q" data-i="'+i+'">'
+        + '<div class="qn"><span class="qnum">'+(i+1)+'</span><span class="qtext">'+item.q+'</span></div>'
+        + '<div class="qcat">'+item.cat+'</div>';
+      item.o.forEach((opt, j) => {
+        html += '<label class="quiz-opt" data-q="'+i+'" data-o="'+j+'">'
+          + '<input type="radio" name="q'+i+'" value="'+j+'"><span>'+opt+'</span></label>';
+      });
+      html += '</div>';
+    });
+    // written
+    html += '<div class="quiz-q" data-i="written">'
+      + '<div class="qn"><span class="qnum">15</span><span class="qtext">'+WRITTEN_Q+'</span></div>'
+      + '<div class="qcat">ข้อเขียน · หัวหน้าตรวจให้คะแนน</div>'
+      + '<textarea class="quiz-textarea" id="writtenAns" placeholder="พิมพ์คำตอบของคุณที่นี่..."></textarea></div>';
+    qContainer.innerHTML = html;
+
+    qContainer.querySelectorAll('.quiz-opt').forEach(opt => {
+      opt.addEventListener('click', () => {
+        const qi = opt.dataset.q;
+        qContainer.querySelectorAll('.quiz-opt[data-q="'+qi+'"]').forEach(o => o.classList.remove('sel'));
+        opt.classList.add('sel');
+        opt.querySelector('input').checked = true;
+        answers[qi] = parseInt(opt.dataset.o);
+      });
+    });
+  }
+
+  startBtn.addEventListener('click', () => {
+    const name = quizName.value.trim();
+    if (!name) { quizName.focus(); quizName.style.boxShadow = '0 0 0 4px rgba(255,255,255,.6)'; return; }
+    document.getElementById('quizWho').textContent = name;
+    answers = {};
+    buildQuiz();
+    intro.style.display = 'none';
+    quizForm.style.display = 'block';
+    quizResult.style.display = 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  quizForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    // ตรวจว่าตอบครบ
+    const unanswered = QUIZ.map((_, i) => i).filter(i => answers[i] === undefined);
+    if (unanswered.length) {
+      alert('ยังตอบไม่ครบ! เหลืออีก ' + unanswered.length + ' ข้อ (ข้อ ' + unanswered.map(i => i+1).join(', ') + ')');
+      const first = qContainer.querySelector('.quiz-q[data-i="'+unanswered[0]+'"]');
+      if (first) first.scrollIntoView({ behavior:'smooth', block:'center' });
+      return;
+    }
+    // ให้คะแนน + เฉลย
+    let score = 0;
+    QUIZ.forEach((item, i) => {
+      const chosen = answers[i];
+      if (chosen === item.a) score++;
+      qContainer.querySelectorAll('.quiz-opt[data-q="'+i+'"]').forEach(o => {
+        const oj = parseInt(o.dataset.o);
+        o.style.pointerEvents = 'none';
+        o.querySelector('input').disabled = true;
+        if (oj === item.a) { o.classList.add('correct'); o.insertAdjacentHTML('beforeend','<span class="mark">✓</span>'); }
+        else if (oj === chosen) { o.classList.add('wrong'); o.insertAdjacentHTML('beforeend','<span class="mark">✗</span>'); }
+      });
+    });
+    const total = QUIZ.length;
+    const pct = Math.round(score / total * 100);
+    const passed = score >= PASS_SCORE;
+    const written = (document.getElementById('writtenAns').value || '').trim();
+    const name = quizName.value.trim();
+
+    const ringColor = passed ? 'var(--success)' : 'var(--warn)';
+    quizResult.innerHTML =
+      '<div class="result-banner '+(passed?'pass':'fail')+'">'
+      + '<div class="score-ring" style="--p:'+pct+'; --ring-c:'+ringColor+';"><div class="inner"><div class="pct">'+pct+'%</div><div class="frac">'+score+' / '+total+' ข้อ</div></div></div>'
+      + '<h2>'+(passed ? 'ยอดเยี่ยม! ผ่านเกณฑ์ 🎉' : 'ทบทวนอีกนิดนะ 💪')+'</h2>'
+      + '<p style="color:var(--gray)">'+(passed ? 'คุณ'+name+' เข้าใจเนื้อหาดีมาก พร้อมปฏิบัติงานแล้ว' : 'คุณ'+name+' ลองกลับไปอ่านหมวดที่ตอบผิด แล้วทำใหม่อีกครั้งได้')+'</p>'
+      + '</div>'
+      + '<div class="save-status" id="saveStatus"></div>'
+      + (written ? '<div class="card"><h3 class="subsec">✏️ คำตอบข้อเขียน (ข้อ 15) — รอหัวหน้าตรวจ</h3><p style="white-space:pre-wrap; color:var(--gray)">'+written.replace(/</g,'&lt;')+'</p></div>' : '<div class="alert warn">คุณยังไม่ได้ตอบข้อเขียน (ข้อ 15) — แนะนำให้กลับไปตอบเพื่อให้หัวหน้าประเมิน</div>')
+      + '<button class="quiz-submit" type="button" id="retryQuiz">ทำแบบทดสอบใหม่</button>';
+    quizForm.style.display = 'none';
+    quizResult.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    document.getElementById('retryQuiz').addEventListener('click', () => {
+      intro.style.display = 'block';
+      quizResult.style.display = 'none';
+      quizName.value = '';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    saveToSheet({ name, score, total, percent: pct, result: passed ? 'ผ่าน' : 'ไม่ผ่าน', written });
+  });
+
+  function saveToSheet(data) {
+    const el = document.getElementById('saveStatus');
+    if (!SHEET_WEBHOOK) {
+      el.className = 'save-status off';
+      el.textContent = 'ℹ️ ยังไม่ได้ตั้งค่าการบันทึก — คะแนนนี้ยังไม่ถูกส่งเข้า Google Sheet (ดูวิธีต่อในไฟล์ google-apps-script.gs)';
+      return;
+    }
+    el.className = 'save-status pending';
+    el.textContent = '⏳ กำลังบันทึกคะแนนลง Google Sheet...';
+    fetch(SHEET_WEBHOOK, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(data)
+    }).then(() => {
+      el.className = 'save-status ok';
+      el.textContent = '✅ บันทึกคะแนนของคุณ '+data.name+' ลง Google Sheet เรียบร้อยแล้ว';
+    }).catch(() => {
+      el.className = 'save-status off';
+      el.textContent = '⚠️ บันทึกไม่สำเร็จ — กรุณาแจ้งหัวหน้า หรือลองใหม่อีกครั้ง';
+    });
+  }
 </script>
 
 </body>
