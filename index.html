@@ -337,7 +337,82 @@
 
   .no-result { text-align: center; color: var(--gray-2); padding: 40px; display: none; }
 
-  /* ─── RESPONSIVE ─── */
+  /* ─── ROLE FILTER ─── */
+  .role-bar { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 4px 6px; }
+  .role-chip { font-family: inherit; font-size: .76rem; font-weight: 700; border: 1px solid var(--border); background: var(--white); color: var(--gray); border-radius: 999px; padding: 5px 11px; cursor: pointer; transition: background .15s, color .15s, border-color .15s; }
+  .role-chip:hover { border-color: var(--orange); color: var(--orange-dark); }
+  .role-chip.active { background: var(--orange); color: #fff; border-color: var(--orange); }
+  .navbtn.dim { display: none; }
+  .role-hint { font-size: .82rem; color: var(--gray); background: var(--orange-soft); border: 1px solid rgba(227,127,51,.2); border-radius: 12px; padding: 10px 14px; margin-bottom: 18px; display: none; }
+  .role-hint.show { display: block; }
+  .role-hint b { color: var(--orange-dark); }
+
+  /* ─── PAGER (next/prev) ─── */
+  .pager { display: flex; gap: 12px; margin-top: 50px; padding-top: 26px; border-top: 1px solid var(--border); }
+  .pg { flex: 1; display: flex; flex-direction: column; gap: 3px; border: 1px solid var(--border); border-radius: 14px; padding: 14px 18px; background: var(--white); cursor: pointer; text-decoration: none; transition: transform .2s, box-shadow .2s, border-color .2s; box-shadow: var(--shadow-sm); }
+  .pg:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--orange); }
+  .pg.next { align-items: flex-end; text-align: right; }
+  .pg .dir { font-size: .72rem; font-weight: 700; color: var(--gray-2); text-transform: uppercase; letter-spacing: .05em; }
+  .pg .ttl { font-family: var(--font-head); font-size: .96rem; color: var(--orange-dark); }
+  .pg.ghost { visibility: hidden; }
+
+  /* ─── MOTION GRAPHICS ─── */
+  .mg { background: linear-gradient(135deg, #ffffff, #fff6ec); border: 1px solid var(--border); border-radius: var(--radius); padding: 26px; margin: 18px 0; position: relative; overflow: hidden; box-shadow: var(--shadow-sm); }
+  .mg-row { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; justify-content: center; text-align: center; }
+  .mg-cap { font-size: .86rem; color: var(--gray); margin-top: 12px; text-align: center; }
+
+  /* hero: floating paws + bobbing mascot */
+  .hero-mg { position: relative; height: 120px; margin: 8px auto 4px; max-width: 360px; }
+  .hero-mg .mascot { font-size: 3.4rem; position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); animation: bob 2.6s ease-in-out infinite; z-index: 2; }
+  .hero-mg .ring { position: absolute; left: 50%; top: 50%; width: 70px; height: 70px; margin: -35px 0 0 -35px; border: 2px solid var(--orange); border-radius: 50%; animation: radar 2.8s ease-out infinite; opacity: 0; }
+  .hero-mg .ring:nth-child(2) { animation-delay: .9s; }
+  .hero-mg .ring:nth-child(3) { animation-delay: 1.8s; }
+  .hero-mg .paw { position: absolute; font-size: 1.2rem; opacity: 0; animation: floatUp 4s linear infinite; }
+  @keyframes bob { 0%,100% { transform: translate(-50%,-50%); } 50% { transform: translate(-50%,-62%); } }
+  @keyframes radar { 0% { transform: scale(.4); opacity: .7; } 100% { transform: scale(2.4); opacity: 0; } }
+  @keyframes floatUp { 0% { transform: translateY(30px) scale(.7) rotate(-10deg); opacity: 0; } 25% { opacity: .8; } 100% { transform: translateY(-70px) scale(1.1) rotate(15deg); opacity: 0; } }
+
+  /* pulsing heart */
+  .mg-heart { font-size: 3rem; display: inline-block; animation: heartPulse 1.5s ease-in-out infinite; }
+  @keyframes heartPulse { 0%,100% { transform: scale(1); } 30% { transform: scale(1.22); } 45% { transform: scale(1.05); } }
+
+  /* waving hand */
+  .mg-wave { font-size: 3rem; display: inline-block; transform-origin: 70% 75%; animation: wave 2.4s ease-in-out infinite; }
+  @keyframes wave { 0%,55%,100% { transform: rotate(0); } 10% { transform: rotate(16deg); } 20% { transform: rotate(-10deg); } 30% { transform: rotate(16deg); } 40% { transform: rotate(-6deg); } 50% { transform: rotate(12deg); } }
+
+  /* greeting chat sequence (looping) */
+  .mg-chat { display: flex; flex-direction: column; gap: 8px; width: 100%; max-width: 340px; margin: 0 auto; }
+  .mg-chat .b { padding: 9px 14px; border-radius: 14px; font-size: .85rem; opacity: 0; }
+  .mg-chat .b.staff { align-self: flex-start; background: #fff; border: 1px solid var(--border); border-bottom-left-radius: 4px; animation: bcycle 6s ease-in-out infinite; }
+  .mg-chat .b.cust { align-self: flex-end; background: var(--orange); color: #fff; border-bottom-right-radius: 4px; animation: bcycle 6s ease-in-out infinite; }
+  .mg-chat .b:nth-child(1) { animation-delay: 0s; }
+  .mg-chat .b:nth-child(2) { animation-delay: 1.4s; }
+  .mg-chat .b:nth-child(3) { animation-delay: 2.8s; }
+  @keyframes bcycle { 0% { opacity: 0; transform: translateY(8px); } 6% { opacity: 1; transform: none; } 42% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 0; } }
+
+  /* step flow (greeting steps) */
+  .mg-steps { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: center; }
+  .mg-steps .s { background: var(--white); border: 1.5px solid var(--border); border-radius: 12px; padding: 10px 14px; font-size: .82rem; font-weight: 600; animation: stepGlow 4s ease-in-out infinite; }
+  .mg-steps .s:nth-child(1) { animation-delay: 0s; } .mg-steps .s:nth-child(3) { animation-delay: .6s; }
+  .mg-steps .s:nth-child(5) { animation-delay: 1.2s; } .mg-steps .s:nth-child(7) { animation-delay: 1.8s; }
+  .mg-steps .arrow { color: var(--orange); font-weight: 900; animation: nudge 1.4s ease-in-out infinite; }
+  @keyframes stepGlow { 0%,100% { border-color: var(--border); transform: translateY(0); } 50% { border-color: var(--orange); transform: translateY(-3px); box-shadow: 0 6px 16px rgba(227,127,51,.18); } }
+  @keyframes nudge { 0%,100% { transform: translateX(0); } 50% { transform: translateX(4px); } }
+
+  /* radar value loop for service mind */
+  .mg-rings { position: relative; width: 110px; height: 110px; display: grid; place-items: center; }
+  .mg-rings .ic { font-size: 2.4rem; z-index: 2; }
+  .mg-rings .r { position: absolute; inset: 0; border: 2px solid var(--orange); border-radius: 50%; opacity: 0; animation: radar2 2.6s ease-out infinite; }
+  .mg-rings .r:nth-child(2) { animation-delay: .8s; } .mg-rings .r:nth-child(3) { animation-delay: 1.6s; }
+  @keyframes radar2 { 0% { transform: scale(.4); opacity: .7; } 100% { transform: scale(1); opacity: 0; } }
+
+  /* phone-down reminder (manners) */
+  .mg-no { font-size: 2.6rem; display: inline-block; position: relative; animation: shake 3s ease-in-out infinite; }
+  .mg-no::after { content: '🚫'; position: absolute; left: -6px; top: -6px; font-size: 1.6rem; animation: stamp 3s ease-in-out infinite; }
+  @keyframes shake { 0%,80%,100% { transform: rotate(0); } 85% { transform: rotate(-8deg); } 90% { transform: rotate(8deg); } 95% { transform: rotate(-5deg); } }
+  @keyframes stamp { 0%,40% { opacity: 0; transform: scale(.4); } 55%,100% { opacity: 1; transform: scale(1); } }
+
+  /* RESPONSIVE */
   @media (max-width: 1000px) {
     .topbar { display: flex; }
     .sidebar { left: calc(-1 * var(--sidebar-w) - 10px); top: 0; transition: left .28s ease; box-shadow: 4px 0 30px rgba(0,0,0,.12); padding-top: 20px; }
@@ -365,39 +440,60 @@
     <input type="text" id="searchBox" placeholder="ค้นหาหัวข้อ..." autocomplete="off">
   </div>
 
+  <div class="sb-label">ดูตามตำแหน่งงาน</div>
+  <div class="role-bar" id="roleBar">
+    <button class="role-chip active" data-role="all">ทุกคน</button>
+    <button class="role-chip" data-role="nur">🐾 พี่เลี้ยง</button>
+    <button class="role-chip" data-role="grm">✂️ ช่าง</button>
+    <button class="role-chip" data-role="rcp">🛎️ ต้อนรับ</button>
+    <button class="role-chip" data-role="hkp">🧹 แม่บ้าน</button>
+  </div>
+
   <div class="sb-label">เริ่มต้น</div>
-  <button class="navbtn active" data-target="home">
+  <button class="navbtn active" data-target="home" data-title="หน้าแรก" data-roles="all">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9.5 12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1Z"/></svg>
     หน้าแรก
   </button>
 
-  <div class="sb-label">มาตรฐานหลัก</div>
-  <button class="navbtn" data-target="cat1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 12 0v1"/></svg> ตัวบุคคล <span class="num">1</span></button>
-  <button class="navbtn" data-target="cat2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10h18M5 10V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v3M6 21v-3M18 21v-3M4 14h16v4H4z"/></svg> การให้บริการ <span class="num">2</span></button>
-  <button class="navbtn" data-target="cat3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg> กฎระเบียบ <span class="num">3</span></button>
-  <button class="navbtn" data-target="cat4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg> SOP มาตรฐาน <span class="num">4</span></button>
-  <button class="navbtn" data-target="cat5"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg> ความปลอดภัย <span class="num">5</span></button>
-  <button class="navbtn" data-target="cat6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="4" r="2"/><circle cx="18" cy="8" r="2"/><circle cx="4" cy="8" r="2"/><path d="M8 14c0-3 8-3 8 0 1 2 2 3 0 5-2 1-6 1-8 0-2-2-1-3 0-5Z"/></svg> ความรู้สัตว์เลี้ยง <span class="num">6</span></button>
+  <div class="sb-label">พื้นฐาน · ทุกคนต้องรู้</div>
+  <button class="navbtn" data-target="cat1" data-title="ตัวบุคคล" data-roles="all"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 12 0v1"/></svg> ตัวบุคคล <span class="num">1</span></button>
+  <button class="navbtn" data-target="service" data-title="หัวใจการบริการ" data-roles="all"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-4.3-9.5-8.5C1 9.5 2.5 6 6 6c2 0 3.2 1.2 4 2.3C10.8 7.2 12 6 14 6c3.5 0 5 3.5 3.5 6.5C19 16.7 12 21 12 21Z"/></svg> หัวใจการบริการ <span class="num">★</span></button>
+  <button class="navbtn" data-target="manners" data-title="มารยาท &amp; การวางตัว" data-roles="all"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0 1 13 0"/></svg> มารยาท &amp; การวางตัว <span class="num">★</span></button>
+  <button class="navbtn" data-target="cat2" data-title="การให้บริการ &amp; ราคา" data-roles="all"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10h18M5 10V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v3M6 21v-3M18 21v-3M4 14h16v4H4z"/></svg> การให้บริการ <span class="num">2</span></button>
+  <button class="navbtn" data-target="cat3" data-title="กฎระเบียบ" data-roles="all"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg> กฎระเบียบ <span class="num">3</span></button>
+  <button class="navbtn" data-target="cat4" data-title="SOP มาตรฐาน" data-roles="all"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg> SOP มาตรฐาน <span class="num">4</span></button>
 
-  <div class="sb-label">ทักษะขั้นสูง</div>
-  <button class="navbtn" data-target="cat7"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg> สื่อสารกับเจ้าของ <span class="num">7</span></button>
-  <button class="navbtn" data-target="cat8"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 2v4M13 2v4M5 10h14l-1 11a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1Z"/><path d="M9 14h6M12 11v6"/></svg> โรค &amp; สุขภาพ <span class="num">8</span></button>
-  <button class="navbtn" data-target="cat9"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M12 7v5l3 2"/></svg> Fear-Free Handling <span class="num">9</span></button>
-  <button class="navbtn" data-target="cat10"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3 2.5 5 5.5.8-4 3.9.9 5.5L12 21l-4.9 2.6.9-5.5-4-3.9 5.5-.8Z"/></svg> สัตว์ต้องการพิเศษ <span class="num">10</span></button>
-  <button class="navbtn" data-target="cat11"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 9h8M8 13h6M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg> รับมือลูกค้ายาก <span class="num">11</span></button>
+  <div class="sb-label">เฉพาะทาง · ตามตำแหน่ง</div>
+  <button class="navbtn" data-target="cat5" data-title="ความปลอดภัย" data-roles="nur grm hkp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg> ความปลอดภัย <span class="num">5</span></button>
+  <button class="navbtn" data-target="cat6" data-title="ความรู้สัตว์เลี้ยง" data-roles="nur grm rcp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="4" r="2"/><circle cx="18" cy="8" r="2"/><circle cx="4" cy="8" r="2"/><path d="M8 14c0-3 8-3 8 0 1 2 2 3 0 5-2 1-6 1-8 0-2-2-1-3 0-5Z"/></svg> ความรู้สัตว์เลี้ยง <span class="num">6</span></button>
+  <button class="navbtn" data-target="cat7" data-title="สื่อสารกับเจ้าของ" data-roles="nur rcp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg> สื่อสารกับเจ้าของ <span class="num">7</span></button>
+  <button class="navbtn" data-target="cat8" data-title="โรค &amp; สุขภาพ" data-roles="nur grm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 2v4M13 2v4M5 10h14l-1 11a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1Z"/><path d="M9 14h6M12 11v6"/></svg> โรค &amp; สุขภาพ <span class="num">8</span></button>
+  <button class="navbtn" data-target="cat9" data-title="Fear-Free Handling" data-roles="nur grm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M12 7v5l3 2"/></svg> Fear-Free Handling <span class="num">9</span></button>
+  <button class="navbtn" data-target="cat10" data-title="สัตว์ต้องการพิเศษ" data-roles="nur"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3 2.5 5 5.5.8-4 3.9.9 5.5L12 21l-4.9 2.6.9-5.5-4-3.9 5.5-.8Z"/></svg> สัตว์ต้องการพิเศษ <span class="num">10</span></button>
+  <button class="navbtn" data-target="cat11" data-title="รับมือลูกค้ายาก" data-roles="nur rcp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 9h8M8 13h6M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg> รับมือลูกค้ายาก <span class="num">11</span></button>
 
   <div class="sb-label">ปิดท้าย</div>
-  <button class="navbtn" data-target="quiz"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg> แบบทดสอบ 15 ข้อ</button>
+  <button class="navbtn" data-target="quiz" data-title="แบบทดสอบ 15 ข้อ" data-roles="all"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg> แบบทดสอบ 15 ข้อ</button>
 </nav>
 
 <main class="main" id="main">
+
+  <div class="role-hint" id="roleHint"></div>
 
   <!-- ════════════ HOME ════════════ -->
   <section class="page active" id="page-home">
     <div class="hero">
       <div class="eyebrow">🐾 คู่มือพนักงานฉบับศึกษา</div>
+      <div class="hero-mg" aria-hidden="true">
+        <span class="ring"></span><span class="ring"></span><span class="ring"></span>
+        <span class="mascot">🐶</span>
+        <span class="paw" style="left:12%; animation-delay:0s;">🐾</span>
+        <span class="paw" style="left:32%; animation-delay:1.2s;">🐾</span>
+        <span class="paw" style="left:64%; animation-delay:.6s;">🐾</span>
+        <span class="paw" style="left:84%; animation-delay:2s;">🐾</span>
+      </div>
       <h1>ยินดีต้อนรับสู่<br><span class="accent">Perfect Pet House</span></h1>
-      <p class="lead">ศึกษามาตรฐานการทำงาน 11 หมวด ครบทุกทักษะ ตั้งแต่พื้นฐานจนถึงการรับมือสถานการณ์จริง</p>
+      <p class="lead">ศึกษามาตรฐานการทำงานครบทุกทักษะ ตั้งแต่หัวใจการบริการ จนถึงการรับมือสถานการณ์จริง — เลือกดูตามตำแหน่งงานของคุณได้</p>
       <div class="hero-chips">
         <span class="chip">📍 วัชรพล–รามอินทรา</span>
         <span class="chip">⏰ เปิด 09:00–20:00 ทุกวัน</span>
@@ -428,12 +524,13 @@
 
     <h2 class="sec">เส้นทางการเรียนรู้</h2>
     <div class="card">
-      <p>อ่านตามลำดับ <strong>หมวด 1 → 11</strong> แล้วปิดท้ายด้วยแบบทดสอบ 15 ข้อ</p>
+      <p>กดปุ่ม <strong>"ถัดไป →"</strong> ท้ายแต่ละหน้าเพื่ออ่านต่อเนื่องได้เลย หรือเลือกหัวข้อจากเมนูซ้าย</p>
       <ul style="margin-top:6px;">
-        <li><strong>หมวด 1–6</strong> พื้นฐาน: องค์กร บริการ กฎ SOP ความปลอดภัย ความรู้สัตว์</li>
-        <li><strong>หมวด 7–11</strong> ทักษะขั้นสูง: สื่อสารลูกค้า โรค การจับสัตว์ สัตว์พิเศษ รับมือลูกค้ายาก</li>
+        <li><strong>พื้นฐาน · ทุกคนต้องรู้</strong> — ตัวบุคคล, หัวใจการบริการ, มารยาท, บริการ/ราคา, กฎระเบียบ, SOP</li>
+        <li><strong>เฉพาะทาง · ตามตำแหน่ง</strong> — ความปลอดภัย, ความรู้สัตว์, สื่อสารเจ้าของ, โรค, การจับสัตว์, สัตว์พิเศษ, ลูกค้ายาก</li>
       </ul>
-      <div class="alert warn" style="margin:14px 0 0">หมวดที่ <strong>ต้องอ่านละเอียดที่สุด</strong> คือ หมวด 5 และ 9 (ความปลอดภัย + การจับสัตว์) — ที่ร้านเคยมีเหตุการณ์พี่เลี้ยงถูกแมวกัดมาแล้วจริง</div>
+      <div class="alert info" style="margin:14px 0 0">💡 <strong>เลือกดูตามตำแหน่งงานได้</strong> — กดปุ่มตำแหน่ง (พี่เลี้ยง/ช่าง/ต้อนรับ/แม่บ้าน) ที่เมนูซ้าย ระบบจะแสดงเฉพาะหมวดที่เกี่ยวกับงานคุณ + หมวดพื้นฐานที่ทุกคนต้องรู้</div>
+      <div class="alert warn" style="margin:10px 0 0">⚠️ หมวดที่ <strong>ต้องอ่านละเอียดที่สุด</strong> คือ ความปลอดภัย + Fear-Free Handling — ที่ร้านเคยมีเหตุการณ์พี่เลี้ยงถูกแมวกัดมาแล้วจริง</div>
     </div>
   </section>
 
@@ -467,6 +564,113 @@
       <div class="t-step"><div class="t-time">4. ควบคุม (Controlling)</div><p>ตรวจสอบมาตรฐานบริการ ความปลอดภัย ความพึงพอใจลูกค้าต่อเนื่อง</p></div>
       <div class="t-step"><div class="t-time">5. ใส่ใจลูกค้า (Customer Care)</div><p>สร้างความไว้วางใจ รายงานทุกวัน ดูแลสัตว์เสมือนของตัวเอง</p></div>
     </div>
+  </section>
+
+  <!-- ════════════ SERVICE MIND ════════════ -->
+  <section class="page" id="page-service">
+    <div class="page-header"><div class="eyebrow">พื้นฐาน · ทุกคนต้องรู้</div><h1>หัวใจการบริการ</h1><p>Service Mind · การต้อนรับลูกค้า · วัฒนธรรมองค์กร — สิ่งที่พนักงานทุกตำแหน่งต้องมีเหมือนกัน</p></div>
+
+    <div class="mg">
+      <div class="mg-row">
+        <div class="mg-rings"><span class="r"></span><span class="r"></span><span class="r"></span><span class="ic">💛</span></div>
+        <div style="max-width:360px; text-align:left;">
+          <h3 class="subsec" style="margin-top:0">Service Mind คืออะไร?</h3>
+          <p style="margin:0">คือ "ใจ" ที่อยากดูแลลูกค้าและน้องๆ ด้วยความเต็มใจจริงๆ ไม่ใช่แค่ทำตามหน้าที่ — ลูกค้าจ่ายเงินเพื่อ <b>ความสบายใจ</b> พอๆ กับการดูแลน้อง</p>
+        </div>
+      </div>
+      <div class="mg-cap">หัวใจบริการที่ดี ส่งต่อความรู้สึกดีๆ ออกไปเป็นวงกว้าง 🐾</div>
+    </div>
+
+    <h2 class="sec">5 Service Mind ที่ต้องมี</h2>
+    <div class="quick-grid">
+      <div class="quick-card"><div class="ic">💗</div><h3>1. ใส่ใจ (Empathy)</h3><p>ดูแลน้องเหมือนเป็นของเราเอง เข้าใจความเป็นห่วงของเจ้าของ</p></div>
+      <div class="quick-card"><div class="ic">😊</div><h3>2. ยิ้มแย้ม (Friendly)</h3><p>เป็นมิตร อบอุ่น ทักทายด้วยรอยยิ้มเสมอ ทั้งกับลูกค้าและเพื่อนร่วมงาน</p></div>
+      <div class="quick-card"><div class="ic">⚡</div><h3>3. กระตือรือร้น (Active)</h3><p>รวดเร็ว ว่องไว ไม่ปล่อยให้ลูกค้ารอ เห็นงานแล้วลงมือ</p></div>
+      <div class="quick-card"><div class="ic">🔎</div><h3>4. ใส่ใจรายละเอียด</h3><p>จำชื่อน้อง จำสิ่งที่ลูกค้าชอบ สังเกตสิ่งเล็กๆ ที่คนอื่นมองข้าม</p></div>
+      <div class="quick-card"><div class="ic">🤝</div><h3>5. ซื่อสัตย์ จริงใจ</h3><p>มีปัญหาแจ้งตรงๆ ไม่ปิดบัง ความไว้ใจสำคัญกว่าการดูดี</p></div>
+    </div>
+
+    <h2 class="sec">การต้อนรับลูกค้า (Greeting)</h2>
+    <div class="mg">
+      <div class="mg-row"><span class="mg-wave">👋</span>
+        <div class="mg-chat">
+          <div class="b staff">สวัสดีค่ะ Perfect Pet House ยินดีต้อนรับค่ะ 🐾</div>
+          <div class="b cust">มาส่งน้องเข้าพักค่ะ</div>
+          <div class="b staff">ได้เลยค่ะ คุณแม่นั่งรอสักครู่นะคะ เดี๋ยวดูแลให้เลยค่ะ 😊</div>
+        </div>
+      </div>
+      <div class="mg-cap">ทักทายภายใน 10 วินาทีแรกที่ลูกค้าเข้าร้าน — สร้างความประทับใจแรกที่ดี</div>
+    </div>
+
+    <h3 class="subsec">สคริปต์ทักทายแต่ละช่องทาง</h3>
+    <div class="table-wrap"><table><thead><tr><th>สถานการณ์</th><th>สิ่งที่พูด</th></tr></thead><tbody>
+      <tr><td>ลูกค้าเดินเข้าร้าน</td><td>ยิ้ม + ไหว้ + "สวัสดีค่ะ Perfect Pet House ยินดีต้อนรับค่ะ 🐾"</td></tr>
+      <tr><td>รับโทรศัพท์</td><td>"สวัสดีค่ะ Perfect Pet House [ชื่อเรา] รับสายค่ะ มีอะไรให้ช่วยดูแลไหมคะ"</td></tr>
+      <tr><td>ตอบ Line OA</td><td>ทักภายใน 15 นาที "สวัสดีค่ะ 🐾 ทาง Perfect Pet House ยินดีดูแลน้องค่ะ"</td></tr>
+      <tr><td>ลูกค้ามารับน้องกลับ</td><td>"น้องรอคุณแม่อยู่เลยค่ะ 💛 วันนี้น้องน่ารักมากเลยนะคะ"</td></tr>
+      <tr><td>ลูกค้ากำลังกลับ</td><td>ยิ้ม + "ขอบคุณมากนะคะ แล้วพบกันใหม่ค่ะ 🐾"</td></tr>
+    </tbody></table></div>
+
+    <div class="mg">
+      <h3 class="subsec" style="margin-top:0; text-align:center;">ขั้นตอนต้อนรับ 4 จังหวะ</h3>
+      <div class="mg-steps">
+        <span class="s">👀 สบตา + ยิ้ม</span><span class="arrow">→</span>
+        <span class="s">🙏 ไหว้ทักทาย</span><span class="arrow">→</span>
+        <span class="s">💬 ถามความต้องการ</span><span class="arrow">→</span>
+        <span class="s">✅ ลงมือดูแล</span>
+      </div>
+    </div>
+
+    <h2 class="sec">วัฒนธรรมองค์กร PPH</h2>
+    <p>สิ่งที่ทีม Perfect Pet House ยึดถือร่วมกัน — ไม่ว่าจะตำแหน่งไหน:</p>
+    <ul class="checklist">
+      <li><b>รักสัตว์จริง</b> — ดูแลน้องทุกตัวเหมือนสมาชิกครอบครัว</li>
+      <li><b>ทีมเวิร์ก</b> — ช่วยกัน ส่งงานต่อกะให้ครบ ไม่ทิ้งภาระให้เพื่อน</li>
+      <li><b>ซื่อสัตย์ โปร่งใส</b> — มีปัญหาแจ้งทันที ไม่ปิดบังเจ้าของหรือหัวหน้า</li>
+      <li><b>ความปลอดภัยมาก่อน</b> — ทั้งของน้องและของพนักงานเอง</li>
+      <li><b>พัฒนาตัวเองเสมอ</b> — เปิดใจเรียนรู้ รับฟีดแบ็กเพื่อทำให้ดีขึ้น</li>
+      <li><b>ใส่ใจรายตัว</b> — จุดแข็งของร้านเล็กคือความใกล้ชิด ไม่ใช่สเกลใหญ่</li>
+    </ul>
+    <div class="alert info">วัฒนธรรมเริ่มจากตัวเรา — ถ้าทุกคนทำตามนี้ ลูกค้าจะรู้สึกได้ถึง "ความต่าง" ของร้านเราเอง 💛</div>
+  </section>
+
+  <!-- ════════════ MANNERS ════════════ -->
+  <section class="page" id="page-manners">
+    <div class="page-header"><div class="eyebrow">พื้นฐาน · ทุกคนต้องรู้</div><h1>มารยาท &amp; การวางตัวในร้าน</h1><p>ภาพลักษณ์ของร้านขึ้นอยู่กับการวางตัวของพนักงานทุกคน แม้ในจังหวะที่คิดว่าไม่มีใครเห็น</p></div>
+
+    <h2 class="sec">มารยาทต่อลูกค้า</h2>
+    <div class="dosdonts">
+      <div class="do"><h4>✅ ควรทำ</h4><ul><li>ยิ้ม สบตา ไหว้ทักทายทุกครั้ง</li><li>เรียกลูกค้าสุภาพ (คุณแม่/คุณพ่อ/คุณลูกค้า)</li><li>ฟังให้จบก่อนตอบ ไม่ขัดจังหวะ</li><li>พูด "ค่ะ/ครับ" และ "ขอบคุณ" เสมอ</li><li>ขอโทษทันทีเมื่อทำให้ลูกค้ารอหรือไม่สะดวก</li></ul></div>
+      <div class="dont"><h4>❌ ห้ามทำ</h4><ul><li>เมินเฉย ทำเหมือนไม่เห็นลูกค้า</li><li>เถียง/โต้กลับเมื่อลูกค้าไม่พอใจ</li><li>วิจารณ์น้องของลูกค้าในแง่ลบ</li><li>พูดแทรก หรือรีบไล่ให้จบเร็วๆ</li><li>ใช้คำห้วน เช่น "อะไรนะ" "ไม่รู้"</li></ul></div>
+    </div>
+
+    <h2 class="sec">การวางตัวขณะอยู่ในร้าน</h2>
+    <div class="mg">
+      <div class="mg-row"><span class="mg-no">📱</span>
+        <div style="max-width:360px; text-align:left;">
+          <h3 class="subsec" style="margin-top:0">เรื่องที่พลาดกันบ่อยที่สุด</h3>
+          <p style="margin:0">เล่นโทรศัพท์ส่วนตัวขณะทำงาน หรือต่อหน้าลูกค้า — แม้แค่แป๊บเดียวก็ทำให้ดูไม่ใส่ใจ ลูกค้าสังเกตเห็นเสมอ</p>
+        </div>
+      </div>
+      <div class="mg-cap">เก็บโทรศัพท์ส่วนตัวไว้ ใช้เฉพาะเวลาพักหรือเรื่องงานเท่านั้น</div>
+    </div>
+
+    <ul class="checklist">
+      <li>แต่งกายสะอาด เรียบร้อย ใส่เครื่องแบบ/ผ้ากันเปื้อนตามที่ร้านกำหนด</li>
+      <li>ไม่เล่นโทรศัพท์ส่วนตัว/ดูคลิป ขณะทำงานหรือต่อหน้าลูกค้า</li>
+      <li>ไม่นั่งเล่น เอกเขนก หรือนอน ในพื้นที่ที่ลูกค้ามองเห็น</li>
+      <li>ไม่กินอาหาร/ขนม ในพื้นที่บริการหรือต่อหน้าลูกค้า</li>
+      <li>ไม่ส่งเสียงดัง คุยเล่นเสียงดัง หรือหยอกล้อกันเกินงาม</li>
+      <li>รักษาความสะอาดพื้นที่และตัวเองตลอดเวลา (มีกลิ่นสัตว์ได้ แต่ต้องดูสะอาด)</li>
+      <li>เคลื่อนไหวสุภาพ ไม่วิ่ง ไม่กระแทกประตู (ทำให้สัตว์ตกใจ)</li>
+    </ul>
+
+    <h2 class="sec">มารยาทต่อเพื่อนร่วมงาน</h2>
+    <div class="dosdonts">
+      <div class="do"><h4>✅ ควรทำ</h4><ul><li>ช่วยกันทำงาน ส่งต่องานระหว่างกะให้ครบถ้วน</li><li>ให้เกียรติกัน พูดดีต่อกัน</li><li>บอกกล่าวเมื่อต้องออกจากพื้นที่</li><li>ชมและขอบคุณเพื่อนเมื่อช่วยเหลือ</li></ul></div>
+      <div class="dont"><h4>❌ ห้ามทำ</h4><ul><li>นินทา หรือพูดถึงเพื่อน/ลูกค้าในแง่ลบ</li><li>โยนความผิด หรือเกี่ยงงานกัน</li><li>ทะเลาะ/มีปากเสียงกันต่อหน้าลูกค้า</li><li>ทิ้งงานค้างให้กะถัดไปโดยไม่บอก</li></ul></div>
+    </div>
+    <div class="alert warn"><b>จำไว้:</b> ต่อหน้าลูกค้า "ทั้งทีมคือหน้าตาของร้าน" — เรื่องส่วนตัว/ความขัดแย้ง เก็บไว้คุยหลังร้านเสมอ</div>
   </section>
 
   <!-- ════════════ CAT 2 ════════════ -->
@@ -1061,6 +1265,8 @@
 
   <div class="no-result" id="noResult">🔍 ไม่พบหัวข้อที่ค้นหา ลองคำอื่นดูนะคะ</div>
 
+  <div class="pager" id="pager"></div>
+
 </main>
 
 <footer>
@@ -1079,15 +1285,68 @@
 
   function closeSidebar() { sidebar.classList.remove('open'); overlay.classList.remove('open'); }
 
+  const pager = document.getElementById('pager');
+
   function showPage(target) {
     navBtns.forEach(b => b.classList.toggle('active', b.dataset.target === target));
     pages.forEach(p => p.classList.toggle('active', p.id === 'page-' + target));
+    noResult.style.display = 'none';
+    updatePager(target);
     window.scrollTo({ top: 0, behavior: 'smooth' });
     closeSidebar();
-    if (searchBox.value) { searchBox.value = ''; runSearch(''); }
+    if (searchBox.value) { searchBox.value = ''; }
+  }
+
+  // รายการหน้าที่กำลังแสดง (ตามตัวกรองตำแหน่ง) เรียงตามลำดับเมนู
+  function visibleNav() {
+    return Array.from(navBtns).filter(b => !b.classList.contains('dim'));
+  }
+
+  function updatePager(target) {
+    const list = visibleNav();
+    const idx = list.findIndex(b => b.dataset.target === target);
+    if (idx === -1) { pager.innerHTML = ''; return; }
+    const prev = list[idx - 1], next = list[idx + 1];
+    let html = '';
+    html += prev
+      ? '<a class="pg prev" data-go="'+prev.dataset.target+'"><span class="dir">← ก่อนหน้า</span><span class="ttl">'+prev.dataset.title+'</span></a>'
+      : '<span class="pg prev ghost"></span>';
+    html += next
+      ? '<a class="pg next" data-go="'+next.dataset.target+'"><span class="dir">ถัดไป →</span><span class="ttl">'+next.dataset.title+'</span></a>'
+      : '<span class="pg next ghost"></span>';
+    pager.innerHTML = html;
+    pager.querySelectorAll('.pg[data-go]').forEach(el => el.addEventListener('click', () => showPage(el.dataset.go)));
   }
 
   navBtns.forEach(btn => btn.addEventListener('click', () => showPage(btn.dataset.target)));
+
+  // ─── ROLE FILTER (กรองตามตำแหน่งงาน) ───
+  const roleBar = document.getElementById('roleBar');
+  const roleHint = document.getElementById('roleHint');
+  const roleNames = { all:'ทุกคน', nur:'พี่เลี้ยงสัตว์เลี้ยง', grm:'ช่างอาบน้ำตัดขน', rcp:'พนักงานต้อนรับ', hkp:'แม่บ้าน' };
+
+  function applyRole(role) {
+    roleBar.querySelectorAll('.role-chip').forEach(c => c.classList.toggle('active', c.dataset.role === role));
+    navBtns.forEach(b => {
+      const roles = (b.dataset.roles || 'all').split(' ');
+      const show = role === 'all' || roles.includes('all') || roles.includes(role);
+      b.classList.toggle('dim', !show);
+    });
+    if (role === 'all') {
+      roleHint.classList.remove('show');
+    } else {
+      roleHint.classList.add('show');
+      roleHint.innerHTML = 'กำลังแสดงเนื้อหาสำหรับตำแหน่ง <b>'+roleNames[role]+'</b> (รวมหมวดพื้นฐานที่ทุกคนต้องรู้) — กด "ทุกคน" เพื่อดูทั้งหมด';
+    }
+    // ถ้าหน้าปัจจุบันถูกซ่อน ให้เด้งไปหน้าแรก
+    const activeBtn = document.querySelector('.navbtn.active');
+    if (activeBtn && activeBtn.classList.contains('dim')) {
+      showPage('home');
+    } else if (activeBtn) {
+      updatePager(activeBtn.dataset.target);
+    }
+  }
+  roleBar.querySelectorAll('.role-chip').forEach(chip => chip.addEventListener('click', () => applyRole(chip.dataset.role)));
   menuBtn.addEventListener('click', () => { sidebar.classList.toggle('open'); overlay.classList.toggle('open'); });
   overlay.addEventListener('click', closeSidebar);
 
@@ -1095,6 +1354,8 @@
   const sectionKeywords = {
     home:'หน้าแรก ภาพรวม เกี่ยวกับร้าน',
     cat1:'ตัวบุคคล โครงสร้าง องค์กร แผนก ตำแหน่ง เวลาทำงาน บริหาร',
+    service:'service mind หัวใจบริการ ต้อนรับ greeting ทักทาย วัฒนธรรมองค์กร culture ยิ้ม ใส่ใจ',
+    manners:'มารยาท การวางตัว แต่งกาย โทรศัพท์ เพื่อนร่วมงาน ภาพลักษณ์ สุภาพ',
     cat2:'บริการ ราคา ห้องพัก อาบน้ำ ตัดขน grooming day care จอง ยกเลิก มัดจำ เช็คอิน เช็คเอาท์',
     cat3:'กฎ ระเบียบ วัคซีน เอกสาร ฉุกเฉิน สัตว์หลุด ร้องเรียน line',
     cat4:'sop มาตรฐาน เปิดร้าน ปิดร้าน ดูแลประจำวัน แบบฟอร์ม f-01 f-02',
@@ -1120,15 +1381,20 @@
       noResult.style.display = 'none';
       navBtns.forEach(b => b.classList.toggle('active', b.dataset.target === match));
       pages.forEach(p => p.classList.toggle('active', p.id === 'page-' + match));
+      updatePager(match);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       pages.forEach(p => p.classList.remove('active'));
+      pager.innerHTML = '';
       noResult.style.display = 'block';
     }
   }
   let st;
   searchBox.addEventListener('input', e => { clearTimeout(st); st = setTimeout(() => runSearch(e.target.value), 250); });
   searchBox.addEventListener('keydown', e => { if (e.key === 'Enter') runSearch(e.target.value); });
+
+  // เริ่มต้น: แสดง pager ของหน้าแรก
+  updatePager('home');
 
   /* ════════════════════════════════════════════════════════════════
      ควิซ + บันทึกลง Google Sheet
